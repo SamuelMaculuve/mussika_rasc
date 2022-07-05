@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "EsqueceuSenha";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="notification notice margin-top-100  margin-bottom-30 center">
+                        <h2>Recuperação de Senha!</h2>
+                        <h4 style="color:black;">Digite seu Email para prosseguir!</h4>
+                        <a class="close" href="#"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-lg-offset-3">
+                    <div class="main_input_search_part gray-style margin-top-50 margin-bottom-10">
+                        <div class="main_input_search_part_item">
+                            <input style="font-size:25px;" type="text" id="campoEmail" placeholder="Digite seu Email" value="" />
+                        </div>
+                        <button id="btnProsseguir" class="button">Prosseguir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#btnProsseguir").click(function () {
+        if ($("#campoEmail").val().trim()==""){
+            informarErro("Digite o Email");
+            throw new Error();
+        }
+        $.LoadingOverlay("show");
+
+        var data = {
+            email: $("#campoEmail").val(),
+
+        };
+
+        $.ajax({
+            method: "POST",
+            url: "/Login/EnviarEmailRecuperacao",
+            data: data,
+            //processData: false,
+            //contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide");
+                    informarErro("Nao foi possivel Enviar novamente O Email, contacte o Administrador!");
+                    
+
+                } else if (msg == "emailinvalido") {
+
+                    $.LoadingOverlay("hide");
+                    informarErro("Email Invalido!");
+                    
+
+                }
+                else {
+                    $.LoadingOverlay("hide");
+                    
+                    location.href = '/Login/confirmarEmailAlteracaoSenha?email=' + $("#campoEmail").val();
+
+                }
+
+            });
+    });
+</script>

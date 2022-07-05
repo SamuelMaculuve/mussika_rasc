@@ -1,0 +1,32 @@
+﻿
+@using ASP_Mussika.Models.ViewModel;
+@using ASP_Mussika.Models;
+@model distrito
+
+@{
+    ViewBag.Title = "restaurantes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<string> galeria = (List<string>)ViewBag.galeria;
+}
+
+@Html.Partial("/Views/distritos/Partials/galeria_distrito_partial.cshtml", new ViewDataDictionary() { { "galeria", galeria } })
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-8">
+
+            <br />
+            @*<h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30"><b>Quelimane</b> - Restaurantes </h3>*@
+            <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30"> Acomodações - @ViewBag.nome_distrito </h3>
+
+            <div id="div_acomodacoes">
+                @Html.Action("acomodacoes_partial", new { id_distrito = Model.id })
+            </div>
+
+        </div>
+
+        <!-- Sidebar -->
+        @Html.Partial("~/Views/distritos/Partials/_RightSideBar.cshtml", Model.id)
+    </div>
+</div>

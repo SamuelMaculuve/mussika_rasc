@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewBag.Title = "criarDistrito";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-map"></i> Dados do Distrito:</h3>
+    </div>
+    <div class="utf_submit_section">
+        <div class="row with-forms">
+
+            <div id="longlat" class="col-md-12">
+
+                <div class="col-md-4">
+                    <h5>Nome do Distrito</h5>
+                    <input type="text" class="search-field" name="distrito" id="distrito" placeholder="Distrito..." value="">
+                </div>
+                <div class="col-md-4">
+                    
+                    <h5>População </h5>
+                    <input type="text" class="search-field" name="populacao" id="populacao" placeholder="populacao..." value="">
+                </div>
+                <div class="col-md-4">
+                    <h5>Área </h5>
+                    <input type="text" class="search-field" name="area" id="area" placeholder="Área..." value="">
+                </div>
+           
+        </div>
+        <div class="row with-forms">
+
+            <div id="longlat" class="col-md-12">
+
+                
+                <div class="col-md-12">
+                    @*<div class="row">
+                        <div class="col-md-12">
+                            <div class="notification notice closeable margin-bottom-30">
+                                <p>Você está atualmente ligado com a conta de <strong>teste</strong>!</p>
+                                <a class="close" href="#"></a>
+                            </div>
+                        </div>
+                    </div>*@
+                    <h5>Link Mapa</h5>
+                    <input type="text" class="search-field" name="linkMapalinkMapa" id="linkMapa" placeholder="Link Mapa...." value="">
+                </div>
+            </div>
+            @*<div id="utf_listing_location" class="col-md-12 utf_listing_section">
+                    <div id="utf_single_listing_map_block">
+                        <div id="utf_single_listingmap" data-latitude="-15.472254" data-longitude="36.980683" data-map-icon="im im-icon-Hamburger"></div>
+                        <a href="#" id="utf_street_view_btn">Street View</a>
+                    </div>
+                </div>*@
+        </div>
+        <div class="row with-forms">
+
+            <div id="longlat" class="col-md-12">
+
+                <div class="col-md-12">
+                    <h5>Descrição </h5>
+                    <textarea name="descricao" cols="40" rows="2" id="descricao" placeholder="Descrição do distrito..." spellcheck="true"></textarea>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</div>
+
+<button id="salvar" style="margin-top:40px; margin-bottom:30px;" class="button btn-sm">Prosseguir</button>
+
+<script>
+    $("#salvar").click(function () {
+        debugger
+        if ($("#distrito").val().trim() == '') {
+            informarErro("Informe o nome do Distrito");
+            throw new Error();
+        }
+
+        salvar();
+    })
+
+    function salvar() {
+        var content =  tinyMCE.activeEditor.getContent();
+        debugger
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('nome', $("#distrito").val());
+        model.append('populacao', $("#populacao").val());
+        model.append('area', $("#area").val());
+        //model.append('longitude', $("#longitude").val());
+        //model.append('latitude', $("#latitude").val());
+        model.append('linkmapa', $("#linkMapa").val());
+        //model.append('descricao', $("#descricao").val());
+        model.append('descricao', content.trim());
+       
+
+        
+        $.ajax({
+            method: "POST",
+            url: "/distritos/SalvarDistritos",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar este Restaurante");
+
+
+                } else if (msg == "existe") {
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Este Quarto ja Existe");
+                }
+                else {
+                    debugger
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/distritos/CarregarFotos?id=' + msg;
+                    //informarSucesso("Artigo Cadastrado com Sucesso")
+                    $('.with-forms').find("input[type=text], textarea").val("");
+                   
+                   
+                    //$("#check-f1").prop("checked", false)
+                }
+
+            });
+    }
+</script>
+

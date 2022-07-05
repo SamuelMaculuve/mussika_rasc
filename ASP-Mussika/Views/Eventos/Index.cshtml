@@ -1,0 +1,101 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.EventoViewModel>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+
+<div id="titlebar" class="gradient">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Eventos</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="/inicio/principal">Inicio</a></li>
+                        <li>eventos</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="blog-page">
+        <div class="row">
+            <div class="col-lg-8 col-md-8">
+                @foreach (var item in Model)
+                {
+                    <div class="utf_blog_post">
+                        <a href="/Eventos/Detalhes?id=@item.id" class="utf_post_img"> <img style="width:auto; height:auto; min-height:300px; min-width:100%" src="~/Repository/images/eventos/@item.foto_capa" alt=""> </a>
+                        <div class="utf_post_content">
+
+                            <h3><a href="/Eventos/Detalhes?id=@item.id">@item.nome</a></h3>
+                            <ul class="utf_post_text_meta">
+                                <li>Data Evento: @DateTime.Now.Date.ToString("MM-dd-yyyy")</li>
+                                <li>Distrito: <a href="/Eventos/Detalhes?id=@item.id">@item.nome_distrito</a>, Local: @item.local</li>
+                                <li><a href="#">@item.comentarios Comentarios</a></li>
+                            </ul>
+                            @{ var html_descricao = new HtmlString(item.descricao); }
+                            <p>
+
+                                @html_descricao<a href="/Eventos/Detalhes?id=@item.id">[...]</a>
+                            </p>
+                            <a href="/Eventos/Detalhes?id=@item.id" class="read-more">Ler mais <i class="fa fa-angle-right"></i></a>
+                        </div>
+                    </div>
+                }
+
+
+
+
+
+
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="utf_pagination_container_part margin-bottom-70">
+                            <nav class="pagination">
+                                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                                @Html.PagedListPager(Model, page => Url.Action("Index",
+                                        new { page }))
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4">
+                <div class="sidebar right">
+
+
+                    <div class="utf_box_widget margin-top-35 margin-bottom-75">
+                        <h3><i class="sl sl-icon-folder-alt"></i> Categorias</h3>
+                        <ul class="utf_listing_detail_sidebar">
+
+                            <li><i class="fa fa-angle-double-right"></i> <a href="/inicio/Distritos">Distritos</a></li>
+                            <li><i class="fa fa-angle-double-right"></i> <a href="/PubAcomodacao/Acomodacoes">Acomodações</a></li>
+                            <li><i class="fa fa-angle-double-right"></i> <a href="/inicio/restaurantes">Restaurantes</a></li>
+                            <li><i class="fa fa-angle-double-right"></i> <a href="/servico_taxi/Index">Taxis</a></li>
+                            <li><i class="fa fa-angle-double-right"></i> <a href="/PubShopMussika/Loja_Shop">Shop Mussika</a></li>
+                            <li><i class="fa fa-angle-double-right"></i> <a href="/Eventos/categorias">Eventos</a></li>
+
+                        </ul>
+                    </div>
+
+
+
+
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

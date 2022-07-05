@@ -1,0 +1,76 @@
+﻿@model ASP_Mussika.Models.EmpresaViewModel
+
+@{
+    ViewBag.Title = "comopagar";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-picture"></i> Como Pagar</h3>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-12">
+            @{var de_ = @Html.Raw(HttpUtility.HtmlDecode(Model.comopagar));
+
+                var html_descricao = new HtmlString(de_.ToHtmlString());
+            }
+            <h5>Como Pagar</h5>
+            <textarea name="seguranca" cols="40" rows="15" id="comopagar" placeholder="Segurança..." spellcheck="true">@html_descricao</textarea>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row with-forms" style="margin-top:40px;">
+    <div class="col-md-2">
+        <button id="btnSalvar" style="margin-top:40px; margin-bottom:30px;" class="button btn-sm">Salvar Dados</button>
+
+    </div>
+</div>
+<script>
+
+
+    $("#btnSalvar").click(function () {
+
+       
+        salvar();
+    })
+
+    function salvar() {
+        debugger
+
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        var content =  tinyMCE.activeEditor.getContent();
+        model.append('id', "@Model.id");
+         model.append('comopagar', content.trim());
+        $.ajax({
+            method: "POST",
+            url: "/empresa/salvarComoPagar",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar estes dados");
+
+
+                } else {
+                     $.LoadingOverlay("hide", true);
+                    informarSucesso("Dados alterados");
+                }
+            });
+
+
+
+
+    }
+
+</script>
+
+

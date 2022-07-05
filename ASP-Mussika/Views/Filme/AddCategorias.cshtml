@@ -1,0 +1,166 @@
+﻿@model ASP_Mussika.Models.filme
+
+@{
+    ViewBag.Title = "AddCategorias";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+    <div class="add_utf_listing_section margin-top-45">
+        <div class="utf_add_listing_part_headline_part">
+            <h3><i class="sl sl-icon-tag"></i>Categorias</h3>
+        </div>
+        <div class="row with-forms">
+            <div class="col-md-6">
+                <div class="col-md-8">
+                    <h5>Categoria/Genero do Filme<strong style="color:orangered">*</strong></h5>
+                    <select data-placeholder="Todas as categorias" id="categoria" class="utf_chosen_select">
+                        <option value="">Seleccione um Tipo</option>
+                        @foreach (var item in ViewBag.categorias)
+                        {
+                            <option value="@item.id">@item.descricao</option>
+                        }
+
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <button id="btnSalvar" style="margin-top:35px; margin-bottom:30px; background-color:deepskyblue;" class="button btn-sm">Adicionar</button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-12">
+                    <h5>Categorias vinculadas ao Filme<strong style="color:orangered">*</strong></h5>
+                    <table id="example" class="display" style="width:100%">
+                        <thead style="background-color:deepskyblue; ">
+                            <tr>
+                                <th style="color:white">ID</th>
+                                <th style="color:white">Nome</th>
+
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+
+
+
+        </div>
+        <div class="row with-forms">
+            <button id="btnNovaAcomodacao" onclick="location.href='/Filme/CarregarFotos?id=@Model.id'" style="margin-left:20px; background-color:deepskyblue" class="button gray">Prosseguir</button>
+        </div>
+
+
+
+
+    </div>
+
+<script>
+
+    $("#btnSalvar").click(function () {
+
+
+
+        if ($("#categoria").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe a categoria que pretende vincular a este filme");
+            throw new Error();
+        }
+
+        salvar();
+    })
+
+     function salvar() {
+     
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('id_filme', @Model.id);
+        model.append('id_categoria', $("#categoria").val());
+        
+        $.ajax({
+            method: "POST",
+            url: "/Filme/VincularCategoria",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel Vincular esta categoria");
+
+
+                } else if (msg == "existe") {
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Ja esta vinculada esta categoria");
+                }
+                else {
+                    $.LoadingOverlay("hide", true);
+                    $('#example').DataTable().ajax.reload();
+                 
+                }
+
+            });
+    }
+
+    $(function () {
+           var model = new FormData();
+        model.append('id', @Model.id);
+        $('#example').DataTable({
+
+            "lengthChange": false,
+            "scrollY": 200,
+            "autoWidth": true,
+            "scrollX": true,
+            "processing": true,
+            "serverSide": true,
+            "searching": false,
+            "responsive": true,
+            "filter": true,
+            "orderMulti": true,
+            "ajax": {
+                "url": "/Filme/carregarTabelaItemsByAjax",
+                "type": "POST",              
+                "datatype": "json",
+                "data": { "id": @Model.id },
+            },
+            "columns": [
+                { "data": "id" },
+
+
+                { "data": "nome" },
+            ],
+            //Descricao
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                //$('td:eq(0)', nRow).html("<a href='javascript:ver('" + aData.id + "')' class='button gray'><i class='fa fa-eye'></i> Ver/Editar</a> ");
+                $('td:eq(0)', nRow).html("<a href='javascript:void(0);' ><button type='button'  id='editar'  class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.id + "') > Apagar</button></a>");
+                //$('td:eq(1)', nRow).html("<a href='javascript:void(0);' ><button type='button' id='ver' class='btn btn-icons btn-sm btn-primary'onclick=verProduto('" + aData.id_produto + "')></button>|<button type='button'  id='editar' class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.idproduto + "') ></button></a>");
+                //$('td:eq(10)', nRow).html("<a href='javascript:void(0);' onclick=alert('" + aData.FuncionarioId + "')><button type='button' class='btn btn-icons btn-rounded btn-warning'><i class='fa fa-edit'></i></button></a>");
+                //$('td:eq(3)', nRow).html("<a href='javascript:void(0);' onclick=apagar('" + aData.IdCategoria + "')><button type='button' class='btn btn-icons btn-rounded btn-danger'><i class='fa fa-trash'></i></button></a>");
+                return nRow;
+            },
+        });
+    });
+
+     var editar = function (id) {
+        $.LoadingOverlay("show");
+
+        // Hide it after 3 seconds
+        setTimeout(function () {
+            window.location.href = '/Filme/ApagarItem?id_categoria=' +id+'&id_filme=@Model.id';
+            $.LoadingOverlay("hide");
+
+        }, 2000);
+
+    }
+</script>

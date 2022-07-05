@@ -1,0 +1,130 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.CarinhoCompraViewModel>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="titlebar" class="dashboard_gradient">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 style="color:black">Meu Carrinho de Compras</h2>
+            <nav id="breadcrumbs">
+                <ul>
+                    <li><a href="/inicio/principal">Inicio</a></li>
+                    <li>Meu Carrinho de Compras</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12" style="padding-left:60px;padding-right:60px">
+        <div class="utf_dashboard_list_box margin-top-0">
+            @*<div class="sort-by my_sort_by">
+                <div class="utf_sort_by_select_item">
+                    <select data-placeholder="Default Listing" class="utf_chosen_select_single">
+                        <option>Default Listing</option>
+                        <option>Active Listing</option>
+                        <option>Pending Listing</option>
+                        <option>Expired Listing</option>
+                    </select>
+                </div>
+            </div>*@
+            <h4><i class="sl sl-icon-list"></i> Meu Carrinho</h4>
+            <ul>
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <div class="utf_list_box_listing_item">
+                            @if (item.e_artigo == true)
+                            {
+                                <div class="utf_list_box_listing_item-img"><a href="#"><img src="../Repository/images/Artigos/@item.foto" alt=""></a></div>
+
+                            }
+                            @if (item.e_Obra == true)
+                            {
+                                <div class="utf_list_box_listing_item-img"><a href="#"><img src="../Repository/images/ArteCultura/@item.foto" alt=""></a></div>
+
+                            }
+                            @if (item.e_Musica == true)
+                            {
+                                <div class="utf_list_box_listing_item-img"><a href="#"><img src="../Repository/images/musica/@item.foto" alt=""></a></div>
+
+                            }
+                            @if (item.e_acomodacao == true)
+                            {
+                                <div class="utf_list_box_listing_item-img"><a href="#"><img src="../Repository/images/Acomodacoes/@item.foto" alt=""></a></div>
+                            }
+                            @if (item.e_Produto_loja == true)
+                            {
+                                <div class="utf_list_box_listing_item-img"><a href="#"><img src="../Repository/images/lojas/@item.foto" alt=""></a></div>
+                            }
+                            @if (item.e_farmacia_produto == true)
+                            {
+                                <div class="utf_list_box_listing_item-img"><a href="#"><img src="../Repository/images/farmacias/@item.foto" alt=""></a></div>
+                            }
+                            @if (item.e_evento == true)
+                            {
+                                <div class="utf_list_box_listing_item-img"><a href="#"><img src="../Repository/images/eventos/@item.foto" alt=""></a></div>
+                            }
+                            @if (item.e_Filme == true)
+                            {
+                                <div class="utf_list_box_listing_item-img"><a href="#"><img src="../Repository/images/cinema/@item.foto" alt=""></a></div>
+                            }
+
+                            <div class="utf_list_box_listing_item_content">
+                                <div class="inner">
+                                    <h3>@item.nome</h3>
+                                    @if (item.e_artigo == true)
+                                    {
+                                        <span><i class="im im-icon-Hotel"></i> Artigo</span>
+                                    }
+                                    @if (item.e_acomodacao == true)
+                                    {
+                                        <span><i class="im im-icon-Hotel"></i> Acomodação</span>
+                                    }
+
+                                    <span><i class="sl sl-icon-location"></i> @item.bairro, @item.distrito</span>
+                                    <span><i class="sl sl-icon-wallet"></i> @string.Format("{0:N}MT", @item.preco)</span>
+
+                                    <p>@item.descricao</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttons-to-right">
+
+                            @*<a href="#" class="button gray"><i class="fa fa-trash-o"></i> Deletar</a>*@
+                        </div>
+                    </li>
+                }
+
+
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
+            <nav class="pagination">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action("Index",
+                            new { id_usuario = Session["idusario"].ToString(), page }))
+            </nav>
+        </div>
+        <div class="row with-forms" style="margin-top:40px;">
+            <div class="col-md-2">
+                <button id="btnSalvar" style="margin-top:40px; margin-bottom:30px;" class="button btn-sm">Finalizar Compra</button>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+      $("#btnSalvar").click(function () {
+
+          location.href = '/Pagamento/ProdutosComEntrega';
+        })
+      
+</script>

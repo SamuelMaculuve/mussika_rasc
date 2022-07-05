@@ -1,0 +1,85 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.MusicaViewModel>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Albuns";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="titlebar" class="gradient margin-bottom-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Álbuns</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="/inicio/principal">Inicio</a></li>
+                        <li>Álbuns</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 listing_grid_item">
+            <div class="listing_filter_block margin-top-30">
+
+                <div class="col-md-12 col-xs-12">
+                   
+                    
+                </div>
+            </div>
+            <div class="row">
+
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4 col-lg-4 col-md-12">
+                        <a href="/PubMusica/AlbumDetalhe?id=@item.id" class="utf_listing_item-container" data-marker-id="2">
+                            <div class="utf_listing_item">
+                                <img src="~/Repository/images/musica/@item.caminho_capa1" alt=""> <span class="tag"><i class="im im-icon-Music-Note"></i> Álbum</span>
+
+                                <div class="utf_listing_item_content">
+                                    <div class="utf_listing_prige_block">
+                                        @*<span class="utf_meta_listing_price"><i class="fa fa-tag"></i> $25 - $55</span>*@
+                                    </div>
+                                    <h3>
+                                        @item.titulo
+                                    </h3>
+                                    <span><i class="sl sl-icon-tag"></i> Produtor: @item.produtor</span>
+                                    <span><i class="sl sl-icon-target"></i>Gravadora: @item.gravadora</span>
+                                    <span><i class="sl sl-icon-target"></i>Ano: @item.ano</span>
+                                </div>
+                            </div>
+                            <div class="utf_star_rating_section" data-rating="4.5">
+                                <div class="utf_counter_star_rating"></div>
+                                <span class="utf_view_count"><i class="fa fa-eye"></i> 822+</span>
+                                <span class="like-icon"></span>
+                            </div>
+                        </a>
+                    </div>
+
+                }
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="utf_pagination_container_part margin-top-20 margin-bottom-75">
+                        <nav class="pagination">
+                            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                            @Html.PagedListPager(Model, page => Url.Action("Albuns",
+                                    new { page }))
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  
+</script>
+

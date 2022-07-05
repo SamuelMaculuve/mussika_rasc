@@ -1,0 +1,125 @@
+﻿@using ASP_Mussika.Models;
+@using ASP_Mussika.Models.ViewModel;
+@model List<QuartosAcomodacao_ViewModel>
+
+
+@{
+    string current_page = (string)ViewBag.current_page;
+    int rpp = (int)ViewBag.records_perpage;
+    List<QuartosAcomodacao_ViewModel> lista_registos = (List<QuartosAcomodacao_ViewModel>)ViewBag.lista_registos;
+    //rpp -> records per page
+}
+
+
+<div class="col-lg-8 col-md-8">
+
+    <h4 class="utf_listing_headline_part margin-top-30 margin-bottom-30"> Quartos - Disponibilidade </h4>
+    <hr />
+
+    <div class="utf_dashboard_list_box margin-top-0">
+        <ul>
+            @foreach (QuartosAcomodacao_ViewModel qa in Model)
+            {
+                <li>
+                    <div class="utf_list_box_listing_item">
+                        <div class="utf_list_box_listing_item-img">
+                            <a href="#"><img src="@Url.Content(qa.caminho_imagem)" alt=""></a>
+                            @*<span class="like-icon"></span>*@
+                        </div>
+                        <div class="utf_list_box_listing_item_content">
+                            <div class="inner">
+                                <h3>@qa.nome_acomodacao</h3>
+
+                                <span class="text-info"><i class="fa fa-home text-info"></i> Instância : @qa.nome_acomodacao </span>
+                                <span><i class="fa fa-usd"></i> Custo/Diária : @qa.custo_diaria </span>
+                                <span><i class="fa fa-users"></i> Capacidade : @qa.hospedes (Pessoas) </span>
+                                <span><i class="fa fa-cogs"></i> Disponibilidade : @qa.quantidade_quartos/@qa.quantidade_disponivel </span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttons-to-right"> <a href="#" class="button gray"><i class="sl sl-icon-check"></i> Pagar</a> </div>
+                </li>
+
+            }
+
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="utf_pagination_container_part margin-top-0 margin-bottom-70">
+                <nav class="pagination">
+                    @{
+
+                        int total_records = lista_registos.Count;
+                        int pageCount = (total_records + rpp - 1) / rpp;
+                        int initial_index = int.Parse(current_page);
+                        int current_index = int.Parse(current_page);
+                        int nextpage_index = current_index + rpp;
+
+                        if (total_records > 0)
+                        {
+                            bool search_bykey = false;
+
+                            if (search_bykey == false)
+                            {
+
+
+                                <ul>
+
+                                    @if (initial_index == 0)
+                                    {
+                                        if (pageCount == 1) { }
+                                        <li><a href="#!" class="current-page">1</a></li>
+
+                                        for (int i = 1; i <= pageCount - 1; i++)
+                                        {
+                                            int bt_index = current_index + rpp;
+                                            current_index = bt_index;
+                                            int pg = i + 1;
+
+                                            <li><a id="@bt_index" href="#!" onclick="SelectPage(this.id)">@pg</a></li>
+                                        }
+                                    }
+                                    @if (initial_index > 0)
+                                    {
+                                        int prevpage = current_index - rpp;
+                                        int count = (-1) * rpp;
+
+                                        for (int i = 0; i <= pageCount - 1; i++)
+                                        {
+                                            count = count + rpp;
+                                            current_index = count;
+                                            int pg = i + 1;
+
+                                            if (initial_index == count)
+                                            {
+                                                <li><a href="#!" class="current-page">@pg</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li><a id="@count" href="#!" onclick="SelectPage(this.id)">@pg</a></li>
+                                            }
+                                        }
+                                    }
+
+                                </ul>
+
+                                current_index = 0;
+                            }
+                            else
+                            {
+
+                            }
+                        }
+                        else
+                        {
+                            <h5 style="color:black;"> ("Nenhum resultado encontrado")  </h5> <br /> <br />
+                        }
+                    }
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

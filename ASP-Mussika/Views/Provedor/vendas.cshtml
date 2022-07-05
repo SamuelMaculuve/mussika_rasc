@@ -1,0 +1,165 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.CompraViewModel>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "vendas";
+    Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-md-12" style="padding-left:60px;padding-right:60px">
+        <div class="margin-top-0">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="utf_dashboard_block_part color-1">
+                        <div class="utf_dashboard_ic_stat"><i class="fa fa-money"></i></div>
+                        <div class="utf_dashboard_content_part utf_wallet_totals_item">
+                            <h4>@ViewBag.numero_vendas</h4>
+                            <span>Quantidade Vendas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="utf_dashboard_block_part color-2">
+                        <div class="utf_dashboard_ic_stat"><i class="fa fa-money"></i></div>
+                        <div class="utf_dashboard_content_part utf_wallet_totals_item">
+                            <h4>@ViewBag.total_receber</h4>
+                            <span>Total Vendas(MT)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                        <div class="utf_dashboard_block_part color-3">
+                            <div class="utf_dashboard_ic_stat"><i class="fa fa-money"></i></div>
+                            <div class="utf_dashboard_content_part">
+                                <h4>@ViewBag.total_ganho_provedor</h4>
+                                <span>Ganho Provedor</span>
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="col-lg-3 col-md-6">
+                        <div class="utf_dashboard_block_part color-4">
+                            <div class="utf_dashboard_ic_stat"><i class="fa fa-money"></i></div>
+                            <div class="utf_dashboard_content_part">
+                                <h4>@ViewBag.total_comissao</h4>
+                                <span>Comissão Mussika</span>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12" style="padding-left:60px;padding-right:60px">
+        <div class="margin-top-0">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="utf_dashboard_block_part color-1">
+                        <div class="utf_dashboard_ic_stat"><i class="fa fa-money"></i></div>
+                        <div class="utf_dashboard_content_part utf_wallet_totals_item">
+                            <h4>@ViewBag.numero_vendas_nao_processadas</h4>
+                            <span>Quantidade Vendas(Não Processadas)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="utf_dashboard_block_part color-2">
+                        <div class="utf_dashboard_ic_stat"><i class="fa fa-money"></i></div>
+                        <div class="utf_dashboard_content_part utf_wallet_totals_item">
+                            <h4>@ViewBag.total_receber_nao_processada</h4>
+                            <span>Total Vendas(Não Processadas)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="utf_dashboard_block_part color-3">
+                        <div class="utf_dashboard_ic_stat"><i class="fa fa-money"></i></div>
+                        <div class="utf_dashboard_content_part">
+                            <h4>@ViewBag.total_ganho_provedor_nao_processada</h4>
+                            <span>Ganho Provedor(Não Processada)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="utf_dashboard_block_part color-4">
+                        <div class="utf_dashboard_ic_stat"><i class="fa fa-money"></i></div>
+                        <div class="utf_dashboard_content_part">
+                            <h4>@ViewBag.total_comissao_nao_processada</h4>
+                            <span>Comissão Mussika(Não Processada)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+<div class="col-lg-12 col-md-12 mb-4">
+    <div class="utf_dashboard_list_box table-responsive ">
+        <h4>Lista de vendas/Reservas/Encomendas Efectuadas pelo Provedor </h4>
+        <div class="dashboard-list-box table-responsive invoices with-icons">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+
+                        <th>Nome</th>
+                        <th>Data</th>
+                        <th>Meio</th>
+                        <th>Estado</th>
+                        <th>Provedor Pago</th>
+                        <th>Ver Venda</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@item.id_compra</td>
+                        <td>@item.descricao</td>
+                        <td>@item.data_cadastro</td>
+                        <td>@item.modo_pagamento</td>
+                        <td><span class="badge badge-pill badge-primary text-uppercase">Confirmado</span></td>
+                        @if (item.provedor_pago == true)
+                        {
+                            <td class="text-center"><span class="badge badge-pill badge-primary text-uppercase">SIM</span></td>
+                        }
+                        else
+                        {
+                            <td class="text-center"><span class="badge badge-pill badge-danger text-uppercase">NÃO</span></td>
+                        }
+                        <td><a href="javascript:/Provedor/DetalhesCompra?id=@item.id_compra'" onclick="location.href='/Provedor/DetalhesCompra?id=@item.id_compra'" class="button gray"><i class="fa fa-eye"></i> Ver</a></td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="utf_pagination_container_part margin-top-20 margin-bottom-75">
+                <nav class="pagination">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                    @Html.PagedListPager(Model, page => Url.Action("vendas",
+                            new { page }))
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+

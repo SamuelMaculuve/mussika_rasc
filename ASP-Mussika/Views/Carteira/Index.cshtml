@@ -1,0 +1,109 @@
+﻿@model List<ASP_Mussika.Models.CompraViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="titlebar" class="dashboard_gradient">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 style="color:black">Minha Carteira</h2>
+            <nav id="breadcrumbs">
+                <ul>
+                    <li><a href="/inicio/principal">Inicio</a></li>
+
+                    <li>Minha Carteira</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12" style="padding-left:60px;padding-right:60px">
+        <div class="margin-top-0">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="utf_dashboard_block_part color-1">
+                        <div class="utf_dashboard_ic_stat"><i class="fa fa-money"></i></div>
+                        <div class="utf_dashboard_content_part utf_wallet_totals_item">
+                            <h4>@ViewBag.dinheiroGasto MT</h4>
+                            <span>Total Gasto em Compras</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                        <div class="utf_dashboard_block_part color-2">
+                            <div class="utf_dashboard_ic_stat"><i class="sl sl-icon-wallet"></i></div>
+                            <div class="utf_dashboard_content_part utf_wallet_totals_item">
+                                <h4>00.00 MT</h4>
+                                <span>Total de Crédito(MT)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="utf_dashboard_block_part color-3">
+                        <div class="utf_dashboard_ic_stat"><i class="sl sl-icon-list"></i></div>
+                        <div class="utf_dashboard_content_part">
+                            <h4>@ViewBag.nrCarinhoCompra</h4>
+                            <span>Itens no Carrinho de Compra</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="utf_dashboard_block_part color-4">
+                        <div class="utf_dashboard_ic_stat"><i class="sl sl-icon-basket"></i></div>
+                        <div class="utf_dashboard_content_part">
+                            <h4>@ViewBag.QCompras</h4>
+                            <span>Total de Itens Comprados</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="utf_dashboard_list_box invoices with-icons margin-top-20">
+                        <h4>Items comprados através da plataforma</h4>
+                        <ul>
+                            @foreach (var item in Model)
+                            {
+                                <li>
+                                    <i class="utf_list_box_icon sl sl-icon-basket-loaded"></i> <strong>@item.titulo - @item.subtitulo <span class="list_hotel">@item.oque_e</span></strong>
+                                    <ul>
+                                        <li><span>Data:-</span>@item.data_cadastro</li>
+                                        <li><span>Cod.Operação:-</span> 00403128</li>
+                                        <li class="paid"><span>Preço:</span> @item.valor 00MT</li>
+                                    </ul>
+                                </li>
+                            }
+
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="utf_dashboard_list_box invoices with-icons margin-top-20">
+                        <h4>Facturas</h4>
+                        <ul>
+                            @*<li>
+                                    <i class="utf_list_box_icon fa fa-paste"></i> <strong>$122  <span class="paid">Paid</span></strong>
+                                    <ul>
+                                        <li><span>Order Number:-</span> 004128641</li>
+                                        <li><span>Date:-</span> 12 Jan 2019</li>
+                                    </ul>
+                                    <div class="buttons-to-right"> <a href="dashboard_invoice.html" class="button gray"><i class="sl sl-icon-printer"></i> Invoice</a> </div>
+                                </li>*@
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

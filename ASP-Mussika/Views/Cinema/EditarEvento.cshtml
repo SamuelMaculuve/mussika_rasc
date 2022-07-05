@@ -1,0 +1,135 @@
+﻿@model ASP_Mussika.Models.cinema
+
+@{
+    ViewBag.Title = "EditarEvento";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-tag"></i>Dados do Cinema</h3>
+    </div>
+    <div class="row with-forms">
+
+        <div class="col-md-4">
+            <h5>Nome do Cinema<strong style="color:orangered">*</strong></h5>
+            <input type="text" name="cinema" value="@Model.nome" id="cinema" placeholder="Cinema...">
+        </div>
+
+        <div class="col-md-4">
+            <h5>Distrito<strong style="color:orangered">*</strong></h5>
+            @Html.DropDownListFor(m => m.id_distrito, ViewBag.distritos as SelectList, "--seleccione um Distrito--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%; padding:0px;", @id = "nome", @name = "id" })
+        </div>
+        <div class="col-md-4">
+            <h5>local<strong style="color:orangered">*</strong></h5>
+            <input type="text" id="local" value="@Model.localizacao" placeholder="Local">
+        </div>
+
+
+    </div>
+
+
+    <div class="row with-forms">
+        <div class="row with-forms">
+            <div class="col-md-12">
+                <h5>Descrição<strong style="color:orangered">*</strong></h5>
+                @{var de_ = @Html.Raw(HttpUtility.HtmlDecode(Model.descricao));
+
+                    var html_descricao = new HtmlString(de_.ToHtmlString());
+                }
+                <textarea name="descricao" cols="40" rows="7" id="descricao" placeholder="Descrição..." spellcheck="true">@html_descricao</textarea>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-docs"></i> Estado do Cinema </h3>
+    </div>
+    <div class="checkboxes in-row amenities_checkbox">
+        <ul>
+            <li>
+                <input id="check-g1" type="checkbox" name="check">
+                <label for="check-g1">Cinema Inactivo</label>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<div class="row with-forms" style="margin-top:40px;">
+    <div class="col-md-2">
+        <button id="btnSalvar" style="margin-top:40px; margin-bottom:30px;" class="button btn-sm">Prosseguir</button>
+
+    </div>
+</div>
+
+<script>
+      $(document).ready(function() {
+          $("#check-g1").prop("checked",@Model.inactivo.ToString().ToLower());
+    });
+    $("#btnSalvar").click(function () {
+        if ($("#cinema").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o nome do Cinema");
+            throw new Error();
+        }
+
+        if ($("#nome").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o Distrito");
+            throw new Error();
+        }
+        if ($("#local").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o local");
+            throw new Error();
+        }
+
+
+        salvar();
+    })
+
+    function salvar() {
+        var content = tinyMCE.activeEditor.getContent();
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('id', @Model.id);
+        model.append('nome', $("#cinema").val());
+        model.append('id_distrito', $("#nome").val());
+        model.append('descricao', content.trim());
+        model.append('localizacao', $("#local").val());
+        model.append('inactivo', $("#check-g1").prop("checked"));
+
+
+
+        $.ajax({
+            method: "POST",
+            url: "/Cinema/salvar",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar este Cinema");
+                }
+                else {
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/Cinema/CarregarFotos?id=' + msg;
+                    //location.href = '/AdminEvento/Index';
+                    //informarSucesso("musica Cadastrada com Sucesso")
+                    $('.with-forms').find("input[type=text], textarea").val("");
+                    Dropzone.forElement('#filedrop').removeAllFiles(true)
+
+                }
+
+            });
+    }
+</script>
+

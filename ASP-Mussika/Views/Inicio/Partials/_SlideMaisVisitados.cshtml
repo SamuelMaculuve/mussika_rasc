@@ -1,0 +1,44 @@
+﻿
+<div class="col-md-12">
+    <div class="simple_slick_carousel_block utf_dots_nav">
+        @foreach (var item in ViewBag.maisVisitados)
+        {
+            <div class="utf_carousel_item">
+                
+                <a href="@item.linkhref" class="utf_listing_item-container compact">
+                    <div class="utf_listing_item">
+                        @if (item.e_Acomodacao == true)
+                        {
+                            <img src="~/Repository/images/Acomodacoes/@item.foto" alt=""> <span class="tag"><i class="im im-icon-Chef-Hat"></i> @item.tipo</span>
+                        }
+                        else
+                        {
+                            <img src="~/Repository/images/Restaurantes/@item.foto" alt=""> <span class="tag"><i class="im im-icon-Chef-Hat"></i> @item.tipo</span>
+                        }
+
+                        @*<span class="utf_open_now">Disponivel</span>*@
+                        <div class="utf_listing_item_content">
+                            <div class="utf_listing_prige_block">
+                                @*<span class="utf_meta_listing_price"><i class="fa fa-tag"></i> 1.200,00MT - 5.000,00MT</span>*@
+                                <span class="utp_approve_item"><i class="utf_approve_listing"></i></span>
+                            </div>
+                            <h3>@item.Nome</h3>
+                            <span><i class="sl sl-icon-location"></i> @item.endereco</span>
+                            <span><i class="sl sl-icon-phone"></i> (258) 848 631 601</span>
+                        </div>
+                    </div>
+                    <div class="utf_star_rating_section" data-rating="5">
+                        <div class="utf_counter_star_rating">(5)</div>
+                        <span class="utf_view_count"><i class="fa fa-eye"></i> 325+</span>
+                        <span class="like-icon"></span>
+                    </div>
+                </a>
+            </div>
+        }
+
+
+
+
+
+    </div>
+</div>

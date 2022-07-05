@@ -1,0 +1,81 @@
+﻿@model ASP_Mussika.Models.compra
+@{
+    ViewBag.Title = "DetalhesCompra";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-tag"></i>Detalhes da Venda</h3>
+    </div>
+    <div class="row with-forms">
+
+
+        <div class="col-md-5">
+            <h5>Descrição da compra <strong style="color:orangered">*</strong></h5>
+            <input type="text" readonly name="endereco" id="endereco" placeholder="Endereço..." value="@Model.descricao">
+        </div>
+        <div class="col-md-4">
+            <h5>Email do Usuario<strong style="color:orangered">*</strong></h5>
+            <input type="text" readonly name="endereco" id="endereco" placeholder="Endereço..." value="@ViewBag.usuario.usuario1">
+
+        </div>
+        <div class="col-md-3">
+            <h5>Nome<strong style="color:orangered">*</strong></h5>
+            <input type="text" readonly name="endereco" id="endereco" placeholder="Endereço..." value="@ViewBag.usuario.nome">
+
+        </div>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-4">
+            <h5>Data Cadastro:</h5>
+            <input type="text" readonly name="endereco" id="endereco" placeholder="Endereço..." value="@Model.data_cadastro">
+        </div>
+        <div class="col-md-4">
+            <h5>Categoria</h5>
+            <input type="text" readonly name="telefone" id="telefone" placeholder="Telefone..." value="@Model.oque_e">
+        </div>
+        <div class="col-md-4">
+            <h5>Modo Pagamento</h5>
+            <input type="text" readonly name="email" id="email" placeholder="Email..." value="@Model.modo_pagamento">
+        </div>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-4">
+            <h5>Total Pago</h5>
+            <input type="text" readonly name="endereco" id="endereco" placeholder="Endereço..." value="@Model.valor">
+        </div>
+        @if (Model.provedor_pago == true)
+        {
+            <div class="col-md-4">
+                <h5>Total Pago ao Provedor</h5>
+                <input type="text" readonly name=""   value="@Model.total_provedor_pago">
+            </div>
+            <div class="col-md-4">
+                <h5>Data Pagamento</h5>
+                <input type="text" readonly name=""  value="@Model.data_provedor_pago">
+            </div>
+        }
+
+
+    </div>
+    <div class="row">
+        @if (Model.provedor_pago == true)
+        {
+            <button id="btnAccao" style="margin-top:10px; margin-left:20px; margin-bottom:30px" class="button gray">VOLTAR</button>
+        }
+        else
+        {
+            <button id="btnPagar" style="margin-top:10px; margin-left:20px; margin-bottom:30px" class="button gray">PAGAR PROVEDOR</button>
+        }
+
+    </div>
+</div>
+<script>
+    $("#btnPagar").click(function () {
+        location.href = '/administracao/pagarProvedor?id=' + @Model.id_compra;
+    })
+    $("#btnAccao").click(function () {
+        location.href = '/administracao/Compras';
+    })
+</script>

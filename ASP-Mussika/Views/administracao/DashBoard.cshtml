@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "DashBoard";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div id="titlebar" class="dashboard_gradient">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Administração </h2>
+            <nav id="breadcrumbs">
+                <ul>
+                    <li><a href="/inicio/principal">Inicio</a></li>
+                    <li>Administração </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="notification success closeable margin-bottom-30">
+            <p>Você está atualmente ligado com a conta de <strong>@Session["nome"].ToString()</strong>!</p>
+            <a class="close" href="#"></a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2 col-md-6">
+        <div class="utf_dashboard_stat color-1">
+            <div class="utf_dashboard_stat_content">
+                <h4>@ViewBag.distritos </h4>
+                <span>Distritos</span>
+            </div>
+            <div class="utf_dashboard_stat_icon"><i class="im im-icon-Map2"></i></div>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-md-6">
+        <div class="utf_dashboard_stat color-2">
+            <div class="utf_dashboard_stat_content">
+                <h4>@ViewBag.acomodacoes</h4>
+                <span>Acomodações  </span>
+            </div>
+            <div class="utf_dashboard_stat_icon"><i class="im im-icon-Hotel"></i></div>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-md-6">
+        <div class="utf_dashboard_stat color-3">
+            <div class="utf_dashboard_stat_content">
+                <h4>@ViewBag.restaurantes</h4>
+                <span>Restaurantes</span>
+            </div>
+            <div class="utf_dashboard_stat_icon"><i class="im im-icon-Chef-Hat"></i></div>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-md-6">
+        <div class="utf_dashboard_stat color-4">
+            <div class="utf_dashboard_stat_content">
+                <h4>@ViewBag.artigos</h4>
+                <span>Artigos(Shop Mussika)</span>
+            </div>
+            <div class="utf_dashboard_stat_icon"><i class="im im-icon-Diploma"></i></div>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-md-6">
+        <div class="utf_dashboard_stat color-5">
+            <div class="utf_dashboard_stat_content">
+                <h4>@ViewBag.taxis</h4>
+                <span>Taxis</span>
+            </div>
+            <div class="utf_dashboard_stat_icon"><i class="im im-icon-Taxi"></i></div>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-md-6">
+        <div class="utf_dashboard_stat color-6">
+            <div class="utf_dashboard_stat_content">
+                <h4>@ViewBag.usuarios</h4>
+                <span>Usuarios</span>
+            </div>
+            <div class="utf_dashboard_stat_icon"><i class="im im-icon-Add-UserStar"></i></div>
+        </div>
+    </div>
+</div>
+

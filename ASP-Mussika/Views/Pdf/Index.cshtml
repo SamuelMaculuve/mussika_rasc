@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "PdfViewer";
+    Layout = "~/Views/Shared/_layoutPDF.cshtml";
+}
+
+<style>
+    #pdfViewer {
+        display: block;
+        margin: 0px;
+        height: 1200px;
+        width: 100%;
+    }
+</style>
+<div id="pdfViewer"></div>
+<script src="~/Content/library/scripts/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="~/Content/library/scripts/loadingoverlay.min.js"></script>
+
+<script src="~/Content/ej2/ej2.min.js"></script>
+@Html.EJS().ScriptManager()
+<script>
+
+        $(document).ready(function () {
+            debugger
+        // Text
+        $.LoadingOverlay("show", {
+            image: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><circle r="80" cx="500" cy="90"/><circle r="80" cx="500" cy="910"/><circle r="80" cx="90" cy="500"/><circle r="80" cx="910" cy="500"/><circle r="80" cx="212" cy="212"/><circle r="80" cx="788" cy="212"/><circle r="80" cx="212" cy="788"/><circle r="80" cx="788" cy="788"/></svg>',
+            text: "Carregando a Obra!. Este processo pode levar alguns minutos, por favor aguarde!",
+            textResizeFactor: 0.2,
+            imageColor:"#db0000",
+        });
+        $.ajax({
+            method: "POST",
+            url: "/Pdf/getPdf",
+            data: { filename: "@ViewBag.filename" }
+
+        })
+            .done(function (msg) {
+                 var viewer = new ej.pdfviewer.PdfViewer({
+        enableDownload: false,
+        serviceUrl: "https://ej2services.syncfusion.com/production/web-services/api/pdfviewer",
+        documentPath: msg,
+
+
+    });
+    $.LoadingOverlay("hide");
+    viewer.appendTo('#pdfViewer');
+
+            });
+    });
+
+
+
+
+
+</script>
+

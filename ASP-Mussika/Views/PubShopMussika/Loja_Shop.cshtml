@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Loja_Shop";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="headline_part centered margin-top-75"> Procure por Categorias</h3>
+        </div>
+    </div>
+    <div class="row margin-bottom-60">
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
+            <a href="/PubShopMussika/Lojas" class="img-box" data-background-image="../Repository/images/lojas/lojas.png">
+                <div class="utf_img_content_box visible">
+                    <h4>Lojas  </h4>
+                    <span>@ViewBag.lojas Encontrados</span>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-5">
+            <a href="/PubShopMussika/Index" class="img-box" data-background-image="../Repository/images/lojas/shopmussika.png">
+                <div class="utf_img_content_box visible">
+                    <h4>Bazar</h4>
+                    <span>@ViewBag.shopmussika Encontrados</span>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-1"></div>
+
+    </div>
+</div>
+

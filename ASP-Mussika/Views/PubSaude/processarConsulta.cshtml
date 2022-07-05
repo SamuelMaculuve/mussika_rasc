@@ -1,0 +1,82 @@
+﻿@model ASP_Mussika.Models.saude_reserva
+
+@{
+    ViewBag.Title = "processarConsulta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+<div id="titlebar" class="gradient">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Marcação de Consulta - @ViewBag.clinica.nome</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="/inicio/Principal">Inicio</a></li>
+                        <li>Marcação Consulta</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container margin-bottom-75">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 utf_listing_payment_section">
+            <div class="utf_booking_listing_section_form margin-bottom-40">
+                <h3><i class="sl sl-icon-paper-plane"></i> Informações do Paciente</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Nome do Paciente</label>
+                        <input type="text" readonly value="@Model.nome_paciente" id="paciente" placeholder="Nome do Paciente">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Endereço</label>
+                        <input type="text" readonly value="@Model.endereco_paciente" id="endereco" placeholder="Endereço">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="medium-icons">
+                            <label>Idade</label>
+                            <input type="text" readonly value="@Model.idade" id="idade" placeholder="Idade">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-6">
+                            <div class="medium-icons">
+                                <label>Dia Consulta</label>
+                                <input type="text" readonly value="@Model.data_consulta" id="dia" placeholder="10/10/20">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="medium-icons">
+                                <label>Hora Consulta</label>
+                                <input type="text" readonly value="@Model.hora_consulta" id="hora" placeholder="00:00">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Descrição dos Sintomas</label>
+                        <textarea name="descricao" readonly cols="40" rows="7" id="sintomas" placeholder="Descrição dos Sintomas..." spellcheck="true">@Model.sintomas</textarea>
+                    </div>
+
+                </div>
+                <a href="javascript:solicitar()" class="button utf_booking_confirmation_button margin-top-20 margin-bottom-10">Confirmar Consulta</a>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    function solicitar() {
+        location.href = "/PubSaude/confirmarConsulta?id=" + @Model.id;
+    }
+</script>
+

@@ -1,0 +1,195 @@
+﻿@using ASP_Mussika.Models;
+@using ASP_Mussika.Models.ViewModel;
+
+@{
+    ViewBag.Title = "disponibilidade_quarto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    QuartoDisponibilidade_ViewModel Qds = (QuartoDisponibilidade_ViewModel)ViewBag.QDs;
+    List<distrito> Distritos = Qds.Distritos;
+    List<acomodacao> Acomodacoes = Qds.Acomodacoes;
+
+    int id_distrito = ViewBag.id_distrito;
+    long id_acomodacao = ViewBag.id_acomodacao;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+
+            <br />
+            @*<h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30"><b>Quelimane</b> - Restaurantes </h3>*@
+            <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30"> Quartos - Disponibilidade </h3>
+
+            <div style="background:rgb(249, 249, 249); border-radius:5px;" class="row">
+                <div style="margin-top:10px;" class="col-md-12">
+                    <form id="utf_add_comment" class="utf_add_comment">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>Chegada</label>
+                                    <input id="txt_chekin" class="form-control" type="date" placeholder="Name" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Saída</label>
+                                    <input id="txt_checkout" class="form-control" type="date" placeholder="Name" />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Distrito</label>
+                                    <select id="cmb_distrito" class="form-control">
+
+                                        @if (id_distrito == 0)
+                                        {
+                                            <option value="0">< Todos ></option>}
+
+                                        @foreach (distrito d in Distritos)
+                                        {
+                                            if (d.id == id_distrito)
+                                            {
+                                                <option selected="selected" value="@d.id">@d.nome</option>}
+                                            else
+                                            {
+                                                <option value="@d.id">@d.nome</option>}
+                                        }
+                                    </select>
+                                    <input id="txt_filtro_distrito" class="" value="@id_distrito" />
+                                </div>
+
+
+                                <div class="col-md-5">
+                                    <label>Acomodação</label>
+                                    <select id="cmb_acomodacao" class="form-control">
+                                        @if (id_acomodacao == 0)
+                                        {
+                                            <option value="0">< Todas ></option>}
+
+                                        @foreach (acomodacao d in Acomodacoes)
+                                        {
+                                            if (d.id == id_acomodacao)
+                                            {
+                                                <option selected="selected" value="@d.id">@d.nome</option>}
+                                            else
+                                            {
+                                                <option value="@d.id">@d.nome</option>}
+                                        }
+                                    </select>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="checkboxes in-row amenities_checkbox">
+                                        <ul>
+                                            <li>
+
+                                                <input type="checkbox" id="check-a" class="cbx" />
+                                                <label for="check-a">Ar Condicionado</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="check-b" class="cbx" />
+                                                <label for="check-b">Parqueamento</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="check-c" class="cbx" />
+                                                <label for="check-c">Televisão</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="check-d" class="cbx" />
+                                                <label for="check-d">Geleira</label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="check-e" class="cbx" />
+                                                <label for="check-e">Internet Wi-Fi</label>
+                                            </li>
+
+                                            <li>
+                                                <input type="checkbox" id="check-f" class="cbx" />
+                                                <label for="check-f">Mini Bar</label>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <br />
+                                    <div class="header_widget"> <a href="#dialog_signin_part_" class="button border sign-in popup-with-zoom-anim">Pesquisar Quartos <i class="fa fa-search"></i></a> </div>
+                                </div>
+
+                            </div>
+
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+
+            <p>
+                <hr />
+                <div class="row" style="background:rgb(249, 249, 249)">
+                    <h5 class="text-center"><i class="fa fa-list"></i> (10) Quartos Disponiveis</h5>
+                </div>
+                <hr />
+            </p>
+            <div id="lista_disponibilidade">
+                @Html.Action("disponibilidade_lista", "administracao", new { id_distrito = 1 })
+            </div>
+
+
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="utf_pagination_container_part margin-top-20 margin-bottom-70">
+                        <nav class="pagination">
+                            <ul>
+                                <li><a href="#"><i class="sl sl-icon-arrow-left"></i></a></li>
+                                <li><a href="#" class="current-page">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        @*@Html.Partial("~/Views/Inicio/Partials/_RightSideBar.cshtml")*@
+    </div>
+
+
+
+
+
+</div>
+
+@section Scripts{
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            $(".cbx").click(
+               function () {
+
+                   var a = $('#check-a').is(':checked'); $('#check-a').val(a);
+                   var b = $('#check-b').is(':checked'); $('#check-b').val(b);
+                   var c = $('#check-c').is(':checked'); $('#check-c').val(c);
+                   var d = $('#check-d').is(':checked'); $('#check-d').val(d);
+                   var e = $('#check-e').is(':checked'); $('#check-e').val(e);
+                   var f = $('#check-f').is(':checked'); $('#check-f').val(f);
+               }
+               );
+
+        });
+
+    </script>
+
+}

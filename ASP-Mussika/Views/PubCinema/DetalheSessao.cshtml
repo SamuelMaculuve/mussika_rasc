@@ -1,0 +1,137 @@
+﻿@model ASP_Mussika.Models.cinemaSessaoViewModel
+
+@{
+    ViewBag.Title = "DetalheSessao";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row utf_sticky_main_wrapper">
+        <div class="col-lg-8 col-md-8">
+            <div id="titlebar" class="utf_listing_titlebar">
+                <div class="utf_listing_titlebar_title">
+                    <h2>@Model.nome_filme <span class="listing-tag">@Model.nome_cinema</span></h2>
+                    <span> <a href="#" class="listing-address"> <i class="sl sl-icon-location"></i> @ViewBag.distrito </a> </span>
+                    <span class="call_now"><i class="sl sl-icon-phone"></i> (+258) 000 000 000</span>
+                    @*<div class="utf_star_rating_section" data-rating="4.5">
+                    <div class="utf_counter_star_rating">(4.5) / (14 Reviews)</div>
+                </div>*@
+                    <ul class="listing_item_social">
+
+                        <li><a href="#" class="now_open">@string.Format("{0:N}MT", Model.preco)</a></li>
+                    </ul>
+
+                </div>
+            </div>
+            <div id="utf_listing_overview" class="utf_listing_section">
+                <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">Descrição</h3>
+                @{ var html_descricao = new HtmlString(Model.descricao); }
+                <text>
+
+                    @html_descricao
+                </text>
+
+                <div id="utf_listing_tags" class="utf_listing_section listing_tags_section margin-bottom-10 margin-top-0">
+                    <a href="#"><i class="sl sl-icon-phone" aria-hidden="true"></i> +(258) 000 000 000</a>
+                    <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> venda@mussika.co.mz</a>
+                    <a href="#"><i class="sl sl-icon-globe" aria-hidden="true"></i> mussika.co.mz</a>
+                </div>
+
+            </div>
+
+            <div id="utf_listing_location" class="utf_listing_section">
+                <h3 class="utf_listing_headline_part margin-top-60 margin-bottom-40">Video Trailer</h3>
+                <div id="utf_single_listing_map_block">
+                    <iframe class="col-md-12" src="@ViewBag.fime.link_trailer" height="450" allowfullscreen frameborder="0" style="border:0;"></iframe>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4 col-md-4 margin-top-75 sidebar-search">
+            <div class="verified-badge with-tip margin-bottom-30" data-tip-content="Listing has been verified and belongs business owner or manager."> <i class="sl sl-icon-check"></i> @ViewBag.distrito.ToUpper()</div>
+            @if (Session["idusario"] != null)
+            {
+                <div class="row">
+                    @*<div class="col-md-6">
+                        <button class="utf_progress_button button fullwidth_block margin-top-5" id="btnAddCarrinho" type="button">Add. Carrinho</button>
+                    </div>*@
+                    <div class="col-md-12">
+                        <button class="utf_progress_button button fullwidth_block margin-top-5" id="btnAddPagarAgora" type="button">Reservar Bilhete</button>
+                    </div>
+                </div>
+
+
+            }
+            else
+            {
+                <p>Faça login para Reservar Ingresso</p>
+            }
+
+            <div class="utf_box_widget margin-top-35 margin-bottom-75">
+                <h3><i class="sl sl-icon-folder-alt"></i> Categorias</h3>
+                <ul class="utf_listing_detail_sidebar">
+                    
+                            <li><i class="fa fa-angle-double-right"></i> <a href="/inicio/Distritos">Distritos</a></li>
+                            <li><i class="fa fa-angle-double-right"></i> <a href="/PubAcomodacao/Acomodacoes">Acomodações</a></li>
+                            <li><i class="fa fa-angle-double-right"></i> <a href="/inicio/restaurantes">Restaurantes</a></li>
+                            <li><i class="fa fa-angle-double-right"></i> <a href="/servico_taxi/listar">Taxis</a></li>
+                            <li><i class="fa fa-angle-double-right"></i> <a href="#">Shop Mussika</a></li>
+                            <li><i class="fa fa-angle-double-right"></i> <a href="#">Eventos</a></li>
+                  
+
+
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#btnAddCarrinho").click(function () {
+        debugger
+          $.LoadingOverlay("show");
+         var data = {
+
+                    id_loja_produto: '@Model.id',
+                    id_usuario: '@Session["idusario"]',
+
+                };
+
+                $.ajax({
+                    method: "POST",
+                    url: "/CarrinhoCompra/adicionarLojaNoCarrinho",
+                    data: data,
+
+                })
+                    .done(function (msg) {
+                        if (msg == "false") {
+
+                            $.LoadingOverlay("hide");
+                            informarErro("Nao foi possivel Adicionar no carrinho");
+
+
+                        } else {
+                            $.LoadingOverlay("hide");
+                            informarSucesso("Artigo Adicionado ao carinho!");
+                        }
+                    });
+    })
+
+    $("#btnAddPagarAgora").click(function () {
+    $.LoadingOverlay("show");
+    setTimeout(function () {
+        location.href = '/Pagamento/Index';
+        $.LoadingOverlay("hide");
+    }, 2000);
+
+});
+</script>
+

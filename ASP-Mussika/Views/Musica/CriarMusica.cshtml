@@ -1,0 +1,194 @@
+﻿@model ASP_Mussika.Models.musica
+
+@{
+    ViewBag.Title = "CriarMusica";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-tag"></i>Dados da Música</h3>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-3">
+            <div class="col-md-12" id="divRestaurante">
+                <h5>Nome da Autor<strong style="color:orangered">*</strong></h5>
+                <input type="text" class="search-field" name="nomeAutor" id="nomeAutor" placeholder="Autor" value="@ViewBag.autor.nome" disabled>
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <h5>titulo<strong style="color:orangered">*</strong></h5>
+            <input type="text" name="titulo" id="titulo" placeholder="Titulo...">
+        </div>
+        <div class="col-md-3">
+
+            <h5>Genero<strong style="color:orangered">*</strong></h5>
+            @Html.DropDownListFor(m => m.id_genero_musical, ViewBag.categorias as SelectList, "--seleccione a categoria--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%;", @id = "descricao", @name = "id" })
+
+        </div>
+        <div class="col-md-3">
+            <h5>Ano<strong style="color:orangered">*</strong></h5>
+            <input type="text" name="ano" id="ano" placeholder="Ano...">
+        </div>
+
+
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-3">
+            <h5>Álbum</h5>
+            <input type="text" name="album" id="album" placeholder="Álbum...">
+        </div>
+        <div class="col-md-3">
+            <h5>Formato</h5>
+            <select id="formato" class="utf_chosen_select_single">
+                <option label="blank">Seleccione o Formato</option>
+                <option value="MP3">MP3</option>
+                <option value="WC3">WC3</option>
+                <option value="MP4">MP4</option>
+
+            </select>
+        </div>
+        <div class="col-md-3">
+            <h5>Produtor</h5>
+            <input type="text" name="produtor" id="produtor" placeholder="Produtor...">
+        </div>
+        <div class="col-md-3">
+            <h5>Gravadora</h5>
+            <input type="text" name="gravadora" id="gravadora" placeholder="Gravadora...">
+        </div>
+
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-6">
+            <h5>Link da Música para Baixar</h5>
+            <input type="text" name="link" id="link" placeholder="Link...">
+        </div>
+        <div class="col-md-3">
+            <h5>Preço</h5>
+            <input type="text" name="preco" id="preco" placeholder="Preço...">
+        </div>
+        <div class="col-md-3">
+            <h5>Duração</h5>
+            <input type="text" name="duracao" id="duracao" placeholder="Duração...">
+        </div>
+
+    </div>
+
+
+</div>
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-home"></i> Outras Caracteristicas</h3>
+    </div>
+    <div class="checkboxes in-row amenities_checkbox">
+        <ul>
+            <li>
+                <input id="check-a" type="checkbox" name="check">
+                <label for="check-a">É Grátis</label>
+            </li>
+            <li>
+                <input id="check-b" type="checkbox" name="check">
+                <label for="check-b">Pode fazer Download</label>
+            </li>
+            <li>
+                <input id="check-c" type="checkbox" name="check">
+                <label for="check-c">É Album</label>
+            </li>
+
+
+
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <button id="btnMusica" style="margin-top:10px; margin-left:20px; margin-bottom:30px" class="button gray">Prosseguir</button>
+</div>
+
+
+<script>
+     $("#btnMusica").click(function () {
+
+
+          $('#preco').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+        if ($("#nomeAutor").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o nome do autor");
+            throw new Error();
+        }
+
+          if ($("#titulo").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o Titulo");
+            throw new Error();
+         }
+
+         if ($("#descricao").val().trim().toLowerCase() == "") {
+
+             informarErro("Informe o Titulo");
+             throw new Error();
+         }
+            if ($("#ano").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o ano");
+            throw new Error();
+         }
+
+
+        salvar();
+     })
+
+     function salvar() {
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('id_artista_obra', '@ViewBag.autor.id');
+        model.append('artista', $("#nomeAutor").val());
+        model.append('id_genero_musical', $("#descricao").val());
+        model.append('titulo', $("#titulo").val());
+        model.append('ano', $("#ano").val());
+        model.append('album', $("#album").val());
+        model.append('formato', $("#formato").val());
+        model.append('produtor', $("#produtor").val());
+        model.append('gravadora', $("#gravadora").val());
+        model.append('link', $("#link").val());
+        model.append('preco_venda', $("#preco").val());
+        model.append('duracao', $("#duracao").val());
+        model.append('pode_baixar', $("#check-b").prop("checked"));
+        model.append('gratis', $("#check-a").prop("checked"));
+        model.append('e_album', $("#check-c").prop("checked"));
+
+
+
+        $.ajax({
+            method: "POST",
+            url: "/Musica/Salvar",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar este Autor");
+
+
+                } else if (msg == "existe") {
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Este Quarto ja Existe");
+                }
+                else {
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/Musica/UploadMusica?id='+msg;
+                    
+
+                }
+
+            });
+    }
+</script>

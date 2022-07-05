@@ -1,0 +1,223 @@
+﻿@model ASP_Mussika.Models.filme
+
+@{
+    ViewBag.Title = "EditarFilme";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+    <div class="add_utf_listing_section margin-top-45">
+        <div class="utf_add_listing_part_headline_part">
+            <h3><i class="sl sl-icon-tag"></i>Dados do Filme</h3>
+        </div>
+        <div class="row with-forms">
+
+            <div class="col-md-4">
+                <h5>Titulo Original do Filme<strong style="color:orangered">*</strong></h5>
+                <input type="text" name="filme" id="filme" value="@Model.titulo_original" placeholder="Titulo Original do Filme...">
+            </div>
+
+            <div class="col-md-4">
+                <h5>Direção<strong style="color:orangered">*</strong></h5>
+                <input type="text" name="direcao" value="@Model.direcao" id="direcao" placeholder="Direção...">
+                @*@Html.DropDownListFor(m => m.id_distrito, ViewBag.distritos as SelectList, "--seleccione um Distrito--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%; padding:0px;", @id = "nome", @name = "id" })*@
+            </div>
+
+
+            <div class="col-md-4">
+                <h5>Elenco<strong style="color:orangered">*</strong></h5>
+                <input type="text" name="elenco" id="elenco" value="@Model.elenco" placeholder="Elenco...">
+            </div>
+
+        </div>
+        <div class="row with-forms">
+
+            <div class="col-md-3">
+                <h5>Origem/Pais<strong style="color:orangered">*</strong></h5>
+                <input type="text" id="origem" value="@Model.nacionalidade" placeholder="Origem/Pais">
+            </div>
+            <div class="col-md-3">
+
+                <h5>Ano Produção<strong style="color:orangered">*</strong></h5>
+                <input type="text" id="anoproducao" value="@Model.ano_producao" placeholder="Ano Produção">
+
+            </div>
+            <div class="col-md-3">
+
+                <h5>Distribuidor<strong style="color:orangered">*</strong></h5>
+                <input type="text" id="distribuidor" value="@Model.distribuidor" placeholder="distribuidor">
+
+            </div>
+            <div class="col-md-3">
+
+                <h5>Tipo Filme<strong style="color:orangered">*</strong></h5>
+                <select data-placeholder="Todas as categorias" id="tipoFilme" class="utf_chosen_select">
+                    <option value="">Seleccione um Tipo</option>
+                    <option value="Curta Metragem">Curta Metragem</option>
+                    <option value="Media Metragem">Média Metragem</option>
+                    <option value="Longa Metragem">Longa Metragem</option>
+
+                </select>
+
+            </div>
+
+
+        </div>
+        <div class="row with-forms">
+
+            <div class="col-md-3">
+                <h5>Orçamento<strong style="color:orangered">*</strong></h5>
+                <input type="text" id="orcamento" value="@Model.orcamento" placeholder="Orçamento">
+            </div>
+            <div class="col-md-3">
+
+                <h5>Cor<strong style="color:orangered">*</strong></h5>
+                <input type="text" id="cor" value="@Model.cor" placeholder="Cor..">
+
+            </div>
+            <div class="col-md-3">
+
+                <h5>Idioma<strong style="color:orangered">*</strong></h5>
+                <input type="text" id="idioma" value="@Model.idioma" placeholder="Idioma...">
+
+            </div>
+            <div class="col-md-3">
+
+                <h5>Minutos<strong style="color:orangered">*</strong></h5>
+                <input type="text" id="minutos" value="@Model.minutos" placeholder="Minutos...">
+
+            </div>
+
+
+
+        </div>
+        <div class="row with-forms">
+
+            <div class="col-md-3">
+                <h5>Preco<strong style="color:orangered">*</strong></h5>
+                <input type="text" value="@Model.preco" id="preco" placeholder="Preco">
+            </div>
+            <div class="col-md-9">
+
+                <h5>Link Trailer(Incorporado)<strong style="color:orangered">*</strong></h5>
+                <input type="text" value="@Model.link_trailer" id="linktrailer" placeholder="Link Trailer...">
+
+            </div>
+        </div>
+        <div class="row with-forms">
+            <div class="row with-forms">
+                <div class="col-md-12">
+                    @{var de_ = @Html.Raw(HttpUtility.HtmlDecode(Model.sinopse));
+
+                        var html_descricao = new HtmlString(de_.ToHtmlString());
+                    }
+                    <h5>Sinopse<strong style="color:orangered">*</strong></h5>
+                    <textarea name="descricao" cols="40" rows="7" id="descricao" placeholder="Sinopse..." spellcheck="true">@html_descricao</textarea>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-docs"></i> Estado do Filme </h3>
+    </div>
+    <div class="checkboxes in-row amenities_checkbox">
+        <ul>
+            <li>
+                <input id="check-g1" type="checkbox" name="check">
+                <label for="check-g1">Filme Inactivo</label>
+            </li>
+
+
+
+        </ul>
+    </div>
+</div>
+<div class="row with-forms" style="margin-top:40px;">
+    <div class="col-md-2">
+        <button id="btnSalvar" style="margin-top:40px; margin-bottom:30px;" class="button btn-sm">Prosseguir</button>
+
+    </div>
+</div>
+
+<script>
+       $(document).ready(function() {
+           $("#check-g1").prop("checked",@Model.inactivo.ToString().ToLower());
+           
+    });
+     $("#tipoFilme").val('@Model.tipo_filme');
+    $("#btnSalvar").click(function () {
+
+
+
+        if ($("#filme").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o Titulo Original do Filme");
+            throw new Error();
+        }
+
+        if ($("#direcao").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe a Direção");
+            throw new Error();
+        }
+         if ($("#elenco").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o elenco");
+            throw new Error();
+        }
+
+
+        salvar();
+    })
+
+    function salvar() {
+        var content =  tinyMCE.activeEditor.getContent();
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('id', @Model.id);
+        model.append('titulo_original', $("#filme").val());
+        model.append('direcao', $("#direcao").val());
+        model.append('elenco', $("#elenco").val());
+        model.append('nacionalidade', $("#origem").val());
+        model.append('sinopse', content.trim());
+        model.append('ano_producao', $("#anoproducao").val());
+        model.append('inactivo', $("#check-g1").prop("checked"));
+        model.append('ano_producao', $("#anoproducao").val());
+        model.append('distribuidor', $("#distribuidor").val());
+        model.append('tipo_filme', $("#tipoFilme").val());
+        model.append('orcamento', $("#orcamento").val());
+        model.append('cor', $("#cor").val());
+        model.append('idioma', $("#idioma").val());
+        model.append('minutos', $("#minutos").val());
+        model.append('preco', $("#preco").val());
+        model.append('link_trailer', $("#linktrailer").val());
+        $.ajax({
+            method: "POST",
+            url: "/Filme/Salvar",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar este Filme");
+
+
+                }
+                else {
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/Filme/AddCategorias?id=' + msg;
+
+                }
+
+            });
+    }
+</script>
+
+

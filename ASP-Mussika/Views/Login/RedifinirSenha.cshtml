@@ -1,0 +1,115 @@
+﻿@model ASP_Mussika.Models.UsuarioViewModel
+
+@{
+    ViewBag.Title = "RedifinirSenha";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="titlebar" class="dashboard_gradient">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 style="color:black;">Redifinir Senha</h2>
+            <nav id="breadcrumbs">
+                <ul>
+                    <li><a href="/inicio/principal">Home</a></li>
+                    <li>Redifinir Senha</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="utf_dashboard_list_box margin-top-0">
+            <h4 class="gray"><i class="sl sl-icon-key"></i> Redifinir Senha Senha</h4>
+            <div class="utf_dashboard_list_box-static">
+                <div class="my-profile">
+                    <div class="row with-forms">
+                        <div class="col-md-4">
+                                <label>Senha Actual</label>
+                                <input type="password" class="input-text" id="senhaActual" name="password" placeholder="*********" value="">
+                            </div>
+                       
+                        <div class="col-md-4">
+                            <label>Nova Senha</label>
+                            <input type="password" class="input-text" id="novaSenha" name="password" placeholder="*********" value="">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Confirmar Nova Senha</label>
+                            <input type="password" class="input-text" id="confirmarSenha" name="password" placeholder="*********" value="">
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <button id="alterarSenha" class="button btn_center_item margin-top-15">Alterar Senha</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="footer_copyright_part">Copyright © 2019 All Rights Reserved.</div>
+    </div>
+</div>
+
+<script>
+    $("#alterarSenha").click(function () {
+
+        if ($("#senhaActual").val().trim()=="") {
+            informarErro("informe a senha actual")
+            throw new Error();
+        }
+        if ($("#novaSenha").val().trim().length <= 6) {
+            informarErro("A nova Senha deve ter no minimo 7 Caracteres! ")
+            throw new Error();
+        }
+
+        if ($("#novaSenha").val().trim() != ($("#confirmarSenha").val().trim())) {
+            informarErro("Senhas nao Coincidem")
+            throw new Error();
+        }
+
+        alterSenha();
+    })
+
+    function alterSenha() {
+        $.LoadingOverlay("show");
+
+        var data = {
+            idusario: '@Model.idusario',
+            senha:$("#novaSenha").val(),
+            senhaActual: $("#senhaActual").val(),
+        };
+
+        $.ajax({
+            method: "POST",
+            url: "/Login/actualizarSenha",
+            data: data,
+            //processData: false,
+            //contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide");
+                    informarErro("Nao foi possivel Enviar novamente O Email, contacte o Administrador!");
+
+
+                } else if (msg == "senhaactualinvalida") {
+
+                    $.LoadingOverlay("hide");
+                    informarErro("A senha nao Corresponde a este Usuario");
+
+
+                }
+                else {
+                    $.LoadingOverlay("hide");
+                    location.href = '/Login/EntrarAposAlteracao?usuario1=' + msg.usuario1 + '&senha=' + msg.senha;
+
+                }
+
+            });
+    }
+</script>
+

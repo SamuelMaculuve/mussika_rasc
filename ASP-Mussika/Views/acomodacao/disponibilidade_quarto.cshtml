@@ -1,0 +1,203 @@
+﻿@using ASP_Mussika.Models;
+@using ASP_Mussika.Models.ViewModel;
+@model List<QuartosAcomodacao_ViewModel>
+
+@{
+    ViewBag.Title = "disponibilidade_quarto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    QuartoDisponibilidade_ViewModel Qds = (QuartoDisponibilidade_ViewModel)ViewBag.QDs;
+    List<distrito> Distritos = Qds.Distritos;
+    List<acomodacao> Acomodacoes = Qds.Acomodacoes;
+    List<acomodacao_tipo> TiposAcomodacao = Qds.TiposAcomodacao;
+
+    int id_distrito = ViewBag.id_distrito;
+    long id_acomodacao = ViewBag.id_acomodacao;
+}
+
+
+<div class="clearfix"></div>
+
+<div class="container">
+    <br />
+    <div class="row">
+
+        <div class="col-lg-4 col-md-4">
+            <div class="sidebar">
+                <div class="utf_box_widget margin-bottom-35">
+                    <h3><i class="sl sl-icon-direction"></i> Filtros</h3>
+
+                    <div class="row with-forms">
+                        <div class="col-md-12">
+                            <label>Chegada</label>
+                            <input id="txt_checkin" class="form-control" type="date" placeholder="Name" />
+                        </div>
+                        <div class="col-md-12">
+                            <label>Saída</label>
+                            <input id="txt_checkout" class="form-control" type="date" placeholder="Name" />
+                        </div>
+
+                        <div class="col-md-12">
+                            <label>Distrito</label>
+                            <select id="cmb_distrito" class="form-control">
+
+                                @if (id_distrito == 0)
+                                {
+                                    <option value="0">< Todos ></option>}
+
+                                @foreach (distrito d in Distritos)
+                                {
+                                    if (d.id == id_distrito)
+                                    {
+                                        <option selected="selected" value="@d.id">@d.nome</option>}
+                                    else
+                                    {
+                                        <option value="@d.id">@d.nome</option>}
+                                }
+                            </select>
+                            <input id="txt_filtro_distrito" class="hidden" value="@id_distrito" />
+                        </div>
+
+                        <div class="col-md-12">
+                            <label>Tipo Acomodação</label>
+                            <select id="cmb_tipo_acomodacao" class="form-control">
+                                @if (id_acomodacao == 0)
+                                {
+                                    <option value="0">< Todos ></option>}
+
+                                @foreach (acomodacao_tipo d in TiposAcomodacao)
+                                {
+                                    if (d.id == id_acomodacao)
+                                    {
+                                        <option selected="selected" value="@d.id">@d.tipo</option>}
+                                    else
+                                    {
+                                        <option value="@d.id">@d.tipo</option>}
+                                }
+                            </select>
+                            <input id="txt_filtro_tipo_acomodacao" class="hidden" />
+                        </div>
+
+                        <div class="col-md-12 hidden">
+                            <label>Acomodação</label>
+                            <select id="cmb_acomodacao" class="form-control">
+                                @if (id_acomodacao == 0)
+                                {
+                                    <option value="0">< Todas ></option>}
+
+                                @foreach (acomodacao d in Acomodacoes)
+                                {
+                                    if (d.id == id_acomodacao)
+                                    {
+                                        <option selected="selected" value="@d.id">@d.nome</option>}
+                                    else
+                                    {
+                                        <option value="@d.id">@d.nome</option>}
+                                }
+                            </select>
+                            <input id="txt_filtro_acomodacao" class="hidden" value="@id_acomodacao" />
+                        </div>
+
+                    </div>
+
+                    <a href="#" class="more-search-options-trigger margin-bottom-10 active" data-open-title="More Filters Options" data-close-title="More Filters Options"></a>
+                    <div class="more-search-options relative active" style="display: block;">
+                        <div class="checkboxes one-in-row margin-bottom-15">
+                            <input type="checkbox" id="check-a" class="cbx" value="@ViewBag.check_ac" />
+                            <label for="check-a">Ar Condicionado</label>
+                            <input type="checkbox" id="check-b" class="cbx" value="@ViewBag.check_parqueamento" />
+                            <label for="check-b">Parqueamento</label>
+                            <input type="checkbox" id="check-c" class="cbx" value="@ViewBag.check_televisao" />
+                            <label for="check-c">Televisão</label>
+                            <input type="checkbox" id="check-d" class="cbx" value="@ViewBag.check_geleira" />
+                            <label for="check-d">Geleira</label>
+                            <input type="checkbox" id="check-e" class="cbx" value="@ViewBag.check_wifi" />
+                            <label for="check-e">Internet Wi-Fi</label>
+                            <input type="checkbox" id="check-f" class="cbx" value="@ViewBag.check_minibar" />
+                            <label for="check-f">Mini Bar</label>
+                        </div>
+                    </div>
+                    <a id="btn_pesquisar" class="button fullwidth_block margin-top-5">Pesquisar</a>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="lista_disponibilidade">
+            @Html.Partial("~/Views/acomodacao/Partials/disponibilidade_lista_partials.cshtml", Model, new ViewDataDictionary { { "current_page", ViewBag.current_page }, { "records_perpage", ViewBag.records_perpage }, { "lista_registos", ViewBag.lista_registos } })
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+@section Scripts{
+
+
+    <script>
+
+        if ($("#check-a").val() == "True") { $("#check-a").prop('checked', true); } else { $("#check-a").prop('checked', false); }
+        if ($("#check-b").val() == "True") { $("#check-b").prop('checked', true); } else { $("#check-b").prop('checked', false); }
+        if ($("#check-c").val() == "True") { $("#check-c").prop('checked', true); } else { $("#check-c").prop('checked', false); }
+        if ($("#check-d").val() == "True") { $("#check-d").prop('checked', true); } else { $("#check-d").prop('checked', false); }
+        if ($("#check-e").val() == "True") { $("#check-e").prop('checked', true); } else { $("#check-e").prop('checked', false); }
+        if ($("#check-f").val() == "True") { $("#check-f").prop('checked', true); } else { $("#check-f").prop('checked', false); }
+
+
+        @*function SelectPage(id) {
+            var categoria = $("#cmb_categoria").val();
+            var distrito = $("#cmb_distrito").val();
+            var perpage = $("#cmb_perpage").val();
+            $("#div_servicos").load('@(Url.Action("bens_servicos_partial", "Inicio", null, Request.Url.Scheme))?id_distrito=' + distrito + '&id_categoria=' + categoria + '&perpage=' + perpage + '&indice=' + id);
+
+        }*@
+
+
+        $(document).ready(function () {
+
+            document.getElementById("txt_checkin").defaultValue = "@ViewBag.checkin";
+            document.getElementById("txt_checkout").defaultValue = "@ViewBag.checkout";
+
+
+            $("#btn_pesquisar").click(function () {
+
+               
+                var checkin = $("#txt_checkin").val();
+                var checkout = $("#txt_checkout").val();
+                var distrito = $("#cmb_distrito").val();
+
+                var chk_ac = $("#check-a").val();
+                var chk_parqueamento = $("#check-b").val();
+                var chk_televisao = $("#check-c").val();
+                var chk_geleira = $("#check-d").val();
+                var chk_wifi = $("#check-e").val();
+                var chk_minibar = $("#check-f").val();
+                alert(checkin);
+                window.location.href = '@(Url.Action("disponibilidade_quarto", "acomodacao", null, Request.Url.Scheme))?id_distrito=' + distrito + '&scheckin=' + checkin + '&scheckout=' + checkout + '&chk_ac=' + chk_ac + '&chk_parqueamento=' + chk_parqueamento + '&chk_televisao=' + chk_televisao + '&chk_geleira=' + chk_geleira + '&chk_wifi=' + chk_wifi + '&chk_minibar=' + chk_minibar;
+
+            });
+
+            //
+
+
+            $(".cbx").click(
+               function () {
+
+                   var a = $('#check-a').is(':checked'); $('#check-a').val(a);
+                   var b = $('#check-b').is(':checked'); $('#check-b').val(b);
+                   var c = $('#check-c').is(':checked'); $('#check-c').val(c);
+                   var d = $('#check-d').is(':checked'); $('#check-d').val(d);
+                   var e = $('#check-e').is(':checked'); $('#check-e').val(e);
+                   var f = $('#check-f').is(':checked'); $('#check-f').val(f);
+               }
+               );
+
+        });
+
+    </script>
+
+}

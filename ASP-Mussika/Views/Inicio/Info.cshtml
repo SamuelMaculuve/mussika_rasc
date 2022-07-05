@@ -1,0 +1,60 @@
+﻿@model ASP_Mussika.Models.EmpresaViewModel
+@{
+    ViewBag.Title = "principal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+
+                <div id="utf_listing_overview" class="utf_listing_section img-responsive">
+                    <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">Empresa - Mussika </h3>
+                    @{ var html_descricao = new HtmlString(Model.descricao); }
+                    <p>@html_descricao</p>
+                </div>
+
+
+                <section id="contact" class="margin-bottom-70">
+                    <h4><i class="sl sl-icon-phone"></i> Escreva-nos</h4>
+                    <form id="contactform">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input name="name" type="text" placeholder="Nome" required />
+                            </div>
+                            <div class="col-md-6">
+                                <input name="name" type="text" placeholder="Sobrenome" required />
+                            </div>
+                            <div class="col-md-6">
+                                <input name="email" type="email" placeholder="Email" required />
+                            </div>
+                            <div class="col-md-6">
+                                <input name="subject" type="text" placeholder="Assunto" required />
+                            </div>
+                            <div class="col-md-12">
+                                <textarea name="comments" cols="40" rows="2" id="comments" placeholder="Mensagem" required></textarea>
+                            </div>
+                        </div>
+                        <input type="submit" class="submit button" id="submit" value="Enviar" />
+                    </form>
+                </section>
+            </div>
+
+            <div class="col-md-4">
+                <br />
+                <div class="utf_box_widget margin-bottom-70">
+                    <h3><i class="sl sl-icon-map"></i> Endereço/Contactos</h3>
+                    <div class="utf_sidebar_textbox">
+                        <ul class="utf_contact_detail">
+                            <li><strong>Telefones:</strong> <p ><span>(258) 876 097 575 </span></p> <p style="margin-top:-20px;"><span>(258) 873 200 032 </span></p><p style="margin-top:-20px;"><span>(258) 860 693 621 </span></p></li>
+                            <li><strong>Website:</strong> <span><a href="#">@Model.website</a></span></li>
+                            <li><strong>E-mail:</strong> <span><a href="mailto:info@example.com">@Model.email</a></span></li>
+                            <li><strong>Endereço:</strong> <span>@Model.endereco</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+

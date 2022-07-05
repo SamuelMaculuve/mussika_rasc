@@ -1,0 +1,262 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mussika - Administração</title>
+
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/Repository/images/logo/favicon_mussika 16x16.png">
+
+
+    <link href="~/Content/library/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="~/Content/library/css/stylesheet.css">
+    <link rel="stylesheet" href="~/Content/library/css/style.css" id="colors">
+
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap&subset=latin-ext,vietnamese" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800" rel="stylesheet" type="text/css">
+
+    <link href="~/Content/library/css/jquery-confirm.min.css" rel="stylesheet" />
+
+    <style>
+        textarea{
+            height:500px;
+        }
+    </style>
+
+
+
+
+
+</head>
+<body>
+
+    <!-- Wrapper -->
+    <div id="main_wrapper">
+        <header id="header_part" class="fixed fullwidth_block dashboard">
+            <div id="header" class="not-sticky">
+                <div class="container">
+                    <div class="utf_left_side">
+                        <div id="logo"> <a href="/administracao/DashBoard"><img src="~/Repository/images/logo/logo 38 x 50.png" alt=""></a> <a href="/administracao/DashBoard" class="dashboard-logo"><img src="~/Repository/images/logo/logo 38 x 50.png" alt=""></a> </div>
+                        <div class="nav_responsive"> <i class="fa fa-reorder menu-trigger"></i> </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="utf_right_side">
+                        <div comLogin class="header_widget">
+                            <div class="dashboard_header_button_item has-noti js-item-menu">
+                                <i class="sl sl-icon-bell"></i>
+                                <div class="dashboard_notifi_dropdown js-dropdown">
+                                    <div class="dashboard_notifi_title">
+                                        <p>Você Tem 2 Notificações</p>
+                                    </div>
+                                    <div class="dashboard_notifi_item">
+                                        <div class="bg-c1 red">
+                                            <i class="fa fa-check"></i>
+                                        </div>
+                                        <div class="content">
+                                            <p>Pedido de suporte</p>
+                                            <span class="date">2 horas atrás </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="dashboard_notify_bottom text-center pad-tb-20">
+                                        <a href="#">Ver todas as Notificações </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="utf_user_menu">
+                                <div class="utf_user_name"><span><img src="~/Repository/images/perfil.png" height="40" width="40" alt=""></span>Olá,  @Session["nome"].ToString()!</div>
+                                <ul>
+                                    <li><a href="#"><i class="sl sl-icon-layers"></i> Mensagens</a></li>
+                                    <li><a href="#"><i class="sl sl-icon-user"></i> Meu Perfil</a></li>
+                                    <li><a href="/Login/RedifinirSenha?usuario=@Session["usuario"].ToString()"><i class="sl sl-icon-envelope-open"></i> Redifinir Senha</a></li>
+                                    <li><a href="/Login/Sair"><i class="sl sl-icon-power"></i>  Sair</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="clearfix"></div>
+        <!-- Dashboard -->
+        <div id="dashboard">
+           
+            <a href="#" class="utf_dashboard_nav_responsive"><i class="fa fa-reorder"></i> Admin Menu</a>
+            <div class="utf_dashboard_navigation">
+                <div class="utf_dashboard_navigation_inner_block">
+                    <ul>
+
+                        @if (@Session["tipo"].ToString() == "3")
+                        {
+                            <li class=""><a href="/administracao/subscricoes"><i class="sl sl-icon-layers"></i> Subscrições</a></li>
+
+                            <li>
+                                <a href="#"><i class="sl sl-icon-layers"></i>Cadastros 1</a>
+                                <ul>
+
+                                    <li><a href="~/ShopMussika/Index">Shop Mussika</a></li>
+                                    <li><a href="@Url.Action("Index","distritos")">Distritos</a></li>
+                                    @*<li><a href="@Url.Action("Criar","acomodacao")">Categorias</a></li>*@
+                                    <li><a href="@Url.Action("Index","acomodacao")">Acomodações</a></li>
+                                    <li><a href="~/Restaurante/Restaurantes">Restaurantes</a></li>
+                                    <li><a href="@Url.Action("Index","Taxi")">Taxis</a></li>
+                                    <li><a href="@Url.Action("Index","Usuario")">Usuarios</a></li>
+
+
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="sl sl-icon-layers"></i>Cadastros 2</a>
+                                <ul>
+
+                                    <li><a href="~/arte_cultura/gestao">Arte e Cultura</a></li>
+                                    <li><a href="@Url.Action("gestao","Musica")">Música</a></li>
+                                    @*<li><a href="@Url.Action("Criar","acomodacao")">Categorias</a></li>*@
+                                    <li><a href="@Url.Action("Index","AdminEvento")">Eventos</a></li>
+                                    <li><a href="~/AdminTurismo/Index">Turismo</a></li>
+                                    <li><a href="@Url.Action("gestao","Saude")">Saúde</a></li>
+                                    <li><a href="@Url.Action("Index","Usuario")">Serviços Mussika</a></li>
+
+
+
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="sl sl-icon-layers"></i>Cadastros 3</a>
+                                <ul>
+
+                                    <li><a href="~/Loja/Index">Lojas</a></li>
+                                    <li><a href="~/Filme/Index">Filmes</a></li>
+                                    <li><a href="~/Cinema/Index">Cinemas</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="sl sl-icon-layers"></i>Politicas</a>
+                                <ul>
+
+                                    <li><a href="~/empresa/Index">Empresa</a></li>
+                                    <li><a href="~/Publicidade/Index">Publicidade</a></li>
+                                    @*<li><a href="@Url.Action("Criar","acomodacao")">Categorias</a></li>*@
+                                    <li><a href="@Url.Action("Index","seguranca")">Segurança</a></li>
+                                    <li><a href="~/empresa/comopagar">Como Pagar</a></li>
+                                    <li><a href="@Url.Action("comopagar","comopagar")">Ajuda</a></li>
+
+                                </ul>
+                            </li>
+
+
+                            <li><a href="#"><i class="sl sl-icon-docs"></i> Reservas</a></li>
+                        }
+
+
+
+                        <li><a href="~/administracao/Compras"><i class="sl sl-icon-heart"></i> Vendas</a></li>
+                        
+                        <li><a href="~/Usuario/Index"><i class="sl sl-icon-user"></i> Utilizadores</a></li>
+                        <li><a href="#"><i class="sl sl-icon-user"></i> Meu Perfil</a></li>
+                        <li><a href="#"><i class="sl sl-icon-key"></i> Trocar Senha</a></li>
+                        <li><a href="/inicio/principal"><i class="sl sl-icon-power"></i> Sair</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Scripts -->
+            @*<script type="text/javascript" src="~/Content/library/scripts/jquery-3.4.1.min.js"></script>*@
+            <script type="text/javascript" src="~/Content/library/scripts/jquery-2.2.0.min.js"></script>
+            <script src="~/Content/tinymce.min.js"></script>
+            @*<script src="https://cdn.tiny.cloud/1/mq0mspo0y3nqips9n8tsf7emvyafkozh6ok987kiwed1dejw/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>*@
+            <script type="text/javascript" src="~/Content/library/scripts/jpanelmenu.min.js"></script>
+            <script type="text/javascript" src="~/Content/library/scripts/chosen.min.js"></script>
+            <script type="text/javascript" src="~/Content/library/scripts/slick.min.js"></script>
+            <script type="text/javascript" src="~/Content/library/scripts/rangeslider.min.js"></script>
+            <script type="text/javascript" src="~/Content/library/scripts/magnific-popup.min.js"></script>
+            <script type="text/javascript" src="~/Content/library/scripts/waypoints.min.js"></script>
+            <script type="text/javascript" src="~/Content/library/scripts/counterup.min.js"></script>
+            <script type="text/javascript" src="~/Content/library/scripts/jquery-ui.min.js"></script>
+            <script type="text/javascript" src="~/Content/library/scripts/tooltips.min.js"></script>
+            <script type="text/javascript" src="~/Content/library/scripts/color_switcher.js"></script>
+            <script type="text/javascript" src="~/Content/library/scripts/jquery_custom.js"></script>
+
+            <script type="text/javascript" src="~/Content/library/scripts/jquery.dataTables.min.js"></script>
+
+
+            <script type="text/javascript" src="~/Content/library/scripts/loadingoverlay.min.js"></script>
+            <script type="text/javascript" src="~/Content/library/scripts/dropzone.js"></script>
+
+            <script src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
+            <script src="~/Content/library/scripts/infobox.min.js"></script>
+
+            <script src="~/Content/library/scripts/markerclusterer.js"></script>
+            <script src="~/Content/library/scripts/maps.js"></script>
+            <script src="~/Content/library/scripts/quantityButtons.js"></script>
+            <script src="~/Content/library/scripts/moment.min.js"></script>
+            <script src="~/Content/library/scripts/daterangepicker.js"></script>
+
+            @*body*@
+            <div class="utf_dashboard_content">
+
+                @RenderBody()
+
+
+            </div>
+            @*<div class="col-md-12">
+            <div class="footer_copyright_part">Copyright © Mussika - Todos os Direitos Reservados</div>
+        </div>*@
+        </div>
+    </div>
+
+    <!-- Scripts -->
+
+    <script src="~/Content/library/scripts/jquery-confirm.min.js"></script>
+
+    <script src="~/Content/library/Dialogos.js"></script>
+   
+  
+
+
+
+
+    <script type="text/javascript">
+        tinymce.init({
+            selector: 'textarea',
+            content_style: 'body { font-size:14px; }'
+        });
+
+        var refreshSn = function () {
+            var time = 240000; // 10 mins
+            setTimeout(
+                function () {
+                    $.ajax({
+                        url: '/inicio/actualizarSession',
+                        cache: false,
+                        complete: function () { refreshSn(); }
+                    });
+                },
+                time
+            );
+        };
+
+        // Call in page
+        refreshSn()
+    </script>
+
+</body>
+</html>
+

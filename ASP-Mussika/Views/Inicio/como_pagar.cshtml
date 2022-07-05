@@ -1,0 +1,49 @@
+﻿@model ASP_Mussika.Models.EmpresaViewModel
+@{
+    ViewBag.Title = "como_pagar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+
+@*<div id="titlebar" class="gradient">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Como Pagar</h2>
+                    <nav id="breadcrumbs">
+                        <ul>
+                            <li><a href="/Inicio/Principal">Inicio</a></li>
+                            <li>Como Pagar</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>*@
+<br />
+
+<section class="fullwidth_block margin-top-0 padding-top-0 padding-bottom-75" data-background-color="#fff">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="headline_part centered margin-bottom-60">Como Pagar</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="style-2">
+                    <div class="accordion">
+
+                        @{ var html_descricao = new HtmlString(Model.comopagar); }
+                        <text>@html_descricao</text>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

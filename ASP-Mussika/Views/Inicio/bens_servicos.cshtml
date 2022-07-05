@@ -1,0 +1,126 @@
+﻿
+@using ASP_Mussika.Models;
+
+@{
+    ViewBag.Title = "bens_servicos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<servico_categoria> categorias = (List<servico_categoria>)ViewBag.categorias;
+    List<distrito> distritos = (List<distrito>)ViewBag.distritos;
+}
+
+
+<div class="container">
+    <div class="row utf_sticky_main_wrapper">
+        <div class="col-lg-8 col-md-8">
+
+            <div id="titlebar" class="utf_listing_titlebar">
+                <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">Bens & Serviços </h3>
+
+                <div class="listing_filter_block">
+                    <div class="col-md-2 col-xs-2">
+                        <div class="utf_layout_nav"> <a href="#" class="grid active"><i class="fa fa-search"></i></a> </div>
+                    </div>
+                    <div class="col-md-10 col-xs-10">
+                        @*<div class="sort-by utf_panel_dropdown sort_by_margin float-right">
+                                <a href="#">Destination</a>
+                                <div class="utf_panel_dropdown-content">
+                                    <input class="distance-radius" type="range" min="1" max="999" step="1" value="1" data-title="Select Range">
+                                    <div class="panel-buttons">
+                                        <button class="panel-apply">Apply</button>
+                                    </div>
+                                </div>
+                            </div>*@
+                        <div class="sort-by">
+                            <div class="utf_sort_by_select_item sort_by_margin">
+                                <select id="cmb_perpage" data-placeholder="Sort by Listing" class="utf_chosen_select_single cmb_sortby ">
+                                    <option value="2">2 reg. p/página</option>
+                                    <option value="4">4 reg. p/página</option>
+                                    <option selected="selected" value="6">6 reg. p/página</option>
+                                    <option value="8">8 reg. p/página</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="sort-by">
+                            <div class="utf_sort_by_select_item sort_by_margin">
+                                <select id="cmb_categoria" data-placeholder="Categories:" class="utf_chosen_select_single cmb_sortby">
+                                    <option value="0">Todas Categorias</option>
+                                    @foreach (servico_categoria sc in categorias)
+                                    {
+                                        <option value="@sc.id">@sc.nome</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="sort-by">
+                            <div class="utf_sort_by_select_item sort_by_margin">
+                                <select id="cmb_distrito" data-placeholder="Categories:" class="utf_chosen_select_single cmb_sortby">
+                                    <option value="0">Todos Distritos</option>
+                                    @foreach (distrito sc in distritos)
+                                    {
+                                        <option value="@sc.id">@sc.nome</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                        @*<div class="sort-by">
+                                <div class="utf_sort_by_select_item utf_search_map_section">
+                                    <ul>
+                                        <li><a class="utf_common_button" href="#"><i class="fa fa-dot-circle-o"></i>Near Me</a></li>
+                                    </ul>
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+
+                <p>
+                    <i class="fa fa-align-justify"></i> Lista de Serviços
+                    <hr />
+                </p>
+
+
+                <div id="div_servicos">
+                    @Html.Action("bens_servicos_partial")
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Sidebar -->
+        @Html.Partial("~/Views/Inicio/Partials/_RightSideBar.cshtml")
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $(".cmb_sortby").change(function () {
+
+                var categoria = $("#cmb_categoria").val();
+                var distrito = $("#cmb_distrito").val();
+                var perpage = $("#cmb_perpage").val();
+                $("#div_servicos").load('@(Url.Action("bens_servicos_partial", "Inicio", null, Request.Url.Scheme))?id_distrito=' + distrito + '&id_categoria=' + categoria + '&perpage=' + perpage);
+
+            });
+
+        });
+
+
+        function SelectPage(id) {
+            var categoria = $("#cmb_categoria").val();
+            var distrito = $("#cmb_distrito").val();
+            var perpage = $("#cmb_perpage").val();
+            $("#div_servicos").load('@(Url.Action("bens_servicos_partial", "Inicio", null, Request.Url.Scheme))?id_distrito=' + distrito + '&id_categoria=' + categoria + '&perpage=' + perpage + '&indice=' + id);
+
+        }
+
+
+    </script>
+
+}

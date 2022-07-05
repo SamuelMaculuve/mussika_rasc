@@ -1,0 +1,119 @@
+﻿
+@{
+    if (Session["tipo"].ToString() == "4")
+    {
+        ViewBag.Title = "Criar";
+        Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+    }
+    else
+    {
+        ViewBag.Title = "Criar";
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+}
+
+<a href="~/Restaurante/Index"><button id="btnSalvar" style="margin-top:40px;" class="button btn-sm">Novo Restaurante</button></a>
+<div class="row">
+    <div class="col-md-10">
+
+
+        
+            
+            <div class="row with-forms">
+                <div class="row" style="margin:20px 10px 20px 20px;">
+                    <table id="example" class="display" style="width:100%">
+                        <thead style="background-color:#ff2222; ">
+                            <tr>
+                                <th style="color:white">Codigo</th>
+                                <th style="color:white">Restaurante</th>
+                                <th style="color:white">Distrito</th>
+                                <th style="color:white">Tipo Restaurante</th>
+                                <th style="color:white">Email</th>
+                                <th style="color:white">Telefone</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Restaurante</th>
+                                <th>Distrito</th>
+                                <th>Tipo Restaurante</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+
+            </div>
+        
+
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+    
+    });
+    $(function () {
+        $('#example').DataTable({
+
+            "lengthChange": false,
+            "scrollY": 400,
+            "autoWidth": false,
+            "scrollX": true,
+            "processing": true,
+            "serverSide": true,
+            "responsive": true,
+            "filter": true,
+            "orderMulti": true,
+            "ajax": {
+                "url": "/Restaurante/carregarTabelaRestaurantesByAjax",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "id" },
+
+
+                { "data": "nome" },
+
+                { "data": "nomeDistrito" },
+
+                { "data": "nomeRestauranteTipo" },
+                { "data": "email" },
+                 { "data": "telefone" },
+                 //{
+                 //    "data": "fotografia",
+                 //    "render": function (fotografia, type, full, meta) {
+
+                 //        return "<a href='javascript:mostrarFoto()'><img src='../Images/" + fotografia + "'class='img-responsive' style='width:50px;height:50px;' /></a>";
+                 //    }
+                 //},
+
+            ],
+            //Descricao
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                $('td:eq(0)', nRow).html("<a href='javascript:void(0);' ><button type='button'style='background-color:#ff2222;color:white;border:none' id='ver' class='btn btn-icons btn-sm btn-primary'onclick=verImagens('" + aData.id + "')>Imagens </button>|<button type='button'  id='editar'  class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.id + "') > Editar</button>|<button type='button'  id='editar' style='background-color:#a14800;color:white;border:none' class='btn btn-icons btn-sm btn-primary' onclick=pratos('" + aData.id + "') > Pratos</button></a>");
+                //$('td:eq(1)', nRow).html("<a href='javascript:void(0);' ><button type='button' id='ver' class='btn btn-icons btn-sm btn-primary'onclick=verProduto('" + aData.id_produto + "')></button>|<button type='button'  id='editar' class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.idproduto + "') ></button></a>");
+                //$('td:eq(10)', nRow).html("<a href='javascript:void(0);' onclick=alert('" + aData.FuncionarioId + "')><button type='button' class='btn btn-icons btn-rounded btn-warning'><i class='fa fa-edit'></i></button></a>");
+                //$('td:eq(3)', nRow).html("<a href='javascript:void(0);' onclick=apagar('" + aData.IdCategoria + "')><button type='button' class='btn btn-icons btn-rounded btn-danger'><i class='fa fa-trash'></i></button></a>");
+                return nRow;
+            },
+        });
+    });
+
+    var verImagens = function (id) {
+        window.location.href = '/Restaurante/AlterarImagens?id='+id;
+    }
+    var editar = function (id) {
+        window.location.href = '/Restaurante/Editar?id=' + id;
+    }
+     var pratos = function (id) {
+        window.location.href = '/Restaurante/pratos?id=' + id;
+    }
+</script>

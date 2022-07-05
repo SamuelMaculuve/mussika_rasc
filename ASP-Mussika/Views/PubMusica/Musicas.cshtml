@@ -1,0 +1,133 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.MusicaViewModel>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Musicas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="titlebar" class="gradient margin-bottom-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Músicas de @ViewBag.cantor.nome</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="/inicio/principal">Inicio</a></li>
+                        <li>Músicas</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 listing_grid_item">
+            <div class="listing_filter_block margin-top-30">
+
+                <div class="col-md-12 col-xs-12">
+                    @*<div class="sort-by utf_panel_dropdown sort_by_margin float-right">
+                            <a href="#">Destination</a>
+                            <div class="utf_panel_dropdown-content">
+                                <input class="distance-radius" type="range" min="1" max="999" step="1" value="1" data-title="Select Range">
+                                <div class="panel-buttons">
+                                    <button class="panel-apply">Apply</button>
+                                </div>
+                            </div>
+                        </div>*@
+                    @*<div class="sort-by">
+                        <div class="utf_sort_by_select_item sort_by_margin">
+                            <select data-placeholder="Ordenar por" class="utf_chosen_select_single">
+                                <option>Ordenar por</option>
+                                <option>Ultimos Lançamentos</option>
+                                <option>Mais Populares</option>
+                                <option>Antigos</option>
+                                <option>Aleatórios</option>
+                            </select>
+                        </div>
+                    </div>*@
+                    <div class="sort-by">
+                        <div class="utf_sort_by_select_item sort_by_margin">
+                            <select onchange="filtrar()" id="filtroCategorias" data-placeholder="Categorias:" class="utf_chosen_select_single">
+                                <option value="">--Selecione a Categoria--</option>
+                                @foreach (var item in ViewBag.categorias)
+                                {
+                                    <option value="@item.id">@item.descricao</option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4 col-lg-4 col-md-12">
+                        <a href="/PubMusica/Musica?id=@item.id" class="utf_listing_item-container" data-marker-id="2">
+                            <div class="utf_listing_item">
+                                <img src="~/Repository/images/musica/@item.caminho_capa1" alt=""> <span class="tag">
+    <i class="im im-icon-Music-Note"></i> @if (item.gratis == true)
+    {<text>Grátis</text>}
+else
+{ <text>Não é Grátis</text>}
+</span>
+
+                                <div class="utf_listing_item_content">
+                                    <div class="utf_listing_prige_block">
+                                        @*<span class="utf_meta_listing_price"><i class="fa fa-tag"></i> $25 - $55</span>*@
+                                    </div>
+                                    <h3>
+                                        @item.titulo
+                                    </h3>
+                                    <span><i class="sl sl-icon-tag"></i> Produtor: @item.produtor</span>
+                                    <span><i class="sl sl-icon-target"></i>Gravadora: @item.gravadora</span>
+                                    <span><i class="sl sl-icon-target"></i>Ano: @item.ano</span>
+                                </div>
+                            </div>
+                            <div class="utf_star_rating_section" data-rating="4.5">
+                                <div class="utf_counter_star_rating"></div>
+                                <span class="utf_view_count"><i class="fa fa-eye"></i> 822+</span>
+                                <span class="like-icon"></span>
+                            </div>
+                        </a>
+                    </div>
+
+                }
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="utf_pagination_container_part margin-top-20 margin-bottom-75">
+                        <nav class="pagination">
+                            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                            @Html.PagedListPager(Model, page => Url.Action("Musicas",
+                                    new { page,cantor=ViewBag.id_cantor }))
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <h2>@ViewBag.cantor.nome</h2><hr />
+            <h4><strong>Descrição do Ártista:</strong></h4>
+            @{ var html_descricao = new HtmlString(ViewBag.cantor.descricao); }
+            <text>
+                @html_descricao
+            </text>
+        </div>
+    </div>
+</div>
+<script>
+     function filtrar() {
+        
+        location.href = '/PubMusica/Musicas?categoria='+$("#filtroCategorias").val()+'&cantor=@ViewBag.id_cantor';
+    
+    }
+</script>

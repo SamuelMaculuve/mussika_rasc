@@ -1,0 +1,34 @@
+﻿@model ASP_Mussika.Models.EmpresaViewModel
+@{
+    ViewBag.Title = "seguranca";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+
+
+<br />
+
+<section class="fullwidth_block margin-top-0 padding-top-0 padding-bottom-75" data-background-color="#fff">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="headline_part centered margin-bottom-60">Segurança</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="style-2">
+                    <div class="accordion">
+                        @{ var html_descricao = new HtmlString(Model.seguranca); }
+                        <text>@html_descricao</text>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,123 @@
+﻿@model ASP_Mussika.Models.cinema
+@{
+    ViewBag.Title = "sessoes";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="notification notice closeable margin-bottom-30">
+            <h2>Gerenciamento de <strong>Sessões</strong></h2>
+
+            <a class="close" href="#"></a>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    <button id="btnNovaAcomodacao" onclick="location.href='/Cinema/criarSessao?id=@Model.id'" style="margin-left:20px;" class="button gray">Nova Sessão</button>
+
+</div>
+
+<div class="row" style="margin-top:10px;">
+
+    <div class="col-md-9" style="margin-top:-20px;">
+
+        <div class="row with-forms">
+            <div class="row" style="margin:20px 40px 20px 0px;">
+                <table id="example" class="display" style="width:100%">
+                    <thead style="background-color:#ff2222; ">
+                        <tr>
+                            <th style="color:white">Codigo</th>
+                            <th style="color:white">Filme </th>
+                            <th style="color:white">Data</th>
+                            <th style="color:white">Hora</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <th style="color:white">Codigo</th>
+                            <th style="color:white">Cinema </th>
+                            <th style="color:white">Hora</th>
+
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+
+
+
+
+    });
+
+
+    $(function () {
+        $('#example').DataTable({
+
+            "lengthChange": false,
+            "scrollY": 300,
+            "autoWidth": true,
+            "scrollX": true,
+            "processing": true,
+            "serverSide": true,
+            "responsive": true,
+            "searching": false,
+            "filter": true,
+            "orderMulti": true,
+            "ajax": {
+                "url": "/Cinema/carregarTabelaSessoesByAjax",
+                "type": "POST",
+                "datatype": "json",
+                "data": { "id": @Model.id },
+            },
+            "columns": [
+                { "data": "id" },
+
+
+                { "data": "nome_filme" },
+
+                { "data": "dataConvetido" },
+                { "data": "hora" },
+
+
+            ],
+            //Descricao
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                //$('td:eq(0)', nRow).html("<a href='javascript:ver('" + aData.id + "')' class='button gray'><i class='fa fa-eye'></i> Ver/Editar</a> ");
+                $('td:eq(0)', nRow).html("<a href='javascript:void(0);' ><button type='button'  id='editar'  class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.id + "') > Editar Sessao</button></a>");
+                //$('td:eq(1)', nRow).html("<a href='javascript:void(0);' ><button type='button' id='ver' class='btn btn-icons btn-sm btn-primary'onclick=verProduto('" + aData.id_produto + "')></button>|<button type='button'  id='editar' class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.idproduto + "') ></button></a>");
+                //$('td:eq(10)', nRow).html("<a href='javascript:void(0);' onclick=alert('" + aData.FuncionarioId + "')><button type='button' class='btn btn-icons btn-rounded btn-warning'><i class='fa fa-edit'></i></button></a>");
+                //$('td:eq(3)', nRow).html("<a href='javascript:void(0);' onclick=apagar('" + aData.IdCategoria + "')><button type='button' class='btn btn-icons btn-rounded btn-danger'><i class='fa fa-trash'></i></button></a>");
+                return nRow;
+            },
+        });
+    });
+
+
+    var editar = function (id) {
+        $.LoadingOverlay("show");
+
+        // Hide it after 3 seconds
+        setTimeout(function () {
+            window.location.href = '/Cinema/EditarSessao?id=' + id;
+            $.LoadingOverlay("hide");
+
+        }, 2000);
+
+    }
+</script>
+

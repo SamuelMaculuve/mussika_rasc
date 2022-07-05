@@ -1,0 +1,32 @@
+﻿@model ASP_Mussika.Models.MusicaViewModel
+
+@{
+    ViewBag.Title = "OuvirAudio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+<div class="container">
+    <div class="row utf_sticky_main_wrapper">
+        <div class="col-lg-12 col-md-12">
+            <div id="utf_listing_location" class="utf_listing_section">
+                <h3 class="utf_listing_headline_part margin-top-60 margin-bottom-40">Ouvir Audio: @Model.artista : @Model.titulo</h3>
+                <audio id="leitor" controls="controls" controlsList="nodownload">
+                    <source src="~/Repository/Audio/@Model.caminho_ficheiro" type="audio/mpeg" />
+                </audio>
+            </div>
+
+
+
+
+
+        </div>
+
+
+
+    </div>
+</div>
+
+<script>
+    $('#leitor').bind('contextmenu', function () { return false; });
+</script>

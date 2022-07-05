@@ -1,0 +1,222 @@
+﻿@model ASP_Mussika.Models.farmacia
+
+@{
+    ViewBag.Title = "EditarFarmacia";
+    Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+}
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-tag"></i>Dados da Farmácia</h3>
+    </div>
+    <div class="row with-forms">
+
+        <div class="col-md-4">
+            <h5>Nome da Clinica<strong style="color:orangered">*</strong></h5>
+            <input type="text" name="evento" id="evento" placeholder="Farmácia..." value="@Model.nome">
+        </div>
+
+        <div class="col-md-4">
+            <h5>Distrito<strong style="color:orangered">*</strong></h5>
+            @Html.DropDownListFor(m => m.id_distrito, ViewBag.distritos as SelectList, "--seleccione um Distrito--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%; padding:0px;", @id = "nome", @name = "id" })
+        </div>
+        <div class="col-md-4">
+            <h5>Localização/Bairro<strong style="color:orangered">*</strong></h5>
+            <input type="text" id="local" placeholder="Localização..." value="@Model.bairro">
+        </div>
+
+
+
+    </div>
+    <div class="row with-forms">
+        <div class="row with-forms">
+            <div class="col-md-4">
+                <h5>Telefone<strong style="color:orangered">*</strong></h5>
+                <input type="text" id="telefone" placeholder="Telefone..." value="@Model.telefone">
+            </div>
+            <div class="col-md-4">
+                <h5>Email<strong style="color:orangered">*</strong></h5>
+                <input type="text" id="email" placeholder="Email..." value="@Model.email">
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row with-forms">
+        <div class="row with-forms">
+            <div class="col-md-12">
+                <h5>Descrição<strong style="color:orangered">*</strong></h5>
+                @{var de_ = @Html.Raw(HttpUtility.HtmlDecode(Model.descricao));
+
+                    var html_descricao = new HtmlString(de_.ToHtmlString());
+                }
+
+                <textarea style="height:500px;" name="descricao" cols="40" rows="2" id="descricao" placeholder="Descrição do Distrito..." spellcheck="true">
+                                          
+                            @html_descricao
+                        </textarea>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-docs"></i> Estado da Farmácia </h3>
+    </div>
+    <div class="checkboxes in-row amenities_checkbox">
+        <ul>
+            <li>
+                <input id="check-g1" type="checkbox" name="check">
+                <label for="check-g1">Farmácia Inactiva</label>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<div class="row with-forms" style="margin-top:40px;">
+    <div class="col-md-2">
+        <button id="btnSalvar" style="margin-top:40px; margin-bottom:30px;" class="button btn-sm">Prosseguir</button>
+
+    </div>
+</div>
+
+<script>
+     $(document).ready(function() {
+          $("#check-g1").prop("checked",@Model.inactivo.ToString().ToLower());
+
+         
+
+
+    });
+    $(function () {
+        $('#date-picker').daterangepicker({
+            "opens": "left",
+            singleDatePicker: true,
+            isInvalidDate: function (date) {
+                var disabled_start = moment('09/02/2018', 'MM/DD/YYYY');
+                var disabled_end = moment('09/06/2018', 'MM/DD/YYYY');
+                return date.isAfter(disabled_start) && date.isBefore(disabled_end);
+            }
+        });
+    });
+
+    $('#date-picker').on('showCalendar.daterangepicker', function (ev, picker) {
+        $('.daterangepicker').addClass('calendar-animated');
+    });
+    $('#date-picker').on('show.daterangepicker', function (ev, picker) {
+        $('.daterangepicker').addClass('calendar-visible');
+        $('.daterangepicker').removeClass('calendar-hidden');
+    });
+    $('#date-picker').on('hide.daterangepicker', function (ev, picker) {
+        $('.daterangepicker').removeClass('calendar-visible');
+        $('.daterangepicker').addClass('calendar-hidden');
+    });
+
+    function close_panel_dropdown() {
+        $('.panel-dropdown').removeClass("active");
+        $('.fs-inner-container.content').removeClass("faded-out");
+    }
+    $('.panel-dropdown a').on('click', function (e) {
+        if ($(this).parent().is(".active")) {
+            close_panel_dropdown();
+        } else {
+            close_panel_dropdown();
+            $(this).parent().addClass('active');
+            $('.fs-inner-container.content').addClass("faded-out");
+        }
+        e.preventDefault();
+    });
+    $('.panel-buttons button').on('click', function (e) {
+        $('.panel-dropdown').removeClass('active');
+        $('.fs-inner-container.content').removeClass("faded-out");
+    });
+    var mouse_is_inside = false;
+    $('.panel-dropdown').hover(function () {
+        mouse_is_inside = true;
+    }, function () {
+        mouse_is_inside = false;
+    });
+    $("body").mouseup(function () {
+        if (!mouse_is_inside) close_panel_dropdown();
+    });
+
+    $('#telefone').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+
+    $("#btnSalvar").click(function () {
+
+
+
+        if ($("#evento").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o nome do Evento");
+            throw new Error();
+        }
+
+        if ($("#nome").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o Distrito");
+            throw new Error();
+        }
+         if ($("#local").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o local");
+            throw new Error();
+        }
+        
+
+        salvar();
+    })
+
+    function salvar() {
+        var content =  tinyMCE.activeEditor.getContent();
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('id', '@Model.id');
+        model.append('nome', $("#evento").val());
+        model.append('email', $("#email").val());
+        model.append('telefone', $("#telefone").val());
+        model.append('id_distrito', $("#nome").val());
+        model.append('descricao', content.trim());
+        model.append('bairro', $("#local").val());
+        model.append('inactivo', $("#check-g1").prop("checked"));
+
+
+
+
+        $.ajax({
+            method: "POST",
+            url: "/saude/salvarFarmacia",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar este local");
+
+
+                }
+                else {
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/saude/CarregarFotosFarmacia?id=' + msg;
+                    //location.href = '/saude/gestao';
+                    //informarSucesso("local turistico Cadastrada com Sucesso")
+                    $('.with-forms').find("input[type=text], textarea").val("");
+                    Dropzone.forElement('#filedrop').removeAllFiles(true)
+
+                }
+
+            });
+    }
+</script>
+

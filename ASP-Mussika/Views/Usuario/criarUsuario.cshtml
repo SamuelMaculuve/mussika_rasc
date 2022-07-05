@@ -1,0 +1,152 @@
+﻿@model ASP_Mussika.Models.UsuarioViewModel
+
+@{
+    ViewBag.Title = "criarUsuario";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-map"></i> Dados do Usuario:</h3>
+    </div>
+    <div class="utf_submit_section">
+        <div class="row with-forms">
+
+            <div id="longlat" class="col-md-12">
+
+                <div class="col-md-4">
+                    <h5>Nome Completo</h5>
+                    <input type="text" class="search-field" name="nome" id="nome" placeholder="Nome Completo..." value="">
+                </div>
+                <div class="col-md-4">
+
+                    <h5>Email </h5>
+                    <input type="email" class="search-field" name="email" id="email" placeholder="Email..." value="">
+                </div>
+                <div class="col-md-4">
+                    <h5>Tipo Usuario </h5>
+                    @Html.DropDownListFor(m => m.id_usuario_tipo, ViewBag.tiposUsuarios as SelectList, "--Seleccione um Usuario--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%;", @id = "tipo", @name = "id" })
+                </div>
+
+            </div>
+           
+            @*<div class="row with-forms">
+
+                <div id="longlat" class="col-md-12">
+
+                    <div class="add_utf_listing_section margin-top-45">
+                        <div class="utf_add_listing_part_headline_part">
+                            <h3><i class="sl sl-icon-docs"></i> Detalhes</h3>
+                        </div>
+                        <div class="checkboxes in-row amenities_checkbox">
+                            <ul>
+                                <li>
+                                    <input id="check-a1" type="checkbox" name="check">
+                                    <label for="check-a1">Activo</label>
+                                </li>
+                                <li>
+                                    <input id="check-b1" type="checkbox" name="check">
+                                    <label for="check-b1">A</label>
+                                </li>
+                                <li>
+                                    <input id="check-c1" type="checkbox" name="check">
+                                    <label for="check-c1">Televisão</label>
+                                </li>
+                                <li>
+                                    <input id="check-d1" type="checkbox" name="check">
+                                    <label for="check-d1">Geleira</label>
+                                </li>
+                                <li>
+                                    <input id="check-e1" type="checkbox" name="check">
+                                    <label for="check-e1">Wifi</label>
+                                </li>
+                                <li>
+                                    <input id="check-f1" type="checkbox" name="check">
+                                    <label for="check-f1">Mini-Bar</label>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>*@
+        </div>
+    </div>
+
+</div>
+
+<button id="salvar" style="margin-top:40px; margin-bottom:30px;" class="button btn-sm">Salvar</button>
+
+<script>
+    $("#salvar").click(function () {
+        if ($("#nome").val().trim() == '') {
+            informarErro("Informe o Nome completo do Usuario");
+            throw new Error('');
+        }
+        if ($("#email").val().trim() == '') {
+            informarErro("Informe o Email");
+            throw new Error('');
+        }
+        if ($("#tipo").val()== '') {
+            informarErro("Informe o tipo de Usuario");
+            throw new Error('');
+        }
+
+        salvar();
+    })
+
+    function salvar() {
+       
+        $.LoadingOverlay("show");
+
+        var data = {
+            nome: $("#nome").val(),
+            usuario1: $("#email").val(),
+            id_usuario_tipo: $("#tipo").val(),
+
+        };
+
+        $.ajax({
+            method: "POST",
+            url: "/Usuario/Salvar",
+            data: data,
+            //processData: false,
+            //contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide");
+                    informarErro("Nao foi possivel Enviar novamente O Email, contacte o Administrador!");
+
+
+                } else if (msg == "existe") {
+
+                    $.LoadingOverlay("hide");
+                    informarErro("Este Usuario ja existe");
+                    
+
+                }
+                else if (msg == "emailinvalido") {
+
+                    $.LoadingOverlay("hide");
+                    informarErro("Email Invalido");
+                   
+
+                }
+                else {
+                    $.LoadingOverlay("hide");
+                   
+                    informarSucesso("Usuario Criado, Informe a senha padrao: 123456789 na primeira vez que usa a aplicacao, depois o sistema vai pedir para actualizar a senha")
+                    setTimeout(function () {
+                        location.href = '/Usuario/Index';
+                    }, 2000);
+                    
+                }
+
+            });
+    }
+</script>

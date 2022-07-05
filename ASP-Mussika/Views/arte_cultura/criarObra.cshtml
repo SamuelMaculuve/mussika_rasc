@@ -1,0 +1,196 @@
+﻿@model ASP_Mussika.Models.obra_arte
+
+@{
+    if (Session["tipo"].ToString() == "4")
+    {
+        ViewBag.Title = "Criar";
+        Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+    }
+    else
+    {
+        ViewBag.Title = "Criar";
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+}
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-tag"></i>Dados da Obra</h3>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-4">
+            <div class="col-md-12" id="divRestaurante">
+                <h5>Nome da Autor<strong style="color:orangered">*</strong></h5>
+                <input type="text" class="search-field" name="nomeAutor" id="nomeAutor" placeholder="Autor" value="@ViewBag.autor.nome" disabled>
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <h5>Categoria Obra<strong style="color:orangered">*</strong></h5>
+            @Html.DropDownListFor(m => m.id_categoria_obra, ViewBag.categorias as SelectList, "--seleccione a categoria--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%;", @id = "descricao", @name = "id" })
+
+        </div>
+        <div class="col-md-4">
+            <h5>titulo<strong style="color:orangered">*</strong></h5>
+            <input type="text" name="titulo" id="titulo" placeholder="Titulo...">
+        </div>
+
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-4">
+            <h5>Matéria</h5>
+            <input type="text" name="materia" id="materia" placeholder="Matéria...">
+        </div>
+        <div class="col-md-4">
+            <h5>Suporte</h5>
+            <input type="text" name="suporte" id="suporte" placeholder="Suporte...">
+        </div>
+        <div class="col-md-4">
+            <h5>Tecnica</h5>
+            <input type="text" name="tecnica" id="tecnica" placeholder="Tecnica...">
+        </div>
+
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-4">
+            <h5>Dimensões</h5>
+            <input type="text" name="dimensoes" id="dimensoes" placeholder="Dimensões...">
+        </div>
+       
+        <div class="col-md-4">
+            <h5>Autoria produção</h5>
+            <input type="text" name="autoriaProducao" id="autoriaProducao" placeholder="Autoria produção...">
+        </div>
+        <div class="col-md-4">
+            <h5>Proprietário</h5>
+            <input type="text" name="proprietario" id="proprietario" placeholder="Informação Técnica...">
+        </div>
+
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-4">
+            <h5>Ano</h5>
+            <input type="number" name="ano" id="ano" min="0" placeholder="ano...">
+        </div>
+        <div class="col-md-4">
+            <h5>Preço de venda</h5>
+            <input type="number" name="preco_venda" id="preco_venda" min="0" value="0">
+        </div>
+        <div class="col-md-4">
+            <h5>Peso do Produto(KG)</h5>
+            <input type="number" min="0" class="search-field" name="peso" id="peso" placeholder="Peso em KG" value="">
+        </div>
+
+    </div>
+    <div class="row with-forms">
+        <h5>Informação Técnica</h5>
+        <textarea name="infoTecnica" cols="40" rows="3" id="infoTecnica" placeholder="Informação Técnica..." spellcheck="true"></textarea>
+    </div>
+
+</div>
+    <div class="row with-forms" style="margin-top:40px;">
+        <div class="col-md-2">
+            <button id="btnSalvar" style="margin-top:40px; margin-bottom:30px;" class="button btn-sm">Prosseguir</button>
+
+        </div>
+    </div>
+
+<script>
+     $("#btnSalvar").click(function () {
+    debugger
+        if ($("#nomeAutor").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o nome do autor");
+            throw new Error();
+        }
+
+          if ($("#titulo").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o Titulo");
+            throw new Error();
+        }
+        if ($("#descricao").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe a categoria da obra");
+            throw new Error();
+        }
+         if ($("#preco_venda").val().trim().toLowerCase() == "") {
+
+             informarErro("Informe o preço de venda");
+             throw new Error();
+         }
+         $('#peso').keypress(function (event) {
+             if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                 event.preventDefault();
+             }
+         })
+
+         var preco_venda = parseFloat($("#preco_venda").val());
+
+         if (preco_venda <= 0) {
+             informarErro("Informe o preço de venda");
+             throw new Error("");
+         }
+
+         if ($("#peso").val() == '') {
+             informarErro("Informe o peso");
+             throw new Error();
+         }
+
+        salvar();
+     })
+
+    function salvar() {
+        var content = tinyMCE.activeEditor.getContent();
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('id_artista_obra', '@ViewBag.autor.id');
+        model.append('autor', $("#nomeAutor").val());
+        model.append('id_categoria_obra', $("#descricao").val());
+        model.append('titulo', $("#titulo").val());
+        model.append('autor', $("#autor").val());
+        model.append('materia', $("#materia").val());      
+        model.append('suporte', $("#suporte").val());
+        model.append('tecnica', $("#tecnica").val());
+        model.append('dimensoes', $("#dimensoes").val());
+        model.append('autoria_producao', $("#autoriaProducao").val());
+        model.append('ano', $("#ano").val());
+        model.append('preco_venda', $("#preco_venda").val());
+        model.append('informacao_tecnica', content.trim());
+        model.append('proprietario', $("#proprietario").val());
+        model.append('peso', $("#peso").val());
+     
+
+        $.ajax({
+            method: "POST",
+            url: "/arte_cultura/SalvarObra",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar este Autor");
+
+
+                } else if (msg == "existe") {
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Este Quarto ja Existe");
+                }
+                else {
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/arte_cultura/carregarFotos?id='+msg;
+                    //location.href = '/Autor/Obras?id='+msg;
+                    //informarSucesso("Quarto Cadastrado com Sucesso")
+                    $('.with-forms').find("input[type=text], textarea").val("");
+                    Dropzone.forElement('#filedrop').removeAllFiles(true)
+                  
+                }
+
+            });
+    }
+</script>

@@ -1,0 +1,125 @@
+﻿@model ASP_Mussika.Models.EmpresaViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-picture"></i> Descrição da Empresa</h3>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-12">
+         
+            <h5>Sobre a Empresa</h5>
+            <textarea name="descricao" cols="40" rows="15" id="descricao" placeholder="Sobre a Empresa..." spellcheck="true"></textarea>
+        </div>
+
+    </div>
+
+    <div class="row with-forms">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <h5>Telefone</h5>
+                <input type="text" class="search-field" name="telefone" id="telefone" placeholder="Telefone..." value="">
+            </div>
+            <div class="col-md-3">
+                <h5>Website</h5>
+                <input type="text" class="search-field" name="website" id="website" placeholder="Website..." value="">
+            </div>
+            <div class="col-md-3">
+                <h5>Email</h5>
+                <input type="text" class="search-field" name="email" id="email" placeholder="Email..." value="">
+            </div>
+            <div class="col-md-3">
+                <h5>Endereço</h5>
+                <input type="text" class="search-field" name="endereco" id="endereco" placeholder="Endereço..." value="">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row with-forms" style="margin-top:40px;">
+    <div class="col-md-2">
+        <button id="btnSalvar" style="margin-top:40px; margin-bottom:30px;" class="button btn-sm">Salvar Dados</button>
+
+    </div>
+</div>
+<script>
+    
+    $('#telefone').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+
+    $("#btnSalvar").click(function () {
+
+        if ($("#descricao").val().trim() == '') {
+            informarErro("Por favor fale um pouco da empresa no campo descricao");
+            throw new Error("");
+        }
+
+        if ($("#telefone").val().trim() == '') {
+            informarErro("Por favor informe o telefone");
+            throw new Error("");
+        };
+        if ($("#email").val().trim() == '') {
+            informarErro("Por favor informe o Email");
+            throw new Error("");
+        };
+        if ($("#endereco").val().trim() == '') {
+            informarErro("Por favor informe o endereco");
+            throw new Error("");
+        };
+        if ($("#website").val().trim() == '') {
+            informarErro("Por favor informe o website");
+            throw new Error("");
+        };
+
+        salvar();
+    })
+
+    function salvar() {
+        debugger
+          var content =  tinyMCE.activeEditor.getContent();
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        
+       
+        model.append('descricao', content.trim());
+        model.append('telefone', $("#telefone").val());
+
+        model.append('website', $("#website").val());
+        model.append('telefone', $("#telefone").val());
+        model.append('email', $("#email").val());
+       
+        model.append('endereco', $("#endereco").val());
+
+        $.ajax({
+            method: "POST",
+            url: "/empresa/salvar",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar estes dados");
+
+
+                } else {
+                     $.LoadingOverlay("hide", true);
+                    informarSucesso("Dados alterados");
+                }
+            });
+
+
+
+
+    }
+
+</script>

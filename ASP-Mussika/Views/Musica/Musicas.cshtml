@@ -1,0 +1,114 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.musica>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Musicas";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="notification success closeable margin-bottom-30">
+            <h2>Artista - <strong>@ViewBag.autor.nome</strong></h2>
+            <p>Gerenciamento de <strong>Músicas</strong>!</p>
+            <a class="close" href="#"></a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <button id="btnSalvar" style="margin-top:40px; margin-left:20px;" class="button gray">Adicionar Música</button>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="col-lg-12 col-md-12 mb-4">
+            <div class="utf_dashboard_list_box table-responsive recent_booking">
+                <h4>Músicas do Artista</h4>
+                <div class="dashboard-list-box table-responsive invoices with-icons">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Titulo</th>
+                                @*<th>Categoria</th>*@
+                                <th>Ano</th>
+
+                                <th>Acções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.titulo)
+                                    </td>
+                                    @*<td>
+                                            @Html.DisplayFor(modelItem => item.categoria_obra_arte.descricao)
+                                        </td>*@
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ano)
+                                    </td>
+                                    <td>
+                                        <a href="javascript:ver(@item.id)" class="button gray"><i class="fa fa-eye"></i> Ver/Editar</a>
+
+
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="utf_pagination_container_part margin-top-20 margin-bottom-70">
+                    <nav class="pagination">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                        @Html.PagedListPager(Model, page => Url.Action("Musicas",
+                            new { page, id = @ViewBag.id_artista }))
+
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <button id="btnAcomodacoes" style="margin-top:10px; margin-left:20px; margin-bottom:30px" class="button gray">Ir para Artistas</button>
+</div>
+<script>
+
+    var ver = function (id) {
+        location.href = '/Musica/EditarMusica?id=' + id;
+    }
+    $("#btnAcomodacoes").click(function () {
+        debugger
+        $.LoadingOverlay("show");
+        setTimeout(function () {
+            window.location.href = '/Musica/gestao';
+            $.LoadingOverlay("hide");
+        }, 2000);
+
+    })
+    $("#btnSalvar").click(function () {
+        debugger
+        $.LoadingOverlay("show");
+        setTimeout(function () {
+            $.LoadingOverlay("hide");
+        }, 2000);
+        location.href = '/Musica/CriarMusica?id=' + '@ViewBag.autor.id';
+    })
+</script>
+

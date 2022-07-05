@@ -1,0 +1,57 @@
+﻿
+@using ASP_Mussika.Models;
+@model List<distrito>
+
+@{
+    ViewBag.Title = "distritos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    string current_page = ViewBag.current_page;
+    string records_perpage = ViewBag.records_perpage;
+    string key_distrito = ViewBag.key_empresa;
+    List<distrito> ListaDistritos = (List<distrito>)ViewBag.lista_distritos;
+}
+
+<div class="container padding-bottom-70">
+    <div class="row">
+        <div class="col-md-12">
+            @*<h3 class="headline_part centered margin-bottom-35 margin-top-70">Distritos mais pesquisados <span>Descubra as melhores coisas para fazer restaurantes, lojas, hotéis, cafés e lugares<br>a nivel de Zambézia.</span></h3>*@
+
+            <h3 class="headline_part centered margin-bottom-35 margin-top-70">Distritos de Zambézia</h3>
+        </div>
+        @Html.Partial("/Views/distritos/Partials/lista_distritos_partial.cshtml", Model)
+
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="row">
+
+        <div id="div_paginas" style="margin-top:-50px;" class="col-md-12">
+            @Html.Partial("/Views/distritos/Partials/lista_distritos_paginas_partial.cshtml", ListaDistritos, new ViewDataDictionary() { { "current_page", current_page }, { "rpp", records_perpage } })
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript" >
+
+        function SelectPage(ind)
+        {
+            //var perpage = $("#select_pp").val();
+            var url = '@Url.Action("listar","distritos")';
+            url += "?indice=" + ind;
+            //url += "&perpage" + perpage;
+            window.location.href = url;
+        }
+
+    </script>
+
+}

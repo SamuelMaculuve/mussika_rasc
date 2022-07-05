@@ -1,0 +1,115 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.farmacia_produto>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "farmaciaProduto";
+    Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="notification success closeable margin-bottom-30">
+            <h2>Fármacia - <strong>@ViewBag.autor.nome</strong></h2>
+            <p>Gerenciamento de <strong>Produtos</strong>!</p>
+            <a class="close" href="#"></a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <button id="btnSalvar" style="margin-top:40px; margin-left:20px;" class="button gray">Adicionar Produto</button>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="col-lg-12 col-md-12 mb-4">
+            <div class="utf_dashboard_list_box table-responsive recent_booking">
+                <h4>Produtos Cadastrados</h4>
+                <div class="dashboard-list-box table-responsive invoices with-icons">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Produto</th>
+                             
+                                <th>Preço Venda</th>
+
+                                <th>Acções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.nome)
+                                    </td>
+                                    @*<td>
+                                            @Html.DisplayFor(modelItem => item.categoria_obra_arte.descricao)
+                                        </td>*@
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.preco_venda)
+                                    </td>
+                                    <td>
+                                        <a href="javascript:ver(@item.id)" class="button gray"><i class="fa fa-eye"></i> Ver/Editar</a>
+
+
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="utf_pagination_container_part margin-top-20 margin-bottom-70">
+                    <nav class="pagination">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                        @Html.PagedListPager(Model, page => Url.Action("farmaciaProduto",
+                            new { page, id = @ViewBag.id_autor }))
+
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <button id="btnAcomodacoes" style="margin-top:10px; margin-left:20px; margin-bottom:30px" class="button gray">Voltar a Pagina de Saúde</button>
+</div>
+<script>
+
+    var ver = function (id) {
+        location.href = '/Saude/EditarProduto?id=' + id;
+    }
+    $("#btnAcomodacoes").click(function () {
+        debugger
+        $.LoadingOverlay("show");
+        setTimeout(function () {
+            window.location.href = '/Saude/gestao';
+            $.LoadingOverlay("hide");
+        }, 2000);
+
+    })
+    $("#btnSalvar").click(function () {
+        debugger
+        $.LoadingOverlay("show");
+        setTimeout(function () {
+            $.LoadingOverlay("hide");
+        }, 2000);
+        location.href = '/Saude/CriarProdutoFarmacia?id=' + '@ViewBag.autor.id';
+    })
+</script>
+
+

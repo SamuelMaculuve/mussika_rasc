@@ -1,0 +1,270 @@
+﻿@model ASP_Mussika.Models.RestViewModel
+@{
+    if (Session["tipo"].ToString() == "4")
+    {
+        ViewBag.Title = "Criar";
+        Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+    }
+    else
+    {
+        ViewBag.Title = "Criar";
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+}
+
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-tag"></i>Dados do Restaurante</h3>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-4">
+            <div class="col-md-10" id="divRestaurante">
+                <h5>Nome do Restaurante<strong style="color:orangered">*</strong></h5>
+                <input type="text" class="search-field" name="nomeRestaurante" id="nomeRestaurante" placeholder="Loja" value="">
+            </div>
+            <div class="col-md-2">
+                <img src="~/Repository/images/45.gif" id="imgRestaurante" style="margin-top:40px;display:none;" />
+            </div>
+
+
+        </div>
+
+        <div class="col-md-4">
+
+            <h5>Distrito<strong style="color:orangered">*</strong></h5>
+            @Html.DropDownListFor(m => m.id, ViewBag.distritos as SelectList, "--seleccione um Distrito--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%;", @id = "nome", @name = "id" })
+
+        </div>
+        <div class="col-md-4">
+            <h5>Tipo de Restaurante<strong style="color:orangered">*</strong></h5>
+            @Html.DropDownListFor(m => m.id, ViewBag.TipoRestaurantes as SelectList, "--seleccione uma Restaurante--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%;", @id = "tipo", @name = "id" })
+
+        </div>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-4">
+            <h5>Endereço:</h5>
+            <input type="text" name="endereco" id="endereco" placeholder="Endereço..." value="">
+        </div>
+        <div class="col-md-4">
+            <h5>Telefone</h5>
+            <input type="text" name="telefone" id="telefone" placeholder="Telefone..." value="">
+        </div>
+        <div class="col-md-4">
+            <h5>Email</h5>
+            <input type="text" name="email" id="email" placeholder="Email..." value="">
+        </div>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-5">
+            <h5>WebSite</h5>
+            <input type="text" class="search-field" name="website" id="website" placeholder="WebSite" value="">
+        </div>
+
+    </div>
+
+
+</div>
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-map"></i> Localização:</h3>
+    </div>
+    <div class="utf_submit_section">
+        <div class="row with-forms">
+
+            <div id="longlat" class="col-md-12">
+
+                <div class="col-md-4">
+                    <h5>Latitude</h5>
+                    <input type="text" class="search-field" name="latitude" id="latitude" placeholder="latitude..." value="">
+                </div>
+                <div class="col-md-4">
+                    <h5>Longitude</h5>
+                    <input type="text" class="search-field" name="longitude" id="longitude" placeholder="longitude...." value="">
+                </div>
+
+            </div>
+            @*<div id="utf_listing_location" class="col-md-12 utf_listing_section">
+                    <div id="utf_single_listing_map_block">
+                        <div id="utf_single_listingmap" data-latitude="-15.472254" data-longitude="36.980683" data-map-icon="im im-icon-Hamburger"></div>
+                        <a href="#" id="utf_street_view_btn">Street View</a>
+                    </div>
+                </div>*@
+        </div>
+        <div class="row with-forms">
+
+            <div id="longlat" class="col-md-12">
+
+                <div class="col-md-12">
+                    <h5>Link Iframe do Mapa</h5>
+                    <input type="text" class="search-field" name="linkMapa" id="linkMapa" placeholder="Link Mapa..." value="">
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-picture"></i> Descrição</h3>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-12">
+            <h5>Description</h5>
+            <textarea name="descricao" cols="40" rows="3" id="descricao" placeholder="Description..." spellcheck="true"></textarea>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<div class="row with-forms" style="margin-top:40px;">
+    <div class="col-md-2">
+        <button id="btnSalvar" style="margin-top:40px;" class="button btn-sm">Prosseguir</button>
+
+    </div>
+</div>
+
+
+
+
+
+<script>
+    $(".utf_opening_day.utf_js_demo_hours .utf_chosen_select").each(function () {
+        $(this).append('' +
+            '<option></option>' +
+            '<option>Closed</option>'+
+            '<option>1 AM</option>'  +
+            '<option>2 AM</option>'  +
+            '<option>3 AM</option>'  +
+            '<option>4 AM</option>'  +
+            '<option>5 AM</option>'  +
+            '<option>6 AM</option>'  +
+            '<option>7 AM</option>'  +
+            '<option>8 AM</option>'  +
+            '<option>9 AM</option>' +
+            '<option>10 AM</option>' +
+            '<option>11 AM</option>' +
+            '<option>12 AM</option>' +
+            '<option>1 PM</option>' +
+            '<option>2 PM</option>' +
+            '<option>3 PM</option>' +
+            '<option>4 PM</option>' +
+            '<option>5 PM</option>' +
+            '<option>6 PM</option>' +
+            '<option>7 PM</option>' +
+            '<option>8 PM</option>' +
+            '<option>9 PM</option>' +
+            '<option>10 PM</option>' +
+            '<option>11 PM</option>' +
+            '<option>12 PM</option>');
+    });
+
+   
+
+        $("#btnSalvar").click(function () {
+           
+            $.LoadingOverlay("show");
+            verficarForm();
+        })
+
+        function verficarForm() {
+            if ($("#nomeRestaurante").val() === '') {
+                $.LoadingOverlay("hide", true);
+                informarErro("Por favor informe o nome do Restaurante");
+
+                throw new Error("nomeRestauranteInvalido");
+            }
+        }
+
+      
+        var podeCadastrar = true;
+        $(document).ready(function () {
+            $("#nomeRestaurante").change(function () {
+                debugger
+                $("#imgRestaurante").show();
+                $.ajax({
+                    method: "POST",
+                    url: "/Restaurante/verificarExistencia",
+                    data: { restaurante: $("#nomeRestaurante").val() }
+                
+                })
+                    .done(function (msg) {
+                        if (msg == "false") {
+                            $("#nomeRestaurante").css("border", "1px solid red");
+                            informarErro("Ja existe um Restaurante com esse nome");
+                            $("#imgRestaurante").hide();
+                            podeCadastrar = false;
+
+                        } else {
+                            $("#nomeRestaurante").css("border", "1px solid gray");
+
+                            $("#imgRestaurante").hide();
+                            podeCadastrar = true;
+                        }
+
+                    });
+
+
+            });
+        });
+
+    $("#btnSalvar").click(function () {
+            var content =  tinyMCE.activeEditor.getContent();
+            debugger
+            if (podeCadastrar = false) {
+                $("#nomeRestaurante").css("border", "1px solid red");
+                informarErro("Ja existe um Restaurante com esse nome");
+            } else {
+                $.LoadingOverlay("show");
+                var model = new FormData();
+                model.append('nome', $("#nomeRestaurante").val());
+                model.append('id_distrito', $("#nome").val());
+                model.append('id_restaurante_tipo', $("#tipo").val());
+
+                model.append('endereco', $("#endereco").val());
+                model.append('telefone', $("#telefone").val());
+                model.append('email', $("#email").val());
+                model.append('website', $("#website").val());
+                model.append('mapa', $("#linkMapa").val());
+                 model.append('descricao', content.trim());
+
+            
+                $.ajax({
+                    method: "POST",
+                    url: "/Restaurante/finalizarCadastro",
+                    data: model,
+                    processData: false,
+                    contentType: false,
+                })
+                    .done(function (msg) {
+                        if (msg == "false") {
+                         
+                            $.LoadingOverlay("hide", true);
+                            informarErro("Nao foi possivel cadastrar este Restaurante");
+                      
+
+                        } else if (msg == "existe") {
+                            $.LoadingOverlay("hide", true);
+                            informarErro("Este Restaurante ja Existe");
+                        }
+                        else {
+                            $.LoadingOverlay("hide", true);
+                            location.href = '/Restaurante/CarregarFotos?idRestaurante='+msg;
+                            $('.with-forms').find("input[type=text], textarea").val("");
+                            //Dropzone.forElement('#filedrop').removeAllFiles(true)
+                            podeCadastrar = false;
+                        }
+
+                    });
+            
+            }
+
+
+        });
+</script>
+

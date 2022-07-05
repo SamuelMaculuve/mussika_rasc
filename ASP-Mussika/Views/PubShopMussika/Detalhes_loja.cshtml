@@ -1,0 +1,151 @@
+﻿@model ASP_Mussika.Models.LojaViewModel
+
+@{
+    ViewBag.Title = "Detalhes_loja";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+
+
+<div class="container">
+    <div class="row utf_sticky_main_wrapper">
+        <div class="col-lg-8 col-md-8">
+            <div id="titlebar" class="utf_listing_titlebar">
+                <div class="utf_listing_titlebar_title">
+                    <h2>@Model.nome <span class="listing-tag">@Model.tipo_loja</span></h2>
+                    <span> <a href="#utf_listing_location" class="listing-address"> <i class="sl sl-icon-location"></i> @Model.bairro, @Model.nome_distrito </a> </span>
+                    <span class="call_now"><i class="sl sl-icon-phone"></i> (+258) 000 000 000</span>
+                    @*<div class="utf_star_rating_section" data-rating="4.5">
+                            <div class="utf_counter_star_rating">(4.5) / (14 Reviews)</div>
+                        </div>*@
+                    <ul class="listing_item_social">
+
+                        <li><a href="#" class="now_open">Aberto a partir das 08:00 às 17:00 Horas</a></li>
+                    </ul>
+
+                </div>
+            </div>
+            <div id="utf_listing_overview" class="utf_listing_section">
+                <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">Descrição</h3>
+                @{ var html_descricao = new HtmlString(Model.descricao); }
+                <text>
+
+                    @html_descricao
+                </text>
+
+                <div id="utf_listing_tags" class="utf_listing_section listing_tags_section margin-bottom-10 margin-top-0">
+                    <a href="#"><i class="sl sl-icon-phone" aria-hidden="true"></i> +(258) 000 000 000</a>
+                    <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> venda@mussika.co.mz</a>
+                    <a href="#"><i class="sl sl-icon-globe" aria-hidden="true"></i> mussika.co.mz</a>
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4 col-md-4 margin-top-75 sidebar-search">
+            <div class="verified-badge with-tip margin-bottom-30" data-tip-content="Listing has been verified and belongs business owner or manager."> <i class="sl sl-icon-check"></i> @Model.nome_distrito.ToUpper()</div>
+           
+                <div class="row">
+                    
+                        <button class="utf_progress_button button fullwidth_block margin-top-5" id="btnAddCarrinho" type="button">Ver Produtos & Serviços</button>
+
+                   
+                </div>
+
+
+            
+           
+            <div class="utf_box_widget margin-top-35 margin-bottom-75">
+                <h3><i class="sl sl-icon-folder-alt"></i> Categorias</h3>
+                <ul class="utf_listing_detail_sidebar">
+
+                    <li><i class="fa fa-angle-double-right"></i> <a href="/inicio/Distritos">Distritos</a></li>
+                    <li><i class="fa fa-angle-double-right"></i> <a href="/PubAcomodacao/Acomodacoes">Acomodações</a></li>
+                    <li><i class="fa fa-angle-double-right"></i> <a href="/inicio/restaurantes">Restaurantes</a></li>
+                    <li><i class="fa fa-angle-double-right"></i> <a href="/servico_taxi/listar">Taxis</a></li>
+                    <li><i class="fa fa-angle-double-right"></i> <a href="#">Shop Mussika</a></li>
+                    <li><i class="fa fa-angle-double-right"></i> <a href="#">Eventos</a></li>
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/library/scripts/quantityButtons.js"></script>
+<script src="~/Content/library/scripts/moment.min.js"></script>
+<script src="~/Content/library/scripts/daterangepicker.js"></script>
+
+<script>
+    $(function () {
+        $('#date-picker').daterangepicker({
+            "opens": "left",
+            // singleDatePicker: true,
+            isInvalidDate: function (date) {
+                var disabled_start = moment('09/02/2018', 'DD/MM/YYYY');
+                var disabled_end = moment('09/06/2018', 'DD/MM/YYYY');
+                return date.isAfter(disabled_start) && date.isBefore(disabled_end);
+            }
+        });
+    });
+
+$('#date-picker').on('showCalendar.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').addClass('calendar-animated');
+});
+$('#date-picker').on('show.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').addClass('calendar-visible');
+	$('.daterangepicker').removeClass('calendar-hidden');
+});
+$('#date-picker').on('hide.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').removeClass('calendar-visible');
+	$('.daterangepicker').addClass('calendar-hidden');
+});
+
+function close_panel_dropdown() {
+$('.panel-dropdown').removeClass("active");
+	$('.fs-inner-container.content').removeClass("faded-out");
+}
+$('.panel-dropdown a').on('click', function(e) {
+	if ($(this).parent().is(".active")) {
+		close_panel_dropdown();
+	} else {
+		close_panel_dropdown();
+		$(this).parent().addClass('active');
+		$('.fs-inner-container.content').addClass("faded-out");
+	}
+	e.preventDefault();
+});
+$('.panel-buttons button').on('click', function(e) {
+	$('.panel-dropdown').removeClass('active');
+	$('.fs-inner-container.content').removeClass("faded-out");
+});
+var mouse_is_inside = false;
+$('.panel-dropdown').hover(function() {
+	mouse_is_inside = true;
+}, function() {
+	mouse_is_inside = false;
+});
+$("body").mouseup(function() {
+	if (!mouse_is_inside) close_panel_dropdown();
+});
+
+$("#btnAddCarrinho").click(function () {
+    $.LoadingOverlay("show");
+    setTimeout(function () {
+        location.href = '/PubShopMussika/Produtos?id=' + '@Model.id';
+        $.LoadingOverlay("hide");
+    }, 2000);
+
+});
+
+  
+</script>
+

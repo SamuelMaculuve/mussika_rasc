@@ -1,0 +1,185 @@
+﻿@model ASP_Mussika.Models.restaurante_prato
+
+@{
+    if (Session["tipo"].ToString() == "4")
+    {
+        ViewBag.Title = "Criar";
+        Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+    }
+    else
+    {
+        ViewBag.Title = "Criar";
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+}
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-tag"></i>Dados do Prato</h3>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-5">
+            <div class="col-md-12" id="divRestaurante">
+                <h5>Nome do Prato<strong style="color:orangered">*</strong></h5>
+                <input type="text" class="search-field" name="nomeRestaurante" id="nomeRestaurante" placeholder="Produto" value="@Model.nome">
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3">
+            <h5>Preço Venda<strong style="color:orangered">*</strong></h5>
+            <input type="text" class="search-field" name="preco" id="preco" placeholder="Preço venda" value="@Model.preco_venda">
+
+        </div>
+        <div class="col-md-4">
+            <h5>Categoria<strong style="color:orangered">*</strong></h5>
+            @Html.DropDownListFor(m => m.id__prato_categoria, ViewBag.categorias as SelectList, "--seleccione uma Categoria--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%;", @id = "nome", @name = "id" })
+
+        </div>
+    </div>
+
+
+</div>
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-picture"></i> Descrição</h3>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-12">
+            <h5>Descrição</h5>
+            @{var de_ = @Html.Raw(HttpUtility.HtmlDecode(Model.descricao));
+
+                var html_descricao = new HtmlString(de_.ToHtmlString());
+            }
+            <textarea name="descricao" cols="40" rows="2" id="desc" placeholder="Descrição do Artigo..." spellcheck="true">
+@html_descricao
+</textarea>
+        </div>
+
+    </div>
+</div>
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-docs"></i> Outros Detalhes </h3>
+    </div>
+    <div class="checkboxes in-row amenities_checkbox">
+        <ul>
+
+            <li>
+                <input id="check-a1" type="checkbox" name="check">
+                <label for="check-a1">Inactivo</label>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+
+<div class="row with-forms" style="margin-top:40px;">
+    <div class="col-md-2">
+        <button id="btnSalvar" style="margin-top:40px; margin-bottom:30px;" class="button btn-sm">Prosseguir</button>
+
+    </div>
+</div>
+
+<script>
+     $(document).ready(function () {
+        
+          $("#check-a1").prop("checked",@Model.inactivo.ToString().ToLower());
+         
+       
+    });
+    $('#telefone').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+
+    $('#preco').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+
+    $("#btnSalvar").click(function () {
+
+        $.LoadingOverlay("show");
+        verficarForm();
+    })
+
+    function verficarForm() {
+
+        if ($("#nomeRestaurante").val() === '') {
+            $.LoadingOverlay("hide", true);
+            informarErro("Por favor informe o nome da Loja");
+
+            throw new Error("nomeRestauranteInvalido");
+        }
+        if ($("#nome").val() === '') {
+            $.LoadingOverlay("hide", true);
+            informarErro("Por favor informe a categoria");
+
+            throw new Error("nomeRestauranteInvalido");
+        }
+
+        if ($("#preco").val().trim() == '') {
+            $.LoadingOverlay("hide", true);
+            informarErro("Por favor informe o preco");
+
+            throw new Error("nomeDistritoInvalido");
+        }
+
+
+    }
+
+
+
+
+    $("#btnSalvar").click(function () {
+        debugger
+
+    var content =  tinyMCE.activeEditor.getContent();
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('id', '@Model.id');
+        model.append('id_resturante', '@Model.id_resturante');
+        model.append('nome', $("#nomeRestaurante").val());
+        model.append('preco_venda', $("#preco").val());
+        model.append('inactivo', $("#check-a1").prop("checked"));
+        model.append('descricao', content.trim());
+        model.append('id__prato_categoria', $("#nome").val());
+
+        $.ajax({
+            method: "POST",
+            url: "/Restaurante/SalvarPratoRestaurante",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar este Prato");
+
+
+                }
+                else {
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/Restaurante/CarregarFotosRestaurantePrato?id=' + msg;
+                    $('.with-forms').find("input[type=text], textarea").val("");
+                    //Dropzone.forElement('#filedrop').removeAllFiles(true)
+                    podeCadastrar = false;
+                }
+
+            });
+
+
+
+
+    });
+</script>
+

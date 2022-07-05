@@ -1,0 +1,29 @@
+﻿@model ASP_Mussika.Models.filme
+@{
+    ViewBag.Title = "AssistirFilme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+<div class="container">
+    <div class="row utf_sticky_main_wrapper">
+        <div class="col-lg-12 col-md-12">
+            <div id="utf_listing_location" class="utf_listing_section">
+                <h3 class="utf_listing_headline_part margin-top-60 margin-bottom-40">Assistir Filme: @Model.titulo_original</h3>
+                <div id="utf_single_listing_map_block">
+                    <iframe class="col-md-12" src="@Model.link_trailer" height="650" allowfullscreen frameborder="0" style="border:0;"></iframe>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+
+
+    </div>
+</div>
+
+

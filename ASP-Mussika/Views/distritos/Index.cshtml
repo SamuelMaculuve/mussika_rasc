@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+
+    <button id="btnNovaAcomodacao" onclick="location.href='/distritos/criarDistrito'" style="margin-left:20px;" class="button gray">Cadastrar Distrito</button>
+
+</div>
+
+<div class="row" style="margin-top:10px;">
+    
+    <div class="col-md-9" style="margin-top:-20px;">
+
+
+
+        <div class="row with-forms">
+            <div class="row" style="margin:20px 40px 20px 0px;">
+                <table id="example" class="display" style="width:100%">
+                    <thead style="background-color:#ff2222; ">
+                        <tr>
+                            <th style="color:white">Codigo</th>
+                            <th style="color:white">Distrito </th>
+                            <th style="color:white">Area</th>
+                            <th style="color:white">População </th>
+                            <th style="color:white">Longitude</th>
+                            <th style="color:white">latitude</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Distrito</th>
+                            <th>Area</th>
+                            <th>População</th>
+                            <th>Longitude</th>
+                            <th>Latitude</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#btnNovaAcomodacao").click(function () {
+            $.LoadingOverlay("show");
+
+            // Hide it after 3 seconds
+            setTimeout(function () {
+                window.location.href = '/distritos/criarDistrito';
+                $.LoadingOverlay("hide");
+
+            }, 2000);
+
+        })
+
+
+      
+
+
+    });
+
+   
+    $(function () {
+        $('#example').DataTable({
+
+            "lengthChange": false,
+            "scrollY": 300,
+            "autoWidth": true,
+            "scrollX": true,
+            "processing": true,
+            "serverSide": true,
+            "responsive": true,
+            "filter": true,
+            "orderMulti": true,
+            "ajax": {
+                "url": "/distritos/carregarTabelaDistritosByAjax",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "id" },
+
+
+                { "data": "nome" },
+
+                { "data": "area" },
+
+                { "data": "populacao" },
+                { "data": "longitude" },
+                 { "data": "latitude" },
+                 //{
+                 //    "data": "fotografia",
+                 //    "render": function (fotografia, type, full, meta) {
+
+                 //        return "<a href='javascript:mostrarFoto()'><img src='../Images/" + fotografia + "'class='img-responsive' style='width:50px;height:50px;' /></a>";
+                 //    }
+                 //},
+
+            ],
+            //Descricao
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                //$('td:eq(0)', nRow).html("<a href='javascript:ver('" + aData.id + "')' class='button gray'><i class='fa fa-eye'></i> Ver/Editar</a> ");
+                $('td:eq(0)', nRow).html("<a href='javascript:void(0);' ><button type='button'  id='editar'  class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.id + "') > Editar Distrito</button></a>");
+                //$('td:eq(1)', nRow).html("<a href='javascript:void(0);' ><button type='button' id='ver' class='btn btn-icons btn-sm btn-primary'onclick=verProduto('" + aData.id_produto + "')></button>|<button type='button'  id='editar' class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.idproduto + "') ></button></a>");
+                //$('td:eq(10)', nRow).html("<a href='javascript:void(0);' onclick=alert('" + aData.FuncionarioId + "')><button type='button' class='btn btn-icons btn-rounded btn-warning'><i class='fa fa-edit'></i></button></a>");
+                //$('td:eq(3)', nRow).html("<a href='javascript:void(0);' onclick=apagar('" + aData.IdCategoria + "')><button type='button' class='btn btn-icons btn-rounded btn-danger'><i class='fa fa-trash'></i></button></a>");
+                return nRow;
+            },
+        });
+    });
+
+ 
+    var editar = function (id) {
+        $.LoadingOverlay("show");
+
+        // Hide it after 3 seconds
+        setTimeout(function () {
+            window.location.href = '/distritos/EditarDistrito?id=' + id;
+            $.LoadingOverlay("hide");
+
+        }, 2000);
+
+    }
+</script>
+

@@ -1,0 +1,241 @@
+﻿@model ASP_Mussika.Models.MusicaViewModel
+
+@{
+    ViewBag.Title = "Musica";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+
+
+<div class="container">
+    <div class="row utf_sticky_main_wrapper">
+        <div class="col-lg-8 col-md-8">
+            <div id="titlebar" class="utf_listing_titlebar">
+                <div class="utf_listing_titlebar_title">
+                   
+                   
+                        <h2>@Model.artista - @Model.titulo<span class="listing-tag">@Model.genero</span></h2>
+                   
+
+                    <span> <a href="#utf_listing_location" class="listing-address"> <i class="sl sl-icon-location"></i> @Model.formato </a> </span>
+                    @if (Model.e_album != true)
+                    {
+                        <span class="call_now"><i class="sl sl-icon-size-actual"></i> Genero: @Model.genero</span>
+                    }
+
+
+                    <span class="call_now"><i class="sl sl-icon-wrench"></i> Ano: @Model.ano</span>
+                    <span class="call_now"><i class="sl sl-icon-support"></i> Produtor: @Model.produtor</span>
+                    <span class="call_now"><i class="sl sl-icon-graph"></i> Gravadora: @Model.gravadora</span>
+                    @if (Model.e_album != true)
+                    {
+                        <span class="call_now"><i class="sl sl-icon-graph"></i> Formato: @Model.formato</span>
+                    }
+
+                    @*<div class="utf_star_rating_section" data-rating="4.5">
+            <div class="utf_counter_star_rating">(4.5) / (14 Reviews)</div>
+        </div>*@
+                    <ul class="listing_item_social">
+
+                        <li><a href="#" class="now_open">@string.Format("{0:N}MT", Model.preco_venda)</a></li>
+
+                    </ul>
+                
+                </div>
+            </div>
+            @*<div id="utf_listing_overview" class="utf_listing_section">
+                    <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">Descrição</h3>
+                    <p></p>
+
+                    <div id="utf_listing_tags" class="utf_listing_section listing_tags_section margin-bottom-10 margin-top-0">
+                        <a href="#"><i class="sl sl-icon-phone" aria-hidden="true"></i> +(258) 000 000 000</a>
+                        <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> venda@mussika.co.mz</a>
+
+                    </div>
+
+                </div>*@
+
+
+
+
+
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4 col-md-4 margin-top-75 sidebar-search">
+
+            @if (Session["idusario"] != null)
+            {
+                if (ViewBag.comprou != true)
+                {
+            <div class="verified-badge with-tip margin-bottom-30" data-tip-content="Listing has been verified and belongs business owner or manager."> <i class="sl sl-icon-check"></i> Música</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button class="utf_progress_button button fullwidth_block margin-top-5" id="btnAddCarrinho" type="button">Add. Carrinho</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="utf_progress_button button fullwidth_block margin-top-5" id="btnAddPagarAgora" type="button">Comprar agora</button>
+                        </div>
+                    </div>
+                }
+                else
+                {
+        <div class="verified-badge with-tip margin-bottom-30" data-tip-content="Listing has been verified and belongs business owner or manager."> <i class="sl sl-icon-check"></i> Música Adquirida</div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <audio controls="controls" controlsList="nodownload">
+                                <source src="~/Repository/Audio/@Model.caminho_ficheiro" type="audio/mpeg" />
+                            </audio>
+
+                        </div>
+
+                    </div>
+                }
+
+            }
+            else
+            {
+                <p>Faça login para baixar esta Música</p>
+            }
+
+            <div class="utf_box_widget margin-top-35 margin-bottom-75">
+                <h3><i class="sl sl-icon-folder-alt"></i> Categorias</h3>
+                <ul class="utf_listing_detail_sidebar">
+
+                    <li><i class="fa fa-angle-double-right"></i> <a href="/inicio/Distritos">Distritos</a></li>
+                    <li><i class="fa fa-angle-double-right"></i> <a href="/PubAcomodacao/Acomodacoes">Acomodações</a></li>
+                    <li><i class="fa fa-angle-double-right"></i> <a href="/inicio/restaurantes">Restaurantes</a></li>
+                    <li><i class="fa fa-angle-double-right"></i> <a href="/servico_taxi/listar">Taxis</a></li>
+                    <li><i class="fa fa-angle-double-right"></i> <a href="#">Shop Mussika</a></li>
+                    <li><i class="fa fa-angle-double-right"></i> <a href="#">Eventos</a></li>
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="~/Content/library/scripts/quantityButtons.js"></script>
+<script src="~/Content/library/scripts/moment.min.js"></script>
+<script src="~/Content/library/scripts/daterangepicker.js"></script>
+
+<script>
+     $(document).ready(function () {
+
+
+         $("audio").on("play", function () {
+             $("audio").not(this).each(function (index, audio) {
+                 audio.pause();
+             });
+         });
+     });
+    $(function () {
+        $('#date-picker').daterangepicker({
+            "opens": "left",
+            // singleDatePicker: true,
+            isInvalidDate: function (date) {
+                var disabled_start = moment('09/02/2018', 'DD/MM/YYYY');
+                var disabled_end = moment('09/06/2018', 'DD/MM/YYYY');
+                return date.isAfter(disabled_start) && date.isBefore(disabled_end);
+            }
+        });
+    });
+
+$('#date-picker').on('showCalendar.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').addClass('calendar-animated');
+});
+$('#date-picker').on('show.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').addClass('calendar-visible');
+	$('.daterangepicker').removeClass('calendar-hidden');
+});
+$('#date-picker').on('hide.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').removeClass('calendar-visible');
+	$('.daterangepicker').addClass('calendar-hidden');
+});
+
+function close_panel_dropdown() {
+$('.panel-dropdown').removeClass("active");
+	$('.fs-inner-container.content').removeClass("faded-out");
+}
+$('.panel-dropdown a').on('click', function(e) {
+	if ($(this).parent().is(".active")) {
+		close_panel_dropdown();
+	} else {
+		close_panel_dropdown();
+		$(this).parent().addClass('active');
+		$('.fs-inner-container.content').addClass("faded-out");
+	}
+	e.preventDefault();
+});
+$('.panel-buttons button').on('click', function(e) {
+	$('.panel-dropdown').removeClass('active');
+	$('.fs-inner-container.content').removeClass("faded-out");
+});
+var mouse_is_inside = false;
+$('.panel-dropdown').hover(function() {
+	mouse_is_inside = true;
+}, function() {
+	mouse_is_inside = false;
+});
+$("body").mouseup(function() {
+	if (!mouse_is_inside) close_panel_dropdown();
+});
+
+    $("#btnAddPagarAgora").click(function () {
+        var preco_venda =@Model.preco_venda;
+        if (preco_venda <= 0) { informarErro("Música sem preço de venda, contacte o administrador"); throw new Error(""); }
+    $.LoadingOverlay("show");
+    setTimeout(function () {
+        location.href = '/PubMusica/comprar?id=' + '@Model.id';
+        $.LoadingOverlay("hide");
+    }, 2000);
+
+});
+    $("#btnDownload").click(function () {
+    $.LoadingOverlay("show");
+    setTimeout(function () {
+
+        $.LoadingOverlay("hide");
+        informarErro("O Link para Download nao esta disponivel no Momento, volte a tentar mais tarde");
+    }, 2000);
+
+});
+
+    $("#btnAddCarrinho").click(function () {
+         var preco_venda =@Model.preco_venda;
+        if (preco_venda <= 0) { informarErro("Música sem preço de venda, contacte o administrador"); throw new Error(""); }
+        debugger
+          $.LoadingOverlay("show");
+         var data = {
+
+                    id_Musica: '@Model.id',
+                    id_usuario: '@Session["idusario"]',
+
+                };
+
+                $.ajax({
+                    method: "POST",
+                    url: "/CarrinhoCompra/adicionarMusicaNoCarrinho",
+                    data: data,
+
+                })
+                    .done(function (msg) {
+                        if (msg == "false") {
+
+                            $.LoadingOverlay("hide");
+                            informarErro("Nao foi possivel Adicionar no carrinho");
+
+
+                        } else {
+                            $.LoadingOverlay("hide");
+                            informarSucesso("Artigo Adicionado ao carinho!");
+                        }
+                    });
+    })
+</script>
+

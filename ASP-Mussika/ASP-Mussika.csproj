@@ -1,0 +1,1347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F5641027-930B-490D-9B45-B4042202AB19}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ASP_Mussika</RootNamespace>
+    <AssemblyName>ASP-Mussika</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort>44360</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=1.1.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.1.1.2\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.1.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.1.2\lib\net451\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PayPal, Version=1.9.1.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PayPal.1.9.1\lib\net451\PayPal.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.11.4.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.11.4\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Compression.Base, Version=18.3451.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Compression.Base.18.3.0.47\lib\net451\Syncfusion.Compression.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.EJ2, Version=18.3500.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.EJ2.MVC5.18.3.0.44\lib\net45\Syncfusion.EJ2.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.EJ2.PdfViewer, Version=18.3450.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.EJ2.PdfViewer.AspNet.Mvc5.18.3.0.47\lib\net45\Syncfusion.EJ2.PdfViewer.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Licensing, Version=18.3451.0.47, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.18.3.0.47\lib\net451\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Pdf.Base, Version=18.3450.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Pdf.AspNet.Mvc5.18.3.0.47\lib\net45\Syncfusion.Pdf.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.1.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.1.2\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Twilio, Version=5.45.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Twilio.5.45.2\lib\net451\Twilio.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Syncfusion.EJ2.PdfViewer.dll" />
+    <Content Include="Content\circle-notch-solid.svg" />
+    <Content Include="Content\comentar_distrito.js" />
+    <Content Include="Content\ej2\ej2.min.js" />
+    <Content Include="Content\inputmask.js" />
+    <Content Include="Content\jquery.mask.js" />
+    <Content Include="Content\jquery.mask.test.js" />
+    <Content Include="Content\library\bootbox\bootbox.all.js" />
+    <Content Include="Content\library\bootbox\bootbox.all.min.js" />
+    <Content Include="Content\library\bootbox\bootbox.js" />
+    <Content Include="Content\library\bootbox\bootbox.locales.js" />
+    <Content Include="Content\library\bootbox\bootbox.locales.min.js" />
+    <Content Include="Content\library\bootbox\bootbox.min.js" />
+    <Content Include="Content\library\bootstrap-4.3.1\css\bootstrap-grid.css" />
+    <Content Include="Content\library\bootstrap-4.3.1\css\bootstrap-grid.min.css" />
+    <Content Include="Content\library\bootstrap-4.3.1\css\bootstrap-reboot.css" />
+    <Content Include="Content\library\bootstrap-4.3.1\css\bootstrap-reboot.min.css" />
+    <Content Include="Content\library\bootstrap-4.3.1\css\bootstrap.css" />
+    <Content Include="Content\library\bootstrap-4.3.1\css\bootstrap.min.css" />
+    <Content Include="Content\library\bootstrap-4.3.1\js\bootstrap.bundle.js" />
+    <Content Include="Content\library\bootstrap-4.3.1\js\bootstrap.bundle.min.js" />
+    <Content Include="Content\library\bootstrap-4.3.1\js\bootstrap.js" />
+    <Content Include="Content\library\bootstrap-4.3.1\js\bootstrap.min.js" />
+    <Content Include="Content\library\css\jquery-confirm.min.css" />
+    <Content Include="Content\library\css\jquery.dataTables.min.css" />
+    <Content Include="Content\library\css\newStyle.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\Dialogos.js" />
+    <Content Include="Content\library\images\mpesa.png" />
+    <Content Include="Content\library\jplayer\dist\add-on\jplayer.playlist.js" />
+    <Content Include="Content\library\jplayer\dist\add-on\jplayer.playlist.min.js" />
+    <Content Include="Content\library\jplayer\dist\add-on\jquery.jplayer.inspector.js" />
+    <Content Include="Content\library\jplayer\dist\add-on\jquery.jplayer.inspector.min.js" />
+    <Content Include="Content\library\jplayer\dist\jplayer\jquery.jplayer.js" />
+    <Content Include="Content\library\jplayer\dist\jplayer\jquery.jplayer.min.js" />
+    <Content Include="Content\library\jplayer\dist\jplayer\jquery.jplayer.swf" />
+    <Content Include="Content\library\jplayer\dist\popcorn\popcorn.jplayer.js" />
+    <Content Include="Content\library\jplayer\dist\popcorn\popcorn.jplayer.min.js" />
+    <Content Include="Content\library\jplayer\dist\skin\blue.monday\css\jplayer.blue.monday.css" />
+    <Content Include="Content\library\jplayer\dist\skin\blue.monday\css\jplayer.blue.monday.min.css" />
+    <Content Include="Content\library\jplayer\dist\skin\blue.monday\image\jplayer.blue.monday.seeking.gif" />
+    <Content Include="Content\library\jplayer\dist\skin\blue.monday\image\jplayer.blue.monday.video.play.png" />
+    <Content Include="Content\library\jplayer\dist\skin\blue.monday\mustache\jplayer.blue.monday.audio.playlist.html" />
+    <Content Include="Content\library\jplayer\dist\skin\blue.monday\mustache\jplayer.blue.monday.audio.single.html" />
+    <Content Include="Content\library\jplayer\dist\skin\blue.monday\mustache\jplayer.blue.monday.audio.stream.html" />
+    <Content Include="Content\library\jplayer\dist\skin\blue.monday\mustache\jplayer.blue.monday.video.playlist.html" />
+    <Content Include="Content\library\jplayer\dist\skin\blue.monday\mustache\jplayer.blue.monday.video.single.html" />
+    <Content Include="Content\library\jplayer\dist\skin\pink.flag\css\jplayer.pink.flag.css" />
+    <Content Include="Content\library\jplayer\dist\skin\pink.flag\css\jplayer.pink.flag.min.css" />
+    <Content Include="Content\library\jplayer\dist\skin\pink.flag\image\jplayer.pink.flag.seeking.gif" />
+    <Content Include="Content\library\jplayer\dist\skin\pink.flag\image\jplayer.pink.flag.video.play.png" />
+    <Content Include="Content\library\jplayer\dist\skin\pink.flag\mustache\jplayer.pink.flag.audio.playlist.html" />
+    <Content Include="Content\library\jplayer\dist\skin\pink.flag\mustache\jplayer.pink.flag.audio.single.html" />
+    <Content Include="Content\library\jplayer\dist\skin\pink.flag\mustache\jplayer.pink.flag.audio.stream.html" />
+    <Content Include="Content\library\jplayer\dist\skin\pink.flag\mustache\jplayer.pink.flag.video.playlist.html" />
+    <Content Include="Content\library\jplayer\dist\skin\pink.flag\mustache\jplayer.pink.flag.video.single.html" />
+    <Content Include="Content\library\jplayer\lib\aurora\aac.js" />
+    <Content Include="Content\library\jplayer\lib\aurora\aurora.js" />
+    <Content Include="Content\library\jplayer\lib\aurora\flac.js" />
+    <Content Include="Content\library\jplayer\lib\aurora\mp3.js" />
+    <Content Include="Content\library\jplayer\lib\aurora\ogg.js" />
+    <Content Include="Content\library\jplayer\lib\aurora\opus.js" />
+    <Content Include="Content\library\jplayer\lib\aurora\vorbis.js" />
+    <Content Include="Content\library\jplayer\lib\circle-player\js\circle.player.js" />
+    <Content Include="Content\library\jplayer\lib\circle-player\js\jquery.grab.js" />
+    <Content Include="Content\library\jplayer\lib\circle-player\js\jquery.transform2d.js" />
+    <Content Include="Content\library\jplayer\lib\circle-player\js\mod.csstransforms.min.js" />
+    <Content Include="Content\library\jplayer\lib\circle-player\skin\buffer.png" />
+    <Content Include="Content\library\jplayer\lib\circle-player\skin\circle.player.css" />
+    <Content Include="Content\library\jplayer\lib\circle-player\skin\progress.png" />
+    <Content Include="Content\library\jplayer\lib\jquery.min.js" />
+    <Content Include="Content\library\jplayer\lib\popcorn.ie8.js" />
+    <Content Include="Content\library\jplayer\lib\popcorn.js" />
+    <Content Include="Content\library\jplayer\lib\popcorn.player.js" />
+    <Content Include="Content\library\jplayer\lib\popcorn.subtitle.js" />
+    <Content Include="Content\library\jquery-3.4.1.min.js" />
+    <Content Include="Content\library\popper.min.js" />
+    <Content Include="Content\library\css\bootstrap-grid.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\bootstrap.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\colors_version\stylesheet.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\colors_version\stylesheet_1.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\colors_version\stylesheet_2.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\colors_version\stylesheet_3.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\colors_version\stylesheet_4.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\colors_version\stylesheet_5.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\datedropper.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\icons.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\icons\datedropper.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\invoice.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\landing.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\revolutionslider.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\style.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\stylesheet.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\timedropper.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\fontawesome-webfont5b62.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\fontello.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\iconsmindca27.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\simple-line-iconsc05f.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\images\brand_logo_01.png" />
+    <Content Include="Content\library\images\brand_logo_02.png" />
+    <Content Include="Content\library\images\brand_logo_03.png" />
+    <Content Include="Content\library\images\brand_logo_04.png" />
+    <Content Include="Content\library\images\brand_logo_05.png" />
+    <Content Include="Content\library\images\brand_logo_06.png" />
+    <Content Include="Content\library\images\brand_logo_07.png" />
+    <Content Include="Content\library\images\favicon.png" />
+    <Content Include="Content\library\images\footer-bg.png" />
+    <Content Include="Content\library\images\loading.gif" />
+    <Content Include="Content\library\images\logo.png" />
+    <Content Include="Content\library\images\logo2.png" />
+    <Content Include="Content\library\images\paypal_pay.png" />
+    <Content Include="Content\library\images\pay_icon.png" />
+    <Content Include="Content\library\images\plus-icon.svg" />
+    <Content Include="Content\library\images\screen_preview\Screen_1.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_10.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_11.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_12.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_13.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_14.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_15.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_16.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_17.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_18.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_19.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_2.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_20.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_21.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_22.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_23.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_24.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_25.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_26.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_27.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_28.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_29.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_3.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_30.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_31.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_32.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_33.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_34.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_35.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_36.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_37.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_38.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_39.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_4.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_40.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_41.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_42.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_43.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_44.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_5.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_6.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_7.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_8.png" />
+    <Content Include="Content\library\images\screen_preview\Screen_9.png" />
+    <Content Include="Content\library\images\screen_preview\ulisting_logo.png" />
+    <Content Include="Content\library\images\search_bg_video.mp4" />
+    <Content Include="Content\library\images\stripe.png" />
+    <Content Include="Content\library\images\testimonial.png" />
+    <Content Include="Content\library\jqueryModalConfirm\bootstrap.confirm.js" />
+    <Content Include="Content\library\jqueryModalConfirm\index.html" />
+    <Content Include="Content\library\scripts\bootstrap_slider.js" />
+    <Content Include="Content\library\scripts\chosen.min.js" />
+    <Content Include="Content\library\scripts\color_switcher.js" />
+    <Content Include="Content\library\scripts\counterup.min.js" />
+    <Content Include="Content\library\scripts\datedropper.js" />
+    <Content Include="Content\library\scripts\daterangepicker.js" />
+    <Content Include="Content\library\scripts\dropzone.js" />
+    <Content Include="Content\library\scripts\extensions\revolution.extension.actions.min.js" />
+    <Content Include="Content\library\scripts\extensions\revolution.extension.carousel.min.js" />
+    <Content Include="Content\library\scripts\extensions\revolution.extension.kenburn.min.js" />
+    <Content Include="Content\library\scripts\extensions\revolution.extension.layeranimation.min.js" />
+    <Content Include="Content\library\scripts\extensions\revolution.extension.migration.min.js" />
+    <Content Include="Content\library\scripts\extensions\revolution.extension.navigation.min.js" />
+    <Content Include="Content\library\scripts\extensions\revolution.extension.parallax.min.js" />
+    <Content Include="Content\library\scripts\extensions\revolution.extension.slideanims.min.js" />
+    <Content Include="Content\library\scripts\extensions\revolution.extension.video.min.js" />
+    <Content Include="Content\library\scripts\extensions\themepunch.revolution.min.js" />
+    <Content Include="Content\library\scripts\extensions\themepunch.tools.min.js" />
+    <Content Include="Content\library\scripts\infobox.min.js" />
+    <Content Include="Content\library\scripts\jpanelmenu.min.js" />
+    <Content Include="Content\library\scripts\jquery-2.2.0.min.js" />
+    <Content Include="Content\library\scripts\jquery-3.3.1.js" />
+    <Content Include="Content\library\scripts\jquery-3.4.1.min.js" />
+    <Content Include="Content\library\scripts\jquery-confirm.min.js" />
+    <Content Include="Content\library\scripts\jquery-ui.min.js" />
+    <Content Include="Content\library\scripts\jquery.countdown.min.js" />
+    <Content Include="Content\library\scripts\jquery.dataTables.min.js" />
+    <Content Include="Content\library\scripts\jquery_custom.js" />
+    <Content Include="Content\library\scripts\loadingoverlay.min.js" />
+    <Content Include="Content\library\scripts\magnific-popup.min.js" />
+    <Content Include="Content\library\scripts\maps.js" />
+    <Content Include="Content\library\scripts\markerclusterer.js" />
+    <Content Include="Content\library\scripts\moment.min.js" />
+    <Content Include="Content\library\scripts\quantityButtons.js" />
+    <Content Include="Content\library\scripts\rangeslider.min.js" />
+    <Content Include="Content\library\scripts\slick.min.js" />
+    <Content Include="Content\library\scripts\tooltips.min.js" />
+    <Content Include="Content\library\scripts\waypoints.min.js" />
+    <Content Include="Content\library\tinymce\license.txt" />
+    <Content Include="Content\library\tinymce\plugins\advlist\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\anchor\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\autolink\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\autoresize\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\autosave\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\bbcode\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\charmap\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\code\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\colorpicker\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\contextmenu\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\directionality\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-cool.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-cry.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-embarassed.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-frown.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-innocent.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-kiss.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-laughing.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-money-mouth.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-sealed.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-smile.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-surprised.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-tongue-out.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-undecided.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-wink.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\img\smiley-yell.gif" />
+    <Content Include="Content\library\tinymce\plugins\emoticons\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\example\dialog.html" />
+    <Content Include="Content\library\tinymce\plugins\example\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\example_dependency\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\fullpage\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\fullscreen\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\hr\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\imagetools\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\image\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\importcss\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\insertdatetime\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\layer\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\legacyoutput\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\link\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\lists\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\media\moxieplayer.swf" />
+    <Content Include="Content\library\tinymce\plugins\media\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\nonbreaking\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\noneditable\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\pagebreak\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\paste\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\preview\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\print\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\save\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\searchreplace\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\spellchecker\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\tabfocus\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\table\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\template\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\textcolor\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\textpattern\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="Content\library\tinymce\plugins\visualblocks\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\visualchars\plugin.min.js" />
+    <Content Include="Content\library\tinymce\plugins\wordcount\plugin.min.js" />
+    <Content Include="Content\library\tinymce\skins\lightgray\content.inline.min.css" />
+    <Content Include="Content\library\tinymce\skins\lightgray\content.min.css" />
+    <Content Include="Content\library\tinymce\skins\lightgray\fonts\tinymce-small.svg" />
+    <Content Include="Content\library\tinymce\skins\lightgray\fonts\tinymce.svg" />
+    <Content Include="Content\library\tinymce\skins\lightgray\img\anchor.gif" />
+    <Content Include="Content\library\tinymce\skins\lightgray\img\loader.gif" />
+    <Content Include="Content\library\tinymce\skins\lightgray\img\object.gif" />
+    <Content Include="Content\library\tinymce\skins\lightgray\img\trans.gif" />
+    <Content Include="Content\library\tinymce\skins\lightgray\skin.ie7.min.css" />
+    <Content Include="Content\library\tinymce\skins\lightgray\skin.min.css" />
+    <Content Include="Content\library\tinymce\themes\modern\theme.min.js" />
+    <Content Include="Content\library\tinymce\tinymce.min.js" />
+    <Content Include="Content\live_banner.png" />
+    <Content Include="Content\live_banner_1250.png" />
+    <Content Include="Content\live_banner_600.png" />
+    <Content Include="Content\loginGmail.js" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\pdf\bootstrap.css" />
+    <Content Include="Content\pdf\ej2.min.js" />
+    <Content Include="Content\sinon-1.10.3.js" />
+    <Content Include="Content\sinon-qunit-1.0.0.js" />
+    <Content Include="Content\tinymce.min.js" />
+    <Content Include="Global.asax" />
+    <Content Include="Models\Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
+    </Content>
+    <Content Include="Repository\Audio\musica.txt" />
+    <Content Include="Repository\images\45.gif" />
+    <Content Include="Repository\images\ArteCultura\artecultura.png" />
+    <Content Include="Repository\images\ArteCultura\noimage.png" />
+    <Content Include="Repository\images\Artigos\noimage.png" />
+    <Content Include="Repository\images\cinema\noimage.png" />
+    <Content Include="Repository\images\clinicas\noimage.png" />
+    <Content Include="Repository\images\distritos\noimage.png" />
+    <Content Include="Repository\images\diversos\available-on-google-play-png-2.png" />
+    <Content Include="Repository\images\diversos\pngkey.com-available-on-app-store-3435978.png" />
+    <Content Include="Repository\images\eventos\espetaculos.png" />
+    <Content Include="Repository\images\eventos\eventosAcademicos.png" />
+    <Content Include="Repository\images\eventos\noimage.png" />
+    <Content Include="Repository\images\farmacias\noimage.png" />
+    <Content Include="Repository\images\flags\france.png" />
+    <Content Include="Repository\images\flags\portugal.png" />
+    <Content Include="Repository\images\flags\united-kingdom.png" />
+    <Content Include="Repository\images\index.ajax-spinner-gif.gif" />
+    <Content Include="Repository\images\lg.ajax-spinner-gif.gif" />
+    <Content Include="Repository\images\logo\favicon_mussika 16x16.png" />
+    <Content Include="Repository\images\logo\logo 38 x 50.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Repository\images\logo\logo 93 x 94.png" />
+    <Content Include="Repository\images\logo\logo100x132.png" />
+    <Content Include="Repository\images\lojas\lojas.png" />
+    <Content Include="Repository\images\lojas\noimage.png" />
+    <Content Include="Repository\images\lojas\shopmussika.png" />
+    <Content Include="Repository\images\mpesa-logo.png" />
+    <Content Include="Repository\images\musica\albuns.png" />
+    <Content Include="Repository\images\musica\artistas.png" />
+    <Content Include="Repository\images\musica\musicasDiversas.png" />
+    <Content Include="Repository\images\musica\noimage.png" />
+    <Content Include="Repository\images\perfil.png" />
+    <Content Include="Repository\images\Restaurantes\noimage2.png" />
+    <Content Include="Repository\images\Taxis\noimage.png" />
+    <Content Include="Repository\images\tempImage\noimage.png" />
+    <Content Include="Repository\images\turismo\turismo.png" />
+    <Content Include="Repository\images\wallpaper\hotel_1.jpeg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Repository\images\wallpaper\hotel_2.jpeg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Repository\images\wallpaper\hotel_3.jpeg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Repository\images\wallpaper\hotel_4.jpeg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminEventoController.cs" />
+    <Compile Include="Controllers\AdminTurismoController.cs" />
+    <Compile Include="Controllers\CinemaController.cs" />
+    <Compile Include="Controllers\EventosController.cs" />
+    <Compile Include="Controllers\FilmeController.cs" />
+    <Compile Include="Controllers\LojaController.cs" />
+    <Compile Include="Controllers\MobileController.cs" />
+    <Compile Include="Controllers\MusicaController.cs" />
+    <Compile Include="Controllers\PagamentoController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\PdfController.cs" />
+    <Compile Include="Controllers\ProvedorAcomodacaoController.cs" />
+    <Compile Include="Controllers\ProvedorArteCulturaController.cs" />
+    <Compile Include="Controllers\ProvedorBazarController.cs" />
+    <Compile Include="Controllers\ProvedorController.cs" />
+    <Compile Include="Controllers\ProvedorEventoController.cs" />
+    <Compile Include="Controllers\ProvedorLojaController.cs" />
+    <Compile Include="Controllers\ProvedorMusicaController.cs" />
+    <Compile Include="Controllers\ProvedorRestauranteController.cs" />
+    <Compile Include="Controllers\ProvedorTurismoController.cs" />
+    <Compile Include="Controllers\PubArteController.cs" />
+    <Compile Include="Controllers\PubCinemaController.cs" />
+    <Compile Include="Controllers\PubMusicaController.cs" />
+    <Compile Include="Controllers\PubSaudeController.cs" />
+    <Compile Include="Controllers\SaudeController.cs" />
+    <Compile Include="Controllers\segurancaController.cs" />
+    <Compile Include="Controllers\ServicoMussikaController.cs" />
+    <Compile Include="Controllers\TransporteController.cs" />
+    <Compile Include="Controllers\TurismoController.cs" />
+    <Compile Include="Controllers\vodacomController.cs" />
+    <Compile Include="Models\acomodacao.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\acomodacao_classificacao.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\acomodacao_comentario.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\acomodacao_disponibilidade.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\acomodacao_foto.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\acomodacao_quarto.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\acomodacao_reserva.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\acomodacao_servico.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\acomodacao_tipo.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\arteCulturaViewModel.cs" />
+    <Compile Include="Models\arte_obra_foto_view_model.cs" />
+    <Compile Include="Models\artigo.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\artigo_imagem.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\artista_obra.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AutorArteViewModel.cs" />
+    <Compile Include="Models\beneficio_pacote.cs" />
+    <Compile Include="Controllers\CarrinhoCompraController.cs" />
+    <Compile Include="Controllers\CarteiraController.cs" />
+    <Compile Include="Controllers\EmpresaController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PubAcomodacaoController.cs" />
+    <Compile Include="Controllers\PubDistritoController.cs" />
+    <Compile Include="Controllers\PublicidadeController.cs" />
+    <Compile Include="Controllers\PubReservaController.cs" />
+    <Compile Include="Controllers\PubRestauranteController.cs" />
+    <Compile Include="Controllers\PubShopMussikaController.cs" />
+    <Compile Include="Controllers\ShopMussikaController.cs" />
+    <Compile Include="Controllers\TaxiController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Models\AcomFotoViewModel.cs" />
+    <Compile Include="Models\AcomodacaoViewModel.cs" />
+    <Compile Include="Models\ArtigoFotoViewModel.cs" />
+    <Compile Include="Models\ArtigoViewModel.cs" />
+    <Compile Include="Models\BilheteViewModel.cs" />
+    <Compile Include="Models\C2B_MODEL.cs" />
+    <Compile Include="Models\CarinhoCompraViewModel.cs" />
+    <Compile Include="Models\carrinho_compra.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\categoria_artigo.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\categoria_cultura.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\categoria_obra_arte.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cinema.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cinemaSessaoViewModel.cs" />
+    <Compile Include="Models\CinemaViewModel.cs" />
+    <Compile Include="Models\cinema_sessao.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\clinica.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClinicaViewModel.cs" />
+    <Compile Include="Models\comentarioViewModel.cs" />
+    <Compile Include="Models\compra.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CompraViewModel.cs" />
+    <Compile Include="Models\Constants.cs" />
+    <Compile Include="Controllers\acomodacaoController.cs" />
+    <Compile Include="Controllers\administracaoController.cs" />
+    <Compile Include="Controllers\arte_culturaController.cs" />
+    <Compile Include="Controllers\distritosController.cs" />
+    <Compile Include="Controllers\inicioController.cs" />
+    <Compile Include="Controllers\playmussika_Controller.cs" />
+    <Compile Include="Controllers\RestauranteController.cs" />
+    <Compile Include="Controllers\servico_taxiController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClasseGeralPortal.cs" />
+    <Compile Include="Models\consulta_view_model.cs" />
+    <Compile Include="Models\counterCategoriasViewModel.cs" />
+    <Compile Include="Models\criptografia.cs" />
+    <Compile Include="Models\distrito.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DistritoFotoViewModel.cs" />
+    <Compile Include="Models\DistritoViewModel.cs" />
+    <Compile Include="Models\distrito_classificacao.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\distrito_comentario.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\distrito_foto.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\empresa.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmpresaViewModel.cs" />
+    <Compile Include="Models\EncryptMpesaCredentials.cs" />
+    <Compile Include="Models\entidade_cultural.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EnviarSms.cs" />
+    <Compile Include="Models\evento.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventoViewModel.cs" />
+    <Compile Include="Models\evento_bilhete.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\evento_categoria.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\evento_comentario.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FacebookUser.cs" />
+    <Compile Include="Models\farmacia.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FarmaciaViewModel.cs" />
+    <Compile Include="Models\farmacia_produto.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\farmacia_produto_view_model.cs" />
+    <Compile Include="Models\filme.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FilmeViewModel.cs" />
+    <Compile Include="Models\filme_categoria.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\genero_musical.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GmailUserViewModel.cs" />
+    <Compile Include="Models\hospital.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HospitalViewModel.cs" />
+    <Compile Include="Models\item_categoria_filme_view_Model.cs" />
+    <Compile Include="Models\item_categoria_view_model.cs" />
+    <Compile Include="Models\item_filme_categoria.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\item_pacote_subscricao.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\loja.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LojaViewModel.cs" />
+    <Compile Include="Models\loja_produto.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\loja_produto_view_model.cs" />
+    <Compile Include="Models\loja_tipo.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\maisVisitadosViewModel.cs" />
+    <Compile Include="Models\Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MpesaResponse.cs" />
+    <Compile Include="Models\musica.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MusicaViewModel.cs" />
+    <Compile Include="Models\musica_album.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\obra_arte.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\obra_arte_imagem.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\pacote_subscricao.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\pagamento_subscricao.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PayRequest.cs" />
+    <Compile Include="Models\PayResponse.cs" />
+    <Compile Include="Models\pesquisaViewModel.cs" />
+    <Compile Include="Models\produto.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\produto_categoria.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProvedorServicoViewModel.cs" />
+    <Compile Include="Models\publicidadeViewModel.cs" />
+    <Compile Include="Models\QuartoViewModel.cs" />
+    <Compile Include="Models\ReservaViewModel.cs" />
+    <Compile Include="Models\reserva_acomodacaoViewModel.cs" />
+    <Compile Include="Models\restaurante.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\restaurante_classificacao.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\restaurante_comentario.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\restaurante_foto.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\restaurante_prato.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\restaurante_prato_categoria.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\restaurante_prato_view_model.cs" />
+    <Compile Include="Models\restaurante_tipo.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RestFotoViewModel.cs" />
+    <Compile Include="Models\RestViewModel.cs" />
+    <Compile Include="Models\saude_reserva.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\servico.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\servicoViewModel.cs" />
+    <Compile Include="Models\servico_categoria.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\servico_foto.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SessaoViewModel.cs" />
+    <Compile Include="Models\subscricao_view_model.cs" />
+    <Compile Include="Models\taxi.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaxiViewModel.cs" />
+    <Compile Include="Models\taxi_categoria.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tipo_produto.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\transportadora.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\transportadora_parametro.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\transportadora_tipo_carga.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\transportadora_view_model.cs" />
+    <Compile Include="Models\turismo.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TurismoViewModel.cs" />
+    <Compile Include="Models\turismo_categoria.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\turismo_comentario.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Usuario.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UsuarioAutenticacao.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UsuarioSessao.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UsuarioViewModel.cs" />
+    <Compile Include="Models\usuario_favorito.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\usuario_provedor.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\usuario_tipo.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaypalConfiguration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="packages.config" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Content\library\css\icons\datedropper.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\icons\datedropper.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\icons\datedropper.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\css\icons\datedropperd41d.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\fontawesome-webfont5b62.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\fontawesome-webfont5b62.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\fontawesome-webfont5b62.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\fontawesome-webfontd41d.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\fontello.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\fontello.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\fontello.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\iconsmindca27.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\iconsmindca27.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\iconsmindca27.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\iconsmindd41d.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\simple-line-iconsc05f.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\simple-line-iconsc05f.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\library\fonts\simple-line-iconsc05f.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Inicio\principal.cshtml" />
+    <Content Include="Views\distritos\listar.cshtml" />
+    <Content Include="Views\Inicio\Partials\_MenuCategorias.cshtml" />
+    <Content Include="Views\Inicio\Partials\_SlideMaisVisitados.cshtml" />
+    <Content Include="Views\Inicio\servicos.cshtml" />
+    <Content Include="Views\distritos\servicos.cshtml" />
+    <Content Include="Views\distritos\acomodacao.cshtml" />
+    <Content Include="Views\distritos\restaurantes.cshtml" />
+    <Content Include="Views\distritos\eventos.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Content\library\tinymce\langs\readme.md" />
+    <Content Include="Content\library\tinymce\skins\lightgray\fonts\tinymce-small.eot" />
+    <Content Include="Content\library\tinymce\skins\lightgray\fonts\tinymce-small.ttf" />
+    <Content Include="Content\library\tinymce\skins\lightgray\fonts\tinymce-small.woff" />
+    <Content Include="Content\library\tinymce\skins\lightgray\fonts\tinymce.eot" />
+    <Content Include="Content\library\tinymce\skins\lightgray\fonts\tinymce.ttf" />
+    <Content Include="Content\library\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Content\library\bootstrap-4.3.1\css\bootstrap-grid.css.map" />
+    <Content Include="Content\library\bootstrap-4.3.1\css\bootstrap-grid.min.css.map" />
+    <Content Include="Content\library\bootstrap-4.3.1\css\bootstrap-reboot.css.map" />
+    <Content Include="Content\library\bootstrap-4.3.1\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\library\bootstrap-4.3.1\css\bootstrap.css.map" />
+    <Content Include="Content\library\bootstrap-4.3.1\css\bootstrap.min.css.map" />
+    <Content Include="Content\library\bootstrap-4.3.1\js\bootstrap.bundle.js.map" />
+    <Content Include="Content\library\bootstrap-4.3.1\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Content\library\bootstrap-4.3.1\js\bootstrap.js.map" />
+    <Content Include="Content\library\bootstrap-4.3.1\js\bootstrap.min.js.map" />
+    <Content Include="Views\distritos\Partials\servicos_partial.cshtml" />
+    <Content Include="Views\distritos\perfil_restaurante.cshtml" />
+    <Content Include="Views\Inicio\bens_servicos.cshtml" />
+    <Content Include="Views\Inicio\empresa.cshtml" />
+    <Content Include="Views\Inicio\produtos.cshtml" />
+    <Content Include="Views\Inicio\seguranca.cshtml" />
+    <Content Include="Views\Inicio\como_pagar.cshtml" />
+    <Content Include="Views\Inicio\ajuda.cshtml" />
+    <Content Include="Views\Inicio\Partials\_RightSideBar.cshtml" />
+    <Content Include="Views\Inicio\Partials\bens_servicos_partial.cshtml" />
+    <Content Include="Views\distritos\perfil_acomodacao.cshtml" />
+    <Content Include="Views\distritos\acomodacoes.cshtml" />
+    <Content Include="Views\Inicio\acomodacoes.cshtml" />
+    <Content Include="Views\Inicio\restaurantes.cshtml" />
+    <Content Include="Content\library\jplayer\lib\README.md" />
+    <EntityDeploy Include="Models\Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Views\playmussika\buscar_musicas.cshtml" />
+    <Content Include="Views\acomodacao\listagem.cshtml" />
+    <Content Include="Views\acomodacao\perfil.cshtml" />
+    <Content Include="Views\distritos\Partials\acomodacoes_partial.cshtml" />
+    <Content Include="Views\acomodacao\Partials\enviar_comentario_partial.cshtml" />
+    <Content Include="Views\acomodacao\Partials\classificacao_comentario_partial.cshtml" />
+    <Content Include="Views\acomodacao\disponibilidade_quarto_.cshtml" />
+    <Content Include="Views\acomodacao\Partials\disponibilidade_lista_partials.cshtml" />
+    <Content Include="Views\acomodacao\disponibilidade_quarto.cshtml" />
+    <Content Include="Views\acomodacao\Partials\disponibilidade_lista_partials_.cshtml" />
+    <Content Include="Views\acomodacao\pagamento.cshtml" />
+    <Content Include="Views\acomodacao\confirmacao_booking.cshtml" />
+    <Content Include="Views\acomodacao\factura.cshtml" />
+    <Content Include="Views\servico_taxi\listar.cshtml" />
+    <Content Include="Views\servico_taxi\partials\listar_taxi_partials.cshtml" />
+    <Content Include="Views\arte_cultura\listagem.cshtml" />
+    <None Include="Properties\PublishProfiles\Mussika.pubxml" />
+    <None Include="Properties\PublishProfiles\mussika_pj.pubxml" />
+    <Content Include="Views\acomodacao\Partials\acomodacoes_partial.cshtml" />
+    <Content Include="Views\Restaurante\Index.cshtml" />
+    <Content Include="Views\Restaurante\CarregarFotos.cshtml" />
+    <Content Include="Views\Restaurante\Restaurantes.cshtml" />
+    <Content Include="Views\Restaurante\AlterarImagens.cshtml" />
+    <Content Include="Views\Restaurante\Editar.cshtml" />
+    <Content Include="Views\administracao\DashBoard.cshtml" />
+    <Content Include="Views\acomodacao\Criar.cshtml" />
+    <Content Include="Views\acomodacao\CarregarFotos.cshtml" />
+    <Content Include="Views\acomodacao\Quartos.cshtml" />
+    <Content Include="Views\acomodacao\CriarQuarto.cshtml" />
+    <Content Include="Views\acomodacao\EditarQuarto.cshtml" />
+    <Content Include="Views\Shared\pageNotFound.cshtml" />
+    <Content Include="Views\Shared\InternalServerError.cshtml" />
+    <Content Include="Views\acomodacao\Index.cshtml" />
+    <Content Include="Views\acomodacao\EditarAcomodacao.cshtml" />
+    <Content Include="Views\ShopMussika\Index.cshtml" />
+    <Content Include="Views\ShopMussika\CriarArtigo.cshtml" />
+    <Content Include="Views\ShopMussika\CarregarFotos.cshtml" />
+    <Content Include="Views\ShopMussika\EditarArtigo.cshtml" />
+    <Content Include="Views\distritos\Index.cshtml" />
+    <Content Include="Views\distritos\criarDistrito.cshtml" />
+    <Content Include="Views\distritos\CarregarFotos.cshtml" />
+    <Content Include="Views\distritos\EditarDistrito.cshtml" />
+    <Content Include="Views\Taxi\Index.cshtml" />
+    <Content Include="Views\Taxi\criarTaxi.cshtml" />
+    <Content Include="Views\Taxi\CarregarFotos.cshtml" />
+    <Content Include="Views\Taxi\EditarTaxi.cshtml" />
+    <Content Include="Views\Inicio\Distritos.cshtml" />
+    <Content Include="Views\PubDistrito\perfil.cshtml" />
+    <Content Include="Views\PubAcomodacao\Acomodacoes.cshtml" />
+    <Content Include="Views\PubAcomodacao\Perfil.cshtml" />
+    <None Include="Properties\PublishProfiles\MUSSSIKA.pubxml" />
+    <Content Include="Views\PubReserva\Acomodacao.cshtml" />
+    <Content Include="Views\PubRestaurante\Perfil.cshtml" />
+    <Content Include="Views\Login\ConfirmarEmailCriacao.cshtml" />
+    <Content Include="Views\Login\confirmarContaInactiva.cshtml" />
+    <Content Include="Views\Login\EsqueceuSenha.cshtml" />
+    <Content Include="Views\Login\confirmarEmailAlteracaoSenha.cshtml" />
+    <Content Include="Views\Login\AlterarSenha.cshtml" />
+    <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\Usuario\criarUsuario.cshtml" />
+    <Content Include="Views\Login\RedifinirSenha.cshtml" />
+    <Content Include="Views\PubShopMussika\Index.cshtml" />
+    <Content Include="Views\PubShopMussika\Perfil.cshtml" />
+    <Content Include="Views\PubDistrito\Index.cshtml" />
+    <Content Include="Views\PubDistrito\Rascunho.cshtml" />
+    <Content Include="Views\Shared\comentarios.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\PubAcomodacao\Rascunho.cshtml" />
+    <Content Include="Views\PubRestaurante\Rascunho.cshtml" />
+    <Content Include="Views\Carteira\Index.cshtml" />
+    <Content Include="Views\CarrinhoCompra\Index.cshtml" />
+    <Content Include="Views\PubShopMussika\comprar.cshtml" />
+    <Content Include="Views\Empresa\Index.cshtml" />
+    <Content Include="Views\Empresa\Editar.cshtml" />
+    <Content Include="Views\Inicio\Info.cshtml" />
+    <Content Include="Views\Publicidade\Index.cshtml" />
+    <Content Include="Views\Publicidade\criar.cshtml" />
+    <Content Include="Views\Publicidade\addItensPacote.cshtml" />
+    <Content Include="Views\Publicidade\CriarVantagem.cshtml" />
+    <Content Include="Views\Publicidade\EditarBeneficio.cshtml" />
+    <Content Include="Views\Publicidade\editarPacote.cshtml" />
+    <Content Include="Views\seguranca\Index.cshtml" />
+    <Content Include="Views\Empresa\comopagar.cshtml" />
+    <Content Include="Views\Eventos\Index.cshtml" />
+    <Content Include="Views\Musica\Index.cshtml" />
+    <Content Include="Views\Turismo\Index.cshtml" />
+    <Content Include="Views\Saude\Index.cshtml" />
+    <Content Include="Views\arte_cultura\gestao.cshtml" />
+    <Content Include="Views\arte_cultura\CriarAutor.cshtml" />
+    <Content Include="Views\arte_cultura\EditarAutor.cshtml" />
+    <Content Include="Views\arte_cultura\Obras.cshtml" />
+    <Content Include="Views\arte_cultura\criarObra.cshtml" />
+    <Content Include="Views\arte_cultura\carregarFotos.cshtml" />
+    <Content Include="Views\arte_cultura\EditarObra.cshtml" />
+    <Content Include="Views\Musica\gestao.cshtml" />
+    <Content Include="Views\Musica\CriarAutor.cshtml" />
+    <Content Include="Views\Musica\EditarAutor.cshtml" />
+    <Content Include="Views\Musica\Musicas.cshtml" />
+    <Content Include="Views\Musica\CriarMusica.cshtml" />
+    <Content Include="Views\Musica\CarregarFotos.cshtml" />
+    <Content Include="Views\Musica\EditarMusica.cshtml" />
+    <Content Include="Views\AdminEvento\Index.cshtml" />
+    <Content Include="Views\AdminEvento\criar.cshtml" />
+    <Content Include="Views\AdminEvento\CarregarFotos.cshtml" />
+    <Content Include="Views\AdminEvento\EditarEvento.cshtml" />
+    <Content Include="Views\AdminTurismo\Index.cshtml" />
+    <Content Include="Views\AdminTurismo\criar.cshtml" />
+    <Content Include="Views\AdminTurismo\CarregarFotos.cshtml" />
+    <Content Include="Views\AdminTurismo\EditarTurismo.cshtml" />
+    <Content Include="Views\arte_cultura\Perfil.cshtml" />
+    <Content Include="Views\arte_cultura\comprar.cshtml" />
+    <Content Include="Views\PubMusica\Cantores.cshtml" />
+    <Content Include="Views\PubMusica\Musicas.cshtml" />
+    <Content Include="Views\PubMusica\Musica.cshtml" />
+    <Content Include="Views\PubMusica\comprar.cshtml" />
+    <Content Include="Views\Eventos\Detalhes.cshtml" />
+    <Content Include="Views\Shared\_EventoComentario.cshtml" />
+    <Content Include="Views\Saude\gestao.cshtml" />
+    <Content Include="Views\Saude\criar.cshtml" />
+    <Content Include="Views\Saude\CarregarFotos.cshtml" />
+    <Content Include="Views\Saude\EditarEvento.cshtml" />
+    <Content Include="Views\Saude\criarClinica.cshtml" />
+    <Content Include="Views\Saude\CarregarFotosClinica.cshtml" />
+    <Content Include="Views\Saude\_Clinicas.cshtml" />
+    <Content Include="Views\Saude\EditarClinica.cshtml" />
+    <Content Include="Views\Saude\_Farmacias.cshtml" />
+    <Content Include="Views\Saude\criarFarmacia.cshtml" />
+    <Content Include="Views\Saude\EditarFarmacia.cshtml" />
+    <Content Include="Views\Saude\CarregarFotosFarmacia.cshtml" />
+    <Content Include="Views\PubSaude\Index.cshtml" />
+    <Content Include="Views\PubSaude\Hospitais.cshtml" />
+    <Content Include="Views\PubSaude\Clinicas.cshtml" />
+    <Content Include="Views\PubSaude\Farmacias.cshtml" />
+    <Content Include="Views\PubSaude\Hospital.cshtml" />
+    <Content Include="Views\PubSaude\Clinica.cshtml" />
+    <Content Include="Views\PubSaude\Farmacia.cshtml" />
+    <Content Include="Views\Shared\_TurismoComentario.cshtml" />
+    <Content Include="Views\Turismo\Detalhes.cshtml" />
+    <Content Include="Views\ServicoMussika\Index.cshtml" />
+    <Content Include="Views\ServicoMussika\Academico.cshtml" />
+    <Content Include="Views\ServicoMussika\Televisao.cshtml" />
+    <Content Include="Views\arte_cultura\Artistas.cshtml" />
+    <Content Include="Views\ShopMussika\Loja_Shop.cshtml" />
+    <Content Include="Views\PubShopMussika\Loja_Shop.cshtml" />
+    <Content Include="Views\PubShopMussika\lojas.cshtml" />
+    <Content Include="Views\Loja\Index.cshtml" />
+    <Content Include="Views\Loja\criar.cshtml" />
+    <Content Include="Views\Loja\CarregarFotos.cshtml" />
+    <Content Include="Views\Loja\EditarLoja.cshtml" />
+    <Content Include="Views\Loja\Produtos.cshtml" />
+    <Content Include="Views\Loja\CriarProduto.cshtml" />
+    <Content Include="Views\Loja\CarregarFotosProduto.cshtml" />
+    <Content Include="Views\Loja\EditarProduto.cshtml" />
+    <Content Include="Views\PubShopMussika\Detalhes_loja.cshtml" />
+    <Content Include="Views\PubShopMussika\Produtos.cshtml" />
+    <Content Include="Views\PubShopMussika\DetalhesProduto.cshtml" />
+    <Content Include="Views\Inicio\Pesquisar.cshtml" />
+    <Content Include="Views\servico_taxi\Index.cshtml" />
+    <Content Include="Views\PubArte\Index.cshtml" />
+    <Content Include="Views\PubMusica\Index.cshtml" />
+    <Content Include="Views\PubMusica\Albuns.cshtml" />
+    <Content Include="Views\PubMusica\MusicasDiversas.cshtml" />
+    <Content Include="Views\Eventos\categorias.cshtml" />
+    <Content Include="Views\Turismo\categorias.cshtml" />
+    <Content Include="Views\ServicoMussika\AguaEnergia.cshtml" />
+    <Content Include="Views\Saude\farmaciaProduto.cshtml" />
+    <Content Include="Views\Saude\CriarProdutoFarmacia.cshtml" />
+    <Content Include="Views\Saude\CarregarFotosProdutoFarmacia.cshtml" />
+    <Content Include="Views\Saude\EditarProduto.cshtml" />
+    <Content Include="Views\PubSaude\FarmaciasProdutos.cshtml" />
+    <Content Include="Views\PubSaude\DetalhesProduto.cshtml" />
+    <Content Include="Views\Restaurante\pratos.cshtml" />
+    <Content Include="Views\Restaurante\CriarPrato.cshtml" />
+    <Content Include="Views\Restaurante\CarregarFotosRestaurantePrato.cshtml" />
+    <Content Include="Views\Restaurante\EditarProduto.cshtml" />
+    <Content Include="Views\PubRestaurante\pratos.cshtml" />
+    <Content Include="Views\PubRestaurante\DetalhesPrato.cshtml" />
+    <Content Include="Views\Pagamento\Index.cshtml" />
+    <Content Include="Views\PubAcomodacao\Categorias.cshtml" />
+    <Content Include="Views\arte_cultura\Cinema.cshtml" />
+    <Content Include="Views\Filme\Index.cshtml" />
+    <Content Include="Views\Filme\Criar.cshtml" />
+    <Content Include="Views\Filme\AddCategorias.cshtml" />
+    <Content Include="Views\Filme\CarregarFotos.cshtml" />
+    <Content Include="Views\Filme\EditarFilme.cshtml" />
+    <Content Include="Views\Cinema\Index.cshtml" />
+    <Content Include="Views\Cinema\criar.cshtml" />
+    <Content Include="Views\Cinema\CarregarFotos.cshtml" />
+    <Content Include="Views\Cinema\EditarEvento.cshtml" />
+    <Content Include="Views\PubCinema\Filmes.cshtml" />
+    <Content Include="Views\PubCinema\DetalhesFilme.cshtml" />
+    <Content Include="Views\CarrinhoCompra\factura_recibo.cshtml" />
+    <Content Include="Views\Cinema\sessoes.cshtml" />
+    <Content Include="Views\Cinema\criarSessao.cshtml" />
+    <Content Include="Views\Cinema\addFilme.cshtml" />
+    <Content Include="Views\Cinema\EditarSessao.cshtml" />
+    <Content Include="Views\PubCinema\Salas.cshtml" />
+    <Content Include="Views\PubCinema\DetalhesSala.cshtml" />
+    <Content Include="Views\PubCinema\DetalheSessao.cshtml" />
+    <Content Include="Views\Musica\UploadMusica.cshtml" />
+    <Content Include="Views\Pagamento\Televisao.cshtml" />
+    <Content Include="Views\Pagamento\Energia.cshtml" />
+    <Content Include="Views\servico_taxi\solicitar.cshtml" />
+    <Content Include="Views\Inicio\perfil.cshtml" />
+    <Content Include="Views\Shared\_LayoutPerfil.cshtml" />
+    <Content Include="Views\Pagamento\ProdutosComEntrega.cshtml" />
+    <Content Include="Views\PubSaude\marcaConsulta.cshtml" />
+    <Content Include="Views\PubMusica\videos.cshtml" />
+    <Content Include="Views\PubMusica\video.cshtml" />
+    <Content Include="Views\PubMusica\videomusicas.cshtml" />
+    <Content Include="Views\Eventos\academicos.cshtml" />
+    <Content Include="Views\Pagamento\EventoEspectaculo.cshtml" />
+    <Content Include="Views\Pagamento\Mesa.cshtml" />
+    <Content Include="Views\Pagamento\TeatroDanca.cshtml" />
+    <Content Include="Views\PubMusica\AssistirVideo.cshtml" />
+    <Content Include="Views\PubCinema\AssistirFilme.cshtml" />
+    <Content Include="Views\Pagamento\filme.cshtml" />
+    <Content Include="Views\PubMusica\comprarVideo.cshtml" />
+    <Content Include="Views\PubMusica\OuvirAudio.cshtml" />
+    <Content Include="Views\Eventos\CriarSolicitacao.cshtml" />
+    <Content Include="Views\Inicio\mussikaPlay.cshtml" />
+    <Content Include="Views\Inicio\PlayMussika.cshtml" />
+    <Content Include="Views\Inicio\LeitorAudio.cshtml" />
+    <Content Include="Views\vodacom\PagamentoSucesso.cshtml" />
+    <Content Include="Views\PubMusica\PagamentoSucesso.cshtml" />
+    <Content Include="Views\PubMusica\PagamentoFalhou.cshtml" />
+    <Content Include="Views\Login\provedor.cshtml" />
+    <Content Include="Views\Login\provedorCriado.cshtml" />
+    <Content Include="Views\Login\ProvedorInactivo.cshtml" />
+    <Content Include="Views\Usuario\ProvedoresPendentes.cshtml" />
+    <Content Include="Views\Usuario\VerificarServicos.cshtml" />
+    <Content Include="Views\Shared\_LayoutProvedor.cshtml" />
+    <Content Include="Views\Provedor\DashBoard.cshtml" />
+    <Content Include="Views\ProvedorMusica\Index.cshtml" />
+    <Content Include="Views\ProvedorMusica\CriarMusica.cshtml" />
+    <Content Include="Views\ProvedorMusica\CarregarFotos.cshtml" />
+    <Content Include="Views\ProvedorMusica\UploadMusica.cshtml" />
+    <Content Include="Views\ProvedorMusica\EditarMusica.cshtml" />
+    <Content Include="Views\ProvedorMusica\CarregarVideo.cshtml" />
+    <Content Include="Views\Provedor\vendas.cshtml" />
+    <Content Include="Views\ProvedorBazar\Index.cshtml" />
+    <Content Include="Views\ProvedorBazar\CriarArtigo.cshtml" />
+    <Content Include="Views\ProvedorBazar\CarregarFotos.cshtml" />
+    <Content Include="Views\ProvedorBazar\EditarArtigo.cshtml" />
+    <Content Include="Views\ProvedorLoja\Index.cshtml" />
+    <Content Include="Views\ProvedorMusica\CriarAlbum.cshtml" />
+    <Content Include="Views\ProvedorMusica\carregarFotoAlbum.cshtml" />
+    <Content Include="Views\ProvedorMusica\VincularMusicas.cshtml" />
+    <Content Include="Views\PubMusica\AlbumDetalhe.cshtml" />
+    <Content Include="Views\PubMusica\comprarAlbum.cshtml" />
+    <Content Include="Views\Inicio\AssistirLive.cshtml" />
+    <Content Include="Views\ProvedorAcomodacao\Index.cshtml" />
+    <Content Include="Views\ProvedorRestaurante\Index.cshtml" />
+    <Content Include="Views\ProvedorArteCultura\Index.cshtml" />
+    <Content Include="Views\ProvedorEvento\Index.cshtml" />
+    <Content Include="Views\ProvedorEvento\Indexa.cshtml" />
+    <Content Include="Views\ProvedorTurismo\Index.cshtml" />
+    <Content Include="Views\Pagamento\PaymentPage.cshtml" />
+    <Content Include="Views\Pagamento\PagamentoSucesso.cshtml" />
+    <Content Include="Views\Pagamento\paymentGateway.cshtml" />
+    <Content Include="Views\arte_cultura\carregarObra.cshtml" />
+    <Content Include="Views\Inicio\Biblioteca.cshtml" />
+    <Content Include="Views\Pdf\Index.cshtml" />
+    <Content Include="Views\Shared\_layoutPDF.cshtml" />
+    <Content Include="Views\Pdf\Embed.cshtml" />
+    <Content Include="Views\administracao\Compras.cshtml" />
+    <Content Include="Views\administracao\DetalhesCompra.cshtml" />
+    <Content Include="Views\Provedor\DetalhesCompra.cshtml" />
+    <Content Include="Views\ProvedorAcomodacao\Reservas.cshtml" />
+    <Content Include="Views\PubReserva\ProcessarReserva.cshtml" />
+    <Content Include="Views\PubSaude\Consultas.cshtml" />
+    <Content Include="Views\PubSaude\processarConsulta.cshtml" />
+    <Content Include="Views\ProvedorEvento\Bilhetes.cshtml" />
+    <Content Include="Views\Inicio\pagar_subscricao.cshtml" />
+    <Content Include="Views\administracao\subscricoes.cshtml" />
+    <Content Include="Views\Transporte\Index.cshtml" />
+    <Content Include="Views\Transporte\Criar.cshtml" />
+    <Content Include="Views\Transporte\Editar.cshtml" />
+    <Content Include="Views\ProvedorMusica\EditarAlbum.cshtml" />
+    <Content Include="Views\Pagamento\SuccessView.cshtml" />
+    <Content Include="Views\Pagamento\FailureView.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\ej2\compatibility\" />
+    <Folder Include="Repository\android\" />
+    <Folder Include="Repository\images\Acomodacoes\" />
+    <Folder Include="Repository\images\bg\" />
+    <Folder Include="Repository\images\hospitais\" />
+    <Folder Include="Repository\images\MussikaServico\" />
+    <Folder Include="Repository\images\saude\" />
+    <Folder Include="Repository\images\usuario\" />
+    <Folder Include="Repository\obras\" />
+    <Folder Include="Repository\video\" />
+    <Folder Include="Scripts\ej2\" />
+    <Folder Include="Views\Error\" />
+    <Folder Include="Views\Mobile\" />
+    <Folder Include="Views\NewFolder1\" />
+    <Folder Include="Views\Payment\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>34532</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44360/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,288 @@
+﻿@using ASP_Mussika.Models.ViewModel;
+@using ASP_Mussika.Models;
+@model acomodacao_ViewModel
+
+@{
+    ViewBag.Title = "perfil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //List<string> galeria = (List<string>)ViewBag.galeria;
+}
+
+@if (Model.fotos.ToList().Count > 0)
+{
+    <div id="utf_listing_gallery_part" class="utf_listing_section">
+        <div class="utf_listing_slider utf_gallery_container margin-bottom-0">
+            @foreach (string s in Model.fotos)
+                {
+                <a href="@Url.Content(s)" data-background-image="@Url.Content(s) " class="item utf_gallery"></a>
+            }
+
+        </div>
+    </div>
+}
+
+<div class="container">
+    <div class="row utf_sticky_main_wrapper">
+        <div class="col-lg-8 col-md-8">
+            <div id="titlebar" class="utf_listing_titlebar">
+                <div class="utf_listing_titlebar_title">
+                    <h2>@Model.nome <span class="listing-tag">Hotel</span></h2>
+                    <span> <a href="#utf_listing_location" class="listing-address"> <i class="sl sl-icon-location"></i> @Model.endereco</a> </span>
+                    <span class="call_now"><i class="sl sl-icon-phone"></i>@Model.telefone</span>
+                    <div class="utf_star_rating_section" data-rating="@Model.classificao">
+                        <div class="utf_counter_star_rating">(@Model.classificao) / (0 Votos)</div>
+                    </div>
+
+                </div>
+
+                <div id="utf_listing_overview" class="utf_listing_section">
+                    <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">Descrição</h3>
+                    @{ HtmlString hs = new MvcHtmlString(Model.descricao); }
+                    @hs
+                </div>
+
+            </div>
+
+
+            <div id="utf_listing_amenities" class="utf_listing_section">
+                <h3 class="utf_listing_headline_part margin-top-50 margin-bottom-40">Oferecemos</h3>
+                <ul class="utf_listing_features checkboxes margin-top-0">
+
+                    @foreach (string s in Model.servicos)
+                    {
+                        <li>@s</li>
+                    }
+                </ul>
+            </div>
+
+
+            <div id="utf_listing_reviews" class="utf_listing_section">
+                <h3 class="utf_listing_headline_part margin-top-75 margin-bottom-20">Comentários <span>(01)</span></h3>
+                <div class="clearfix"></div>
+                <div class="comments utf_listing_reviews">
+                    <ul>
+                        <li>
+                            <div class="avatar"><img src="images/client-avatar1.jpg" alt="" /></div>
+                            <div class="utf_comment_content">
+                                <div class="utf_arrow_comment"></div>
+                                <div class="utf_star_rating_section" data-rating="5"></div>
+                                <a href="#" class="rate-review">Apoiar <i class="fa fa-thumbs-up"></i></a>
+                                <div class="utf_by_comment">João Paulo<span class="date"><i class="fa fa-clock-o"></i> Jan 05, 2019 - 8:52 am</span> </div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat.</p>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="utf_pagination_container_part margin-top-30">
+                            <nav class="pagination">
+                                <ul>
+                                    <li><a href="#"><i class="sl sl-icon-arrow-left"></i></a></li>
+                                    <li><a href="#" class="current-page">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            @* comentario *@
+            <div id="utf_add_review" class="utf_add_review-box">
+                <h3 class="utf_listing_headline_part margin-bottom-20">Enviar Comentário</h3>
+                <span class="utf_leave_rating_title">O seu e-mail não será divulgado.</span>
+                <div id="classificacao_form">
+                    @Html.Partial("~/Views/acomodacao/Partials/classificacao_comentario_partial.cshtml")
+                </div>
+                <form id="utf_add_comment" class="utf_add_comment">
+                    <div id="enviar_comentario_form">
+                        @Html.Partial("~/Views/acomodacao/Partials/enviar_comentario_partial.cshtml")
+                    </div>
+                    <button class="button">Enviar Comentário</button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4 col-md-4 margin-top-75 sidebar-search">
+            @*<div class="verified-badge with-tip margin-bottom-30" data-tip-content="Listing has been verified and belongs business owner or manager."> <i class="sl sl-icon-check"></i> Now Available</div>*@
+            <div class="utf_box_widget booking_widget_box">
+                <h3><i class="fa fa-calendar"></i> Reservas</h3>
+                <div class="row with-forms margin-top-0">
+
+                    <div class="col-lg-12 col-md-12">
+                        <h5>Chegada</h5>
+                        <input type="date" id="txt_checkin" placeholder="Check-In">
+                    </div>
+
+                    <div class="col-lg-12 col-md-12">
+                        <h5>Saída</h5>
+                        <input type="date" id="txt_checkout" placeholder="Check-Out">
+                    </div>
+
+                </div>
+                <button id="btn_reservar" class="utf_progress_button button fullwidth_block margin-top-5" type="submit">Marcar Reserva <i class="fa fa-check"></i> </button>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="utf_box_widget opening-hours margin-top-35">
+                <h3><i class="sl sl-icon-envelope-open"></i> Escreva-nos </h3>
+                <form id="contactform">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input name="name" type="text" placeholder="Nome" required="">
+                        </div>
+                        <div class="col-md-12">
+                            <input name="email" type="email" placeholder="Email" required="">
+                        </div>
+                        <div class="col-md-12">
+                            <input name="phone" type="text" placeholder="Telefone" required="">
+                        </div>
+                        <div class="col-md-12">
+                            <textarea name="comments" cols="40" rows="2" id="comments" placeholder="Sua mensagem" required=""></textarea>
+                        </div>
+                    </div>
+                    <input type="submit" class="submit button" id="submit" value="Enviar">
+                </form>
+            </div>
+
+            <div class="utf_box_widget margin-top-35">
+                <h3><i class="sl sl-icon-phone"></i> Contactos</h3>
+
+                <ul class="utf_social_icon rounded margin-top-10">
+                    <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
+                    <li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
+                    <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
+                    <li><a class="linkedin" href="#"><i class="icon-linkedin"></i></a></li>
+                    <li><a class="instagram" href="#"><i class="icon-instagram"></i></a></li>
+                </ul>
+                <ul class="utf_listing_detail_sidebar">
+                    <li><i class="sl sl-icon-map"></i> @Model.endereco</li>
+                    <li><i class="sl sl-icon-phone"></i> @Model.telefone</li>
+                    <li><i class="sl sl-icon-globe"></i> <a href="#">@Model.website</a></li>
+                    <li><i class="fa fa-envelope-o"></i> <a href="mailto:info@example.com">@Model.email</a></li>
+                </ul>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<section class="fullwidth_block padding-top-20 padding-bottom-50">
+    <div class="container">
+        <div class="row slick_carousel_slider">
+            <div class="col-md-12">
+                <h3 class="headline_part centered margin-bottom-25">Lugares Similares</h3>
+            </div>
+
+            <div class="row">
+                @Html.Partial("~/Views/Inicio/Partials/_SlideMaisVisitados.cshtml")
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+@section Scripts
+{
+
+
+    <script>
+
+
+        $(document).ready(function () {
+
+            $("#btn_reservar").click(function () {
+                var dckin = $("#txt_checkin").val();
+                var dckout = $("#txt_checkout").val();
+
+                window.location.href = '@Url.Content("/acomodacao/disponibilidade_quarto")?schekin=' + @DateTime.Now + '&scheckout=' + @DateTime.Now.AddDays(5) + '&id_acomodacao=@Model.id';
+            });
+        });
+
+
+
+    </script>
+
+
+
+
+
+    <!-- Maps -->
+    <script src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
+    <script src="~/Content/library/scripts/infobox.min.js"></script>
+    <script src="~/Content/library/scripts/markerclusterer.js"></script>
+    <script src="~/Content/library/scripts/maps.js"></script>
+    <script src="~/Content/library/scripts/quantityButtons.js"></script>
+    <script src="~/Content/library/scripts/moment.min.js"></script>
+    <script src="~/Content/library/scripts/daterangepicker.js"></script>
+    <script>
+        $(function () {
+            $('#date-picker').daterangepicker({
+                "opens": "left",
+                singleDatePicker: true,
+                isInvalidDate: function (date) {
+                    var disabled_start = moment('09/02/2018', 'MM/DD/YYYY');
+                    var disabled_end = moment('09/06/2018', 'MM/DD/YYYY');
+                    return date.isAfter(disabled_start) && date.isBefore(disabled_end);
+                }
+            });
+        });
+
+        $('#date-picker').on('showCalendar.daterangepicker', function (ev, picker) {
+            $('.daterangepicker').addClass('calendar-animated');
+        });
+        $('#date-picker').on('show.daterangepicker', function (ev, picker) {
+            $('.daterangepicker').addClass('calendar-visible');
+            $('.daterangepicker').removeClass('calendar-hidden');
+        });
+        $('#date-picker').on('hide.daterangepicker', function (ev, picker) {
+            $('.daterangepicker').removeClass('calendar-visible');
+            $('.daterangepicker').addClass('calendar-hidden');
+        });
+
+        function close_panel_dropdown() {
+            $('.panel-dropdown').removeClass("active");
+            $('.fs-inner-container.content').removeClass("faded-out");
+        }
+        $('.panel-dropdown a').on('click', function (e) {
+            if ($(this).parent().is(".active")) {
+                close_panel_dropdown();
+            } else {
+                close_panel_dropdown();
+                $(this).parent().addClass('active');
+                $('.fs-inner-container.content').addClass("faded-out");
+            }
+            e.preventDefault();
+        });
+        $('.panel-buttons button').on('click', function (e) {
+            $('.panel-dropdown').removeClass('active');
+            $('.fs-inner-container.content').removeClass("faded-out");
+        });
+        var mouse_is_inside = false;
+        $('.panel-dropdown').hover(function () {
+            mouse_is_inside = true;
+        }, function () {
+            mouse_is_inside = false;
+        });
+        $("body").mouseup(function () {
+            if (!mouse_is_inside) close_panel_dropdown();
+        });
+
+
+
+
+
+
+    </script>
+}

@@ -1,0 +1,156 @@
+﻿@model ASP_Mussika.Models.clinica
+@{
+    ViewBag.Title = "marcaConsulta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+<div id="titlebar" class="gradient">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Marcação de Consulta</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="/inicio/Principal">Inicio</a></li>
+                        <li>Marcação Consulta</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container margin-bottom-75">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 utf_listing_payment_section">
+            <div class="utf_booking_listing_section_form margin-bottom-40">
+                <h3><i class="sl sl-icon-paper-plane"></i> Informações do Paciente</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Nome do Paciente</label>
+                        <input type="text" value="" id="paciente" placeholder="Nome do Paciente">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Endereço</label>
+                        <input type="text" value="" id="endereco" placeholder="Endereço">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="medium-icons">
+                            <label>Idade</label>
+                            <input type="text" value="" id="idade" placeholder="Idade">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-6">
+                            <div class="medium-icons">
+                                <label>Dia Consulta</label>
+                                <input type="text" value="" id="dia" placeholder="10/10/20">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="medium-icons">
+                                <label>Hora Consulta</label>
+                                <input type="text" value="" id="hora" placeholder="00:00">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Descrição dos Sintomas</label>
+                        <textarea name="descricao" cols="40" rows="7" id="sintomas" placeholder="Descrição dos Sintomas..." spellcheck="true"></textarea>
+                    </div>
+
+                </div>
+                <a href="javascript:solicitar()" class="button utf_booking_confirmation_button margin-top-20 margin-bottom-10">Marcar Consulta</a>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    function solicitar() {
+        if ($("#paciente").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o nome do paciente");
+            throw new Error();
+        }
+        if ($("#dia").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o dia");
+            throw new Error();
+        }
+        if ($("#hora").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe a hora");
+            throw new Error();
+        }
+        if ($("#endereco").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o endereco");
+            throw new Error();
+        }
+        if ($("#idade").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe a idade");
+            throw new Error();
+        }
+        if ($("#sintomas").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe os sintomas");
+            throw new Error();
+        }
+        salvar();
+    }
+    function salvar() {
+     
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('nome_paciente', $("#paciente").val());
+        model.append('enedereco', $("#endereco").val());
+        model.append('idade', $("#idade").val());
+        model.append('sintomas', $("#sintomas").val());
+        model.append('dia', $("#dia").val());
+        model.append('hora', $("#hora").val());
+        model.append('centro', @ViewBag.centro);
+        model.append('clinica', true);
+        model.append('hospital', false);
+
+
+
+
+
+        $.ajax({
+            method: "POST",
+            url: "/PubSaude/salvarConsulta",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar esta consulta");
+
+
+                }
+                else {
+                    $.LoadingOverlay("hide", true);
+                     location.href = '/Pagamento/paymentGateway?oque=clinica&id_produto=@Model.id';
+                    $('.with-forms').find("input[type=text], textarea").val("");
+                   
+                }
+
+            });
+
+
+     
+
+    }
+</script>

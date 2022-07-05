@@ -1,0 +1,50 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.DistritoViewModel>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Distritos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container padding-bottom-70">
+    <div class="row">
+        <div class="col-md-12">
+          
+
+            <h3 class="headline_part centered margin-bottom-35 margin-top-70">Distritos de Zambézia</h3>
+        </div>
+
+        @foreach (var d in Model)
+        {
+            <div class="col-md-3">
+                <a href="@Url.Action("perfil", "PubDistrito", new { id = d.id })" class="img-box" data-background-image="../Repository/images/distritos/@d.foto_capa">
+                    <div class="utf_img_content_box visible">
+                        <h4>@d.nome</h4>
+                    </div>
+                </a>
+            </div>
+
+        }
+
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="row">
+
+        <div id="div_paginas" style="margin-top:-50px;" class="col-md-12">
+            <div class="utf_pagination_container_part margin-top-20 margin-bottom-70">
+                <nav class="pagination">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                    @Html.PagedListPager(Model, page => Url.Action("Distritos",
+                            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

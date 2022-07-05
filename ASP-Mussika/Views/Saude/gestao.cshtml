@@ -1,0 +1,161 @@
+﻿
+@{
+    ViewBag.Title = "gestao";
+    Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+}
+
+    <div class="row">
+        <div class="col-md-9">
+            <div class="notification notice closeable margin-bottom-30">
+                <h2>Administração de <strong>Hospitais, Clinicas, e Farmácias</strong></h2>
+                @*<p>Gerenciamento de <strong>Obras e Artes</strong>!</p>*@
+                <a class="close" href="#"></a>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="row">
+            <div class="col-md-10">              
+                <div class="style-2 element_tab">
+                    <ul class="utf_tabs_nav">
+                        <li id="tabb1" class="active" ><a href="#tab1a"><i class="sl sl-icon-heart"></i> Hospitais</a></li>
+                        <li id="tabb2" ><a href="#tab2a"><i class="sl sl-icon-support"></i> Clinicas</a></li>
+                        <li id="tabb3"><a href="#tab3a"><i class="sl sl-icon-handbag"></i> Farmácias</a></li>
+                        
+                    </ul>
+                    <div class="tab_container">
+                        <div class="tab_content" id="tab1a">
+                            <button id="btnNovaAcomodacao" onclick="location.href='/saude/criar'" style="margin-bottom:20px;background-color:#3184ae;" class="button gray">Novo Hospital</button>
+                            <table id="example" class="display" style="width:100%;" >
+                                <thead style="background-color:#3184ae; ">
+                                    <tr>
+                                        <th style="color:white">Codigo</th>
+                                        <th style="color:white">Nome </th>
+                                        <th style="color:white">Distrito</th>
+                                        <th style="color:white">Bairro</th>
+                                        
+
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Codigo</th>
+                                        <th>Nome</th>
+                                        <th>Distrito</th>
+                                        <th>Bairro</th>
+                                        
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="tab_content" id="tab2a">
+                            <button id="btnNovaAcomodacao" onclick="location.href='/saude/criarClinica'" style="margin-bottom:20px;background-color:#8431ae" class="button gray">Nova Clinica</button>
+                            
+                            @{Html.RenderAction("Clinicas", "Saude");}
+                            @*, new { id = Model.id }*@
+                        </div>
+                        <div class="tab_content" id="tab3a">
+                            <button id="btnNovaAcomodacao" onclick="location.href='/saude/criarFarmacia'" style="margin-bottom:20px;background-color:#dc640e" class="button gray">Nova Farmácia</button>
+                            @{Html.RenderAction("Farmacias", "Saude");}
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+   <script>
+      
+       /////////////////////// Hospital //////////////////////////////////
+        $(function () {
+        $('#example').DataTable({
+
+            "lengthChange": false,
+            "scrollY": 300,
+            "autoWidth": true,
+            "scrollX": true,
+            "processing": true,
+            "serverSide": true,
+            "responsive": true,
+            "filter": true,
+            "orderMulti": true,
+            "ajax": {
+                "url": "/Saude/carregarTabelaHospitaisByAjax",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "id" },
+
+
+                { "data": "nome" },
+
+                { "data": "nome_distrito" },
+
+                { "data": "bairro" },
+               
+               
+            ],
+            //Descricao
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                //$('td:eq(0)', nRow).html("<a href='javascript:ver('" + aData.id + "')' class='button gray'><i class='fa fa-eye'></i> Ver/Editar</a> ");
+                $('td:eq(0)', nRow).html("<a href='javascript:void(0);' ><button type='button'  id='editar'  class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.id + "') > Editar Hospital</button></a>");
+                //$('td:eq(1)', nRow).html("<a href='javascript:void(0);' ><button type='button' id='ver' class='btn btn-icons btn-sm btn-primary'onclick=verProduto('" + aData.id_produto + "')></button>|<button type='button'  id='editar' class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.idproduto + "') ></button></a>");
+                //$('td:eq(10)', nRow).html("<a href='javascript:void(0);' onclick=alert('" + aData.FuncionarioId + "')><button type='button' class='btn btn-icons btn-rounded btn-warning'><i class='fa fa-edit'></i></button></a>");
+                //$('td:eq(3)', nRow).html("<a href='javascript:void(0);' onclick=apagar('" + aData.IdCategoria + "')><button type='button' class='btn btn-icons btn-rounded btn-danger'><i class='fa fa-trash'></i></button></a>");
+                return nRow;
+            },
+        });
+    });
+
+       
+  
+    var editar = function (id) {
+        $.LoadingOverlay("show");
+
+        // Hide it after 3 seconds
+        setTimeout(function () {
+            window.location.href = '/Saude/EditarEvento?id=' + id;
+            $.LoadingOverlay("hide");
+
+        }, 2000);
+
+       }
+       /////////////////////// Hospital //////////////////////////////////
+
+        /////////////////////// clinica //////////////////////////////////
+       
+
+  
+    var editarClinica = function (id) {
+        $.LoadingOverlay("show");
+
+        // Hide it after 3 seconds
+        setTimeout(function () {
+            window.location.href = '/Saude/EditarEvento?id=' + id;
+            $.LoadingOverlay("hide");
+
+        }, 2000);
+
+       }
+       /////////////////////// clinica //////////////////////////////////
+
+        /////////////////////// farmacia //////////////////////////////////
+        
+
+  
+    var editarClinica = function (id) {
+        $.LoadingOverlay("show");
+
+        // Hide it after 3 seconds
+        setTimeout(function () {
+            window.location.href = '/Saude/EditarEvento?id=' + id;
+            $.LoadingOverlay("hide");
+
+        }, 2000);
+
+       }
+       /////////////////////// farmacia //////////////////////////////////
+   </script>

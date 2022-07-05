@@ -1,0 +1,176 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.CompraViewModel>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Compras";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-lg-12 col-md-12" style="padding-left:60px;padding-right:60px">
+        <div class="margin-top-0">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="utf_dashboard_block_part color-1">
+                        <div class="utf_dashboard_ic_stat"><i class="fa fa-money"></i></div>
+                        <div class="utf_dashboard_content_part utf_wallet_totals_item">
+                            <h4>@ViewBag.numero_vendas</h4>
+                            <span>Quantidade Vendas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                        <div class="utf_dashboard_block_part color-2">
+                            <div class="utf_dashboard_ic_stat"><i class="sl sl-icon-wallet"></i></div>
+                            <div class="utf_dashboard_content_part utf_wallet_totals_item">
+                                <h4>@ViewBag.total_receber</h4>
+                                <span>Total vendido(MT)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                @*<div class="col-lg-3 col-md-6">
+                        <div class="utf_dashboard_block_part color-3">
+                            <div class="utf_dashboard_ic_stat"><i class="sl sl-icon-list"></i></div>
+                            <div class="utf_dashboard_content_part">
+                                <h4>0</h4>
+                                <span>Itens no Carrinho de Compra</span>
+                            </div>
+                        </div>
+                    </div>*@
+
+                @*<div class="col-lg-3 col-md-6">
+                        <div class="utf_dashboard_block_part color-4">
+                            <div class="utf_dashboard_ic_stat"><i class="sl sl-icon-basket"></i></div>
+                            <div class="utf_dashboard_content_part">
+                                <h4>0</h4>
+                                <span>Total de Itens Comprados</span>
+                            </div>
+                        </div>
+                    </div>*@
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .select2-selection__rendered {
+        line-height: 46px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 50px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 50px !important;
+    }
+</style>
+<div class="row ">
+    <div class="col-md-1">
+
+    </div>
+    @*<div class="col-md-4 center">
+        <h5><strong>Filtro por N:</strong></h5>
+        <input type="text" name="filtro" id="filtro" placeholder="Digite o nome da Loja..." value="">
+    </div>*@
+<div class="col-md-6" style="margin-top:30px;">
+    <h5><strong>Filtro por Provedor:</strong></h5>
+    <select id="filtroCategorias" data-placeholder="Seleccione/Pesquise um Provedor:" style="height:100px;" class="js-example-basic-single" name="state">
+        <option value="0">--Todos--</option>
+        @foreach (var item in ViewBag.provedores)
+            {
+                <option value="@item.idusario">@item.usuario1</option>
+            }
+
+    </select>
+</div>
+    <div class="col-md-2">
+        <a href="javascript:pesquisar()" style="margin-top:65px;" class="button gray"><i class="fa fa-search"></i> Pesquisar</a>
+    </div>
+    <div class="col-md-1">
+
+    </div>
+
+</div>
+<div class="col-lg-12 col-md-12 mb-4">
+    <div class="utf_dashboard_list_box table-responsive ">
+        <h4>Lista de vendas/Reservas/Encomendas Efectuadas </h4>
+        <div class="dashboard-list-box table-responsive invoices with-icons">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+
+                        <th>Nome</th>
+                        <th>Data</th>
+                        <th>Meio</th>
+                        <th>Estado</th>
+                        <th>Provedor Pago</th>
+                        <th>Accao</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@item.id_compra</td>
+                        <td>@item.descricao</td>
+                        <td>@item.data_cadastro.Value.ToString("dd-MM-yyyy")</td>
+                        <td>@item.modo_pagamento</td>
+                        <td><span class="badge badge-pill badge-primary text-uppercase">Confirmado</span></td>
+                        @if (item.provedor_pago == true)
+                        {
+                            <td class="text-center"><span class="badge badge-pill badge-primary text-uppercase">SIM</span></td>
+                        }
+                        else
+                        {
+                            <td class="text-center"><span class="badge badge-pill badge-danger text-uppercase">NÃO</span></td>
+                        }
+
+                        <td><a href="javascript:/administracao/DetalhesCompra?id=@item.id_compra'" onclick="location.href='/administracao/DetalhesCompra?id=@item.id_compra'" class="button gray"><i class="fa fa-eye"></i> Ver</a></td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="utf_pagination_container_part margin-top-20 margin-bottom-75">
+                <nav class="pagination">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                    @Html.PagedListPager(Model, page => Url.Action("Compras",
+                            new { page }))
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script>
+     $(document).ready(function () {
+
+        $('.js-example-basic-single').select2({
+            placeholder: "Seleccione o Provedor",
+            allowClear: true
+
+        });
+
+
+    });
+    $("#filtroCategorias").val('@ViewBag.distrito')
+     function pesquisar() {
+         $.LoadingOverlay("show");
+         location.href = '/administracao/Compras?id_provedor='+$("#filtroCategorias").val();
+
+    }
+</script>

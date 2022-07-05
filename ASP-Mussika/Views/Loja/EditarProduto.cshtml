@@ -1,0 +1,198 @@
+﻿@model ASP_Mussika.Models.loja_produto
+
+@{
+    ViewBag.Title = "EditarProduto";
+    Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+}
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-tag"></i>Dados do Produto</h3>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-4">
+            <div class="col-md-12" id="divRestaurante">
+                <h5>Nome do Produto<strong style="color:orangered">*</strong></h5>
+                <input type="text" class="search-field" name="nomeRestaurante" id="nomeRestaurante" placeholder="Produto" value="@Model.nome">
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <h5>Categoria<strong style="color:orangered">*</strong></h5>
+            @Html.DropDownListFor(m => m.categoria, ViewBag.categorias as SelectList, "--seleccione uma Categoria--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%;", @id = "categoria", @name = "id" })
+
+        </div>
+        <div class="col-md-4">
+            <h5>Preço Venda<strong style="color:orangered">*</strong></h5>
+            <input type="text" class="search-field" name="preco" id="preco" placeholder="Preço venda" value="@Model.preco_venda">
+
+        </div>
+        
+    </div>
+    <div class="row with-forms">
+       
+        <div class="col-md-4">
+            <h5>Peso(KG)<strong style="color:orangered">*</strong></h5>
+            <input type="number" min="0" class="search-field" name="peso" id="peso" placeholder="Ex: 10" value="@Model.peso">
+
+        </div>
+    </div>
+
+
+</div>
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-picture"></i> Descrição</h3>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-12">
+            <h5>Descrição</h5>
+            @{var de_ = @Html.Raw(HttpUtility.HtmlDecode(Model.descricao));
+
+                var html_descricao = new HtmlString(de_.ToHtmlString());
+            }
+        <textarea name="descricao" cols="40" rows="3" id="descricao1" placeholder="Descrição..." spellcheck="true">@html_descricao</textarea>
+        </div>
+
+    </div>
+</div>
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-docs"></i> Outros Detalhes </h3>
+    </div>
+    <div class="checkboxes in-row amenities_checkbox">
+        <ul>
+            <li>
+                <input id="check-g1" type="checkbox" name="check">
+                <label for="check-g1">É Serviço</label>
+            </li>
+            <li>
+                <input id="check-a1" type="checkbox" name="check">
+                <label for="check-a1">Inactivo</label>
+            </li>
+
+        </ul>
+    </div>
+    <button id="btnSalvar" style="margin-top:40px; margin-bottom:30px;" class="button btn-sm">Prosseguir</button>
+</div>
+
+
+
+
+<script>
+    $(document).ready(function () {
+          $("#categoria").val('@ViewBag.catPro')
+          $("#check-a1").prop("checked",@Model.inactivo.ToString().ToLower());
+          $("#check-g1").prop("checked",@Model.e_servico.ToString().ToLower());
+       
+    });
+    $('#telefone').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+
+    $('#preco').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+    $('#peso').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+
+    $("#btnSalvar").click(function () {
+
+        $.LoadingOverlay("show");
+        verficarForm();
+    })
+
+    function verficarForm() {
+
+        if ($("#nomeRestaurante").val() === '') {
+            $.LoadingOverlay("hide", true);
+            informarErro("Por favor informe o nome da Loja");
+
+            throw new Error("nomeRestauranteInvalido");
+        }
+
+
+        if ($("#preco").val().trim() == '') {
+            $.LoadingOverlay("hide", true);
+            informarErro("Por favor informe o preco");
+
+            throw new Error("nomeDistritoInvalido");
+        }
+        if ($("#peso").val().trim() == '') {
+            $.LoadingOverlay("hide", true);
+            informarErro("Por favor informe o peso");
+
+            throw new Error("peso");
+        }
+        if ($("#categoria").val().trim() == '') {
+            $.LoadingOverlay("hide", true);
+            informarErro("Por favor informe a categoria");
+
+            throw new Error("nomeDistritoInvalido");
+        }
+
+    }
+
+
+
+
+    $("#btnSalvar").click(function () {
+        debugger
+
+    var content =  tinyMCE.activeEditor.getContent();
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('id', '@Model.id');
+        model.append('id_loja', '@Model.id_loja');
+        model.append('nome', $("#nomeRestaurante").val());
+        model.append('preco_venda', $("#preco").val());
+        model.append('categoria', $("#categoria").val());
+        model.append('peso', $("#peso").val());
+        model.append('e_servico', $("#check-g1").prop("checked"));
+        model.append('inactivo', $("#check-a1").prop("checked"));
+        model.append('descricao', content.trim());
+       
+
+
+        $.ajax({
+            method: "POST",
+            url: "/Loja/SalvarProduto",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar este Produto");
+
+
+                }
+                else {
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/Loja/CarregarFotosProduto?id=' + msg;
+                    $('.with-forms').find("input[type=text], textarea").val("");
+                    //Dropzone.forElement('#filedrop').removeAllFiles(true)
+                    podeCadastrar = false;
+                }
+
+            });
+
+
+
+
+    });
+</script>
+

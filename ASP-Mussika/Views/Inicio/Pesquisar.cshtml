@@ -1,0 +1,131 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.pesquisaViewModel>
+
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Pesquisar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row utf_sticky_main_wrapper">
+        <div class="col-lg-8 col-md-8">
+
+            <div id="titlebar" class="utf_listing_titlebar">
+                <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">Resultados Encontrados </h3>
+
+                <div class="listing_filter_block">
+                    <div class="col-md-2 col-xs-2">
+                        <div class="utf_layout_nav"> <a href="#" class="grid active"><i class="fa fa-search"></i></a> </div>
+                    </div>
+                    <div class="col-md-10 col-xs-10">
+                        @*<div class="sort-by utf_panel_dropdown sort_by_margin float-right">
+                                <a href="#">Destination</a>
+                                <div class="utf_panel_dropdown-content">
+                                    <input class="distance-radius" type="range" min="1" max="999" step="1" value="1" data-title="Select Range">
+                                    <div class="panel-buttons">
+                                        <button class="panel-apply">Apply</button>
+                                    </div>
+                                </div>
+                            </div>*@
+                        @*<div class="sort-by">
+                            <div class="utf_sort_by_select_item sort_by_margin">
+                                <select id="cmb_perpage" data-placeholder="Sort by Listing" class="utf_chosen_select_single cmb_sortby ">
+                                    <option value="2">2 reg. p/página</option>
+                                    <option value="4">4 reg. p/página</option>
+                                    <option selected="selected" value="6">6 reg. p/página</option>
+                                    <option value="8">8 reg. p/página</option>
+                                </select>
+                            </div>
+                        </div>*@
+                        @*<div class="sort-by">
+                                <div class="utf_sort_by_select_item sort_by_margin">
+                                    <select id="cmb_categoria" data-placeholder="Categories:" class="utf_chosen_select_single cmb_sortby">
+                                        <option value="0">Todas Categorias</option>
+                                        @foreach (servico_categoria sc in categorias)
+                                        {
+                                            <option value="@sc.id">@sc.nome</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>*@
+                        @*<div class="sort-by">
+                            <div class="utf_sort_by_select_item sort_by_margin">
+                                <select id="cmb_distrito" data-placeholder="Categories:" class="utf_chosen_select_single cmb_sortby">
+                                    <option value="0">Todos Distritos</option>
+                                    @foreach (distrito sc in distritos)
+                                    {
+                                        <option value="@sc.id">@sc.nome</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>*@
+                        <div class="sort-by">
+                                <div class="utf_sort_by_select_item utf_search_map_section">
+                                    <ul>
+                                        <li><a class="utf_common_button" href="/inicio/principal"><i class="fa fa-dot-circle-o"></i>Voltar para Filtro</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <p>
+                    <i class="fa fa-align-justify"></i> Apresentar resultados para: @ViewBag.filtro
+                    <hr />
+                </p>
+
+
+                <div id="div_servicos">
+                    <div class="row">
+                        <ul>
+                            @foreach (var item in Model)
+                            {
+                                <li>
+                                    <a href="@item.endereco">
+                                        <div class="utf_list_box_listing_item">
+
+                                           
+                                            <div class="utf_list_box_listing_item-img"><img src="@item.foto" alt=""></div>
+                                            <div class="utf_list_box_listing_item_content">
+                                                <div class="inner">
+                                                    <h3>@item.nome</h3>
+                                                    <span><i class="im im-icon-Link"></i> <u><a href="@item.endereco">  @item.endereco</a> </u> </span><br />
+                                                    @{ var html_descricao = new HtmlString(item.descricao); }
+                                                <span><i class="sl sl-icon-docs"></i> @html_descricao</span><br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+
+                            }
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Sidebar -->
+        @Html.Partial("~/Views/Inicio/Partials/_RightSideBar.cshtml")
+    </div>
+</div>
+
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="utf_pagination_container_part margin-top-20 margin-bottom-70">
+            <nav class="pagination">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action("Pesquisar",
+                            new { page, filtro= ViewBag.filtro, distrito= ViewBag.distrito,categoria= ViewBag.categoria }))
+            </nav>
+        </div>
+    </div>
+</div>

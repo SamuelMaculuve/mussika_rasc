@@ -1,0 +1,9 @@
+{
+    "php.validate.executablePath": "C:\\xampp\\php\\php.exe",
+    "composer.executablePath": "C:\\xampp\\htdocs\\mpesa\\composer.bat",
+    "composer.workingPath": "C:\\xampp\\htdocs\\mpesa",
+    "launch": {
+        
+    
+    }
+}

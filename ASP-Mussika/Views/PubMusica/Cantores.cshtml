@@ -1,0 +1,83 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.artista_obra>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Cantores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+ 
+<div class="container padding-bottom-70">
+    <div class="row">
+        <div class="col-md-12">
+
+
+            <h3 class="headline_part centered margin-bottom-35 margin-top-70">Artistas</h3>
+            <div class="row ">
+                <div class="col-md-1">
+
+                </div>
+                <div class="col-md-4 center">
+                    <h5><strong>Filtro por Nome:</strong></h5>
+                    <input type="text" name="filtro" id="filtro" placeholder="Digite o nome da Música..." value="@ViewBag.filtro">
+                </div>
+                @*<div class="col-md-3" style="margin-top:30px;">
+                    <select id="filtroCategorias" data-placeholder="Categorias:" class="utf_chosen_select_single">
+                        <option value="">--Selecione a Categoria--</option>
+                        @foreach (var item in ViewBag.categorias)
+                        {
+                            <option value="@item.id">@item.descricao</option>
+                        }
+
+                    </select>
+                </div>*@
+                <div class="col-md-2">
+                    <a href="javascript:pesquisar()" style="margin-top:30px;" class="button gray"><i class="fa fa-search"></i> Pesquisar</a>
+                </div>
+                <div class="col-md-1">
+
+                </div>
+
+            </div>
+        </div>
+
+        @foreach (var d in Model)
+        {
+            <div class="col-md-3">
+                <a href="@Url.Action("Musicas", "PubMusica", new { cantor = d.id })" class="img-box" data-background-image="../Repository/images/ArteCultura/@d.fotografia">
+                    <div class="utf_img_content_box visible">
+                        <h4>@d.nome</h4>
+                    </div>
+                </a>
+            </div>
+
+        }
+
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="row">
+
+        <div id="div_paginas" style="margin-top:-50px;" class="col-md-12">
+            <div class="utf_pagination_container_part margin-top-20 margin-bottom-70">
+                <nav class="pagination">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                    @Html.PagedListPager(Model, page => Url.Action("Cantores",
+                            new { page}))
+
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script>
+    $("#filtroCategorias").val('@ViewBag.categoria')
+     function pesquisar() {
+         location.href = '/PubMusica/Cantores?filtro='+$("#filtro").val();
+    }
+</script>

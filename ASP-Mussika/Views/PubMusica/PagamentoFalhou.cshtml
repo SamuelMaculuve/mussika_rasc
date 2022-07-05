@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "PagamentoFalhou";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container margin-bottom-75">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="utf_booking_listing_confirmation_section">
+                    <i class="sl sl-icon-info"></i>
+                    <h2>Houve um erro ao processar o Pagamento!</h2>
+                    <p>Descrição do erro: @ViewBag.erro</p>
+                    <a href="#" onclick="history.back();" class="button margin-top-30">Voltar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+

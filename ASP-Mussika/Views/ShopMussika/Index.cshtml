@@ -1,0 +1,235 @@
+﻿@model ASP_Mussika.Models.ArtigoViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+  
+       <button id="btnNovaAcomodacao" onclick="location.href='/ShopMussika/CriarArtigo'" style="margin-left:20px;" class="button gray">Novo Artigo</button>
+
+</div>
+
+<div class="row" style="margin-top:10px;">
+    <div class="col-md-2">
+        <div class="row">
+            <center><strong>Filtrar Artigos</strong> </center>
+        </div>
+        <div class="row with-forms">
+            <div class="col-md-12">
+                <h5><strong>Distrito</strong></h5>
+                @Html.DropDownListFor(m => m.id_distrito, ViewBag.distritos as SelectList, "-- Distrito--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%;", @id = "nome", @name = "id" })
+            </div>
+
+        </div>
+        <div class="row with-forms">
+            <div class="col-md-12">
+                <h5>Categoria Artigo :</h5>
+                @Html.DropDownListFor(m => m.id_categoria_artigo, ViewBag.categorias as SelectList, "-- Categoria--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%;", @id = "categorias", @name = "id" })
+            </div>
+
+        </div>
+        <div class="row with-forms" style="margin-top:40px;">
+            <div class="col-md-2">
+                <button id="btnPesquisar" class="button btn-sm">Pesquisar</button>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9" style="margin-top:-20px;">
+
+
+
+        <div class="row with-forms">
+            <div class="row" style="margin:20px 40px 20px 0px;">
+                <table id="example" class="display" style="width:100%">
+                    <thead style="background-color:#ff2222; ">
+                        <tr>
+                            <th style="color:white">Codigo</th>
+                            <th style="color:white">Artigo </th>
+                            <th style="color:white">Distrito</th>
+                            <th style="color:white">Categoria</th>
+                            <th style="color:white">Preco Minimo</th>
+                            <th style="color:white">Preco Venda</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Artigo</th>
+                            <th>Distrito</th>
+                            <th>Categoria</th>
+                            <th>Preco Minimo</th>
+                            <th>Preco Venda</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#btnNovaAcomodacao").click(function () {
+            $.LoadingOverlay("show");
+
+            // Hide it after 3 seconds
+            setTimeout(function () {
+                window.location.href = '/acomodacao/criar';
+                $.LoadingOverlay("hide");
+
+            }, 2000);
+
+        })
+
+
+        $("#btnPesquisar").click(function () {
+            $("#example").LoadingOverlay("show");
+            var data = {
+                id_distrito: $("#nome").val(),
+                id_categoria_artigo: $("#categorias").val(),
+            }
+            $.ajax({
+                url: "/ShopMussika/filtrarAcomodacoes",
+                type: "get",
+                data: data,
+                success: function (response) {
+                    if (response != "false") {
+                        $("#example").dataTable().fnDestroy();
+                        $("#example").LoadingOverlay("hide", true);
+                        BindDataTable(response);
+                    } else {
+                        $("#example").LoadingOverlay("hide", true);
+                        informarErro("Ocorreu um erro ao processar o pedido");
+                    }
+                },
+                error: function () {
+                    $("#example").LoadingOverlay("hide", true);
+                    informarErro("Ocorreu um erro ao processar o pedido");
+                }
+            })
+
+        });
+
+
+    });
+
+    var BindDataTable = function (response) {
+
+
+        $("#example").DataTable({
+            dom: 'Bfrtip',
+            "lengthChange": false,
+            "aaData": response,
+            "scrollY": 300,
+            "autoWidth": true,
+            "scrollX": true,
+            "responsive": true,
+            "filter": true,
+            "orderMulti": true,
+            "aoColumns": [
+
+                { "data": "id" },
+
+
+                { "data": "nome" },
+
+                { "data": "nomeDistrito" },
+
+                { "data": "nomeCategoria" },
+                { "data": "preco_min" },
+                 { "data": "preco_venda" },
+
+            ],
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+
+                $('td:eq(0)', nRow).html("<a href='javascript:void(0);' ><button type='button'  id='editar'  class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.id + "') > Editar Artigo</button></a>");
+                //$('td:eq(0)', nRow).html("<a href='javascript:void(0);' > <select class='form-control input-danger input-sm'  id='accionar'><option value=''>--Seleccione--</option> <option  value='masculino'>Ver mais Detalhes</option><option id='editar' value='femenino'>Editar</option></select></a>");
+                //$('td:eq(0)', nRow).html("<a href='javascript:void(0);' >  <div class='btn-group'><button type='button' class='btn btn-danger btn-sm'>Acçao</button><button type='button' class='btn btn-sm btn-danger dropdown-toggle' data-toggle='dropdown'> <span class='caret'></span><span class='sr-only'>Toggle Dropdown</span> </button> <ul class='dropdown-menu' role='menu'> <li><a href='#'>Ver Mais Detalhes</a></li><li><a href='#'>Editar</a></li></ul></div></a>");
+                //$('td:eq(7)', nRow).html("<a href='javascript:void(0);' ><button type='button' id='ver' class='btn btn-icons btn-sm btn-info'onclick=verProduto('" + aData.idRequisicao + "') ><i class='fa fa-eye'></i></button>|<button type='button'  id='editar' class='btn btn-icons btn-sm btn-success' onclick=editar('" + aData.idRequisicao + "') ><i class='fa fa-pencil'></i></button></a>");
+                //$('td:eq(10)', nRow).html("<a href='javascript:void(0);' onclick=alert('" + aData.FuncionarioId + "')><button type='button' class='btn btn-icons btn-rounded btn-warning'><i class='fa fa-edit'></i></button></a>");
+                //$('td:eq(3)', nRow).html("<a href='javascript:void(0);' onclick=apagar('" + aData.IdCategoria + "')><button type='button' class='btn btn-icons btn-rounded btn-danger'><i class='fa fa-trash'></i></button></a>");
+                return nRow;
+            },
+
+        });
+        $("#example").LoadingOverlay("hide", true);
+    }
+    $(function () {
+        $('#example').DataTable({
+
+            "lengthChange": false,
+            "scrollY": 300,
+            "autoWidth": true,
+            "scrollX": true,
+            "processing": true,
+            "serverSide": true,
+            "responsive": true,
+            "filter": true,
+            "orderMulti": true,
+            "ajax": {
+                "url": "/ShopMussika/carregarTabelaArtigosByAjax",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "id" },
+
+
+                { "data": "nome" },
+
+                { "data": "nomeDistrito" },
+
+                { "data": "nomeCategoria" },
+                { "data": "preco_min" },
+                 { "data": "preco_venda" },
+                 //{
+                 //    "data": "fotografia",
+                 //    "render": function (fotografia, type, full, meta) {
+
+                 //        return "<a href='javascript:mostrarFoto()'><img src='../Images/" + fotografia + "'class='img-responsive' style='width:50px;height:50px;' /></a>";
+                 //    }
+                 //},
+
+            ],
+            //Descricao
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                //$('td:eq(0)', nRow).html("<a href='javascript:ver('" + aData.id + "')' class='button gray'><i class='fa fa-eye'></i> Ver/Editar</a> ");
+                $('td:eq(0)', nRow).html("<a href='javascript:void(0);' ><button type='button'  id='editar'  class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.id + "') > Editar Artigo</button></a>");
+                //$('td:eq(1)', nRow).html("<a href='javascript:void(0);' ><button type='button' id='ver' class='btn btn-icons btn-sm btn-primary'onclick=verProduto('" + aData.id_produto + "')></button>|<button type='button'  id='editar' class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.idproduto + "') ></button></a>");
+                //$('td:eq(10)', nRow).html("<a href='javascript:void(0);' onclick=alert('" + aData.FuncionarioId + "')><button type='button' class='btn btn-icons btn-rounded btn-warning'><i class='fa fa-edit'></i></button></a>");
+                //$('td:eq(3)', nRow).html("<a href='javascript:void(0);' onclick=apagar('" + aData.IdCategoria + "')><button type='button' class='btn btn-icons btn-rounded btn-danger'><i class='fa fa-trash'></i></button></a>");
+                return nRow;
+            },
+        });
+    });
+
+    //var verQuartos = function (id) {
+    //    $.LoadingOverlay("show");
+
+    //    // Hide it after 3 seconds
+    //    setTimeout(function () {
+    //        window.location.href = '/acomodacao/Quartos?page=1&sortOrder=""&currentFilter=""&id=' + id;
+    //        $.LoadingOverlay("hide");
+
+    //    }, 2000);
+
+    //}
+    var editar = function (id) {
+        $.LoadingOverlay("show");
+
+        // Hide it after 3 seconds
+        setTimeout(function () {
+            window.location.href = '/ShopMussika/EditarArtigo?id=' + id;
+            $.LoadingOverlay("hide");
+
+        }, 2000);
+
+    }
+</script>

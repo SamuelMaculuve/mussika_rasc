@@ -1,0 +1,194 @@
+﻿@model ASP_Mussika.Models.TaxiViewModel
+
+@{
+    ViewBag.Title = "criarTaxi";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-map"></i> Dados do Taxi:</h3>
+    </div>
+    <div class="utf_submit_section">
+        <div class="row with-forms">
+
+            <div id="longlat" class="col-md-12">
+
+                <div class="col-md-3">
+                    <h5>Nome do Taxi<strong style="color:orangered">*</strong></h5>
+                    <input type="text" class="search-field" name="taxi" id="taxi" placeholder="Taxi..." value="">
+                </div>
+                <div class="col-md-3">
+
+                    <h5>Condutor <strong style="color:orangered">*</strong></h5>
+                    <input type="text" class="search-field" name="condutor" id="condutor" placeholder="populacao..." value="">
+                </div>
+                <div class="col-md-3">
+
+                    <h5>Categoria<strong style="color:orangered">*</strong></h5>
+                    @Html.DropDownListFor(m => m.id_categoria, ViewBag.categoria as SelectList, "--seleccione uma Categoria--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%;", @id = "categoria", @name = "id" })
+
+                </div>
+                <div class="col-md-3">
+                    <h5>Distrito<strong style="color:orangered">*</strong></h5>
+                    @Html.DropDownListFor(m => m.id_distrito, ViewBag.distritos as SelectList, "--seleccione um Distrito--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%;", @id = "nome", @name = "id" })
+                </div>
+
+            </div>
+            <div class="row with-forms">
+
+                <div id="longlat" class="col-md-12">
+
+
+                    <div class="col-md-3">
+                        <h5>Praça Fixa<strong style="color:orangered">*</strong></h5>
+                        <input type="text" class="search-field" name="praca" id="praca" placeholder="Praça Fixa..." value="">
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Matricula<strong style="color:orangered">*</strong></h5>
+                        <input type="text" class="search-field" name="matricula" id="matricula" placeholder="Matricula...." value="">
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Telefone<strong style="color:orangered">*</strong></h5>
+                        <input type="text" class="search-field" name="telefone" id="telefone" placeholder="Telefone...." value="">
+                    </div>
+                  
+                    <div class="col-md-3">
+                        <h5>Proprietario</h5>
+                        <input type="text" class="search-field" name="proprietario" id="proprietario" placeholder="Proprietario...." value="">
+                    </div>
+                    
+                </div>
+              
+            </div>
+            <div class="row with-forms">
+
+                <div id="longlat" class="col-md-12">
+
+
+                    <div class="col-md-3">
+                        <h5>Marca</h5>
+                        <input type="text" class="search-field" name="marca" id="marca" placeholder="Marca...." value="">
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Cor</h5>
+                        <input type="text" class="search-field" name="cor" id="cor" placeholder="Cor...." value="">
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Bairro</h5>
+                        <input type="text" class="search-field" name="bairro" id="bairro" placeholder="Bairro...." value="">
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Email</h5>
+                        <input type="text" class="search-field" name="email" id="email" placeholder="Email...." value="">
+                    </div>
+
+                </div>
+                @*<div id="utf_listing_location" class="col-md-12 utf_listing_section">
+                <div id="utf_single_listing_map_block">
+                    <div id="utf_single_listingmap" data-latitude="-15.472254" data-longitude="36.980683" data-map-icon="im im-icon-Hamburger"></div>
+                    <a href="#" id="utf_street_view_btn">Street View</a>
+                </div>
+            </div>*@
+            </div>
+          
+        </div>
+    </div>
+
+</div>
+
+<button id="salvar" style="margin-top:40px; margin-bottom:30px;" class="button btn-sm">Prosseguir</button>
+<script>
+    $('#telefone').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+    $("#salvar").click(function () {
+        debugger
+        if ($("#taxi").val().trim() == '') {
+            informarErro("Informe o nome do Taxi");
+            throw new Error();
+        }
+
+        if ($("#condutor").val().trim() == '') {
+            informarErro("Informe o nome do Condutor");
+            throw new Error();
+        }
+        if ($("#nome").val() == '') {
+            informarErro("Informe o nome do Distrito");
+            throw new Error();
+        }
+        if ($("#praca").val() == '') {
+            informarErro("Informe a Praca Fixa");
+            throw new Error();
+        }
+        if ($("#matricula").val() == '') {
+            informarErro("Informe a Matricula");
+            throw new Error();
+        }
+        if ($("#telefone").val() == '') {
+            informarErro("Informe o numero de Telefone");
+            throw new Error();
+        }
+         if ($("#categoria").val() == '') {
+            informarErro("Informe o tipo de Taxi");
+            throw new Error();
+        }
+        
+        
+       salvar();
+    })
+
+    function salvar() {
+        debugger
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('id_categoria', $("#categoria").val());
+        model.append('nome', $("#taxi").val());
+        model.append('condutor', $("#condutor").val());
+        model.append('id_distrito', $("#nome").val());
+        model.append('praca_fixa', $("#praca").val());
+        model.append('matricula', $("#matricula").val());
+        model.append('telefone', $("#telefone").val());
+        model.append('proprietario', $("#proprietario").val());
+        model.append('marca', $("#marca").val());
+        model.append('cor', $("#cor").val());
+        model.append('bairro', $("#bairro").val());
+        model.append('email', $("#email").val());
+       
+
+
+
+        $.ajax({
+            method: "POST",
+            url: "/Taxi/SalvarTaxi",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar este Restaurante");
+
+
+                } else if (msg == "existe") {
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Este Quarto ja Existe");
+                }
+                else {
+                    debugger
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/Taxi/CarregarFotos?id=' + msg;
+                    //informarSucesso("Artigo Cadastrado com Sucesso")
+                    $('.with-forms').find("input[type=text], textarea").val("");
+
+
+                    //$("#check-f1").prop("checked", false)
+                }
+
+            });
+    }
+</script>

@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "provedor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="clearfix"></div>
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="add_utf_listing_section margin-top-45">
+            <div class="utf_add_listing_part_headline_part">
+                <h3><i class="sl sl-icon-home"></i>Serviços a fornecer</h3>
+            </div>
+            <div class="checkboxes in-row amenities_checkbox">
+                <ul>
+                    <li>
+                        <input id="check-a1" type="checkbox" name="check">
+                        <label for="check-a1">Música</label>
+                    </li>
+                    <li>
+                        <input id="check-b1" type="checkbox" name="check">
+                        <label for="check-b1">Produtos Diversivicados</label>
+                    </li>
+                    <li>
+                        <input id="check-c1" type="checkbox" name="check">
+                        <label for="check-c1">Estabelecimento Comercial</label>
+                    </li>
+                    <li>
+                        <input id="check-d1" type="checkbox" name="check">
+                        <label for="check-d1">Acomodação</label>
+                    </li>
+                    <li>
+                        <input id="check-e1" type="checkbox" name="check">
+                        <label for="check-e1">Taxi</label>
+                    </li>
+                    <li>
+                        <input id="check-f1" type="checkbox" name="check">
+                        <label for="check-f1">Restaurantes</label>
+                    </li>
+                    <li>
+                        <input id="check-g1" type="checkbox" name="check">
+                        <label for="check-g1">Arte e cultura</label>
+                    </li>
+                    <li>
+                        <input id="check-h1" type="checkbox" name="check">
+                        <label for="check-h1">Eventos</label>
+                    </li>
+                    <li>
+                        <input id="check-i1" type="checkbox" name="check">
+                        <label for="check-i1">Turismo</label>
+                    </li>
+                    <li>
+                        <input id="check-j1" type="checkbox" name="check">
+                        <label for="check-j1">Farmácia</label>
+                    </li>
+
+                    <li>
+                        <input id="check-k1" type="checkbox" name="check">
+                        <label for="check-k1">Pagamento de Serviços</label>
+                    </li>
+                    <li>
+                        <input id="check-l1" type="checkbox" name="check">
+                        <label for="check-l1">Cliníca</label>
+                    </li>
+                    <li>
+                        <input id="check-m1" type="checkbox" name="check">
+                        <label for="check-m1">Transportadora</label>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="add_utf_listing_section margin-top-45">
+            <div class="utf_add_listing_part_headline_part">
+                <h3><i class="sl sl-icon-tag"></i> Referência do Contrato</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Referência</h5>
+                    <input type="text" id="referencia" placeholder="Referência do Contrato">
+                </div>
+            </div>
+        </div>
+        <a href="#" id="btnFinalizar" class="button preview"><i class="fa fa-arrow-circle-right"></i> Finalizar Cadastro</a>
+   
+    </div>
+</div>
+
+<script>
+    $("#btnFinalizar").click(function () {
+    debugger
+        if ($("#referencia").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe a referencia do contrato");
+            throw new Error();
+        }
+
+      
+        salvar();
+    })
+
+
+
+    function salvar() {
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('usuario', '@ViewBag.id');
+        model.append('referencia', $("#referencia").val());        
+        model.append('musica', $("#check-a1").prop("checked"));
+        model.append('bazar', $("#check-b1").prop("checked"));
+        model.append('loja', $("#check-c1").prop("checked"));
+        model.append('acomodacao', $("#check-d1").prop("checked"));
+        model.append('taxi', $("#check-e1").prop("checked"));
+        model.append('restaurante', $("#check-f1").prop("checked"));
+        model.append('arte_cultura', $("#check-g1").prop("checked"));
+        model.append('evento', $("#check-h1").prop("checked"));
+        model.append('turismo', $("#check-i1").prop("checked"));
+        model.append('farmacia', $("#check-j1").prop("checked"));
+        model.append('clinica', $("#check-l1").prop("checked"));
+        model.append('servicomussika', $("#check-k1").prop("checked"));
+        model.append('transportadora', $("#check-m1").prop("checked"));
+
+
+
+        $.ajax({
+            method: "POST",
+            url: "/Login/SalvarServicosProvedor",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar os servicos");
+
+
+                } 
+                else {
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/Login/provedorCriado';
+                   
+                }
+
+            });
+    }
+</script>

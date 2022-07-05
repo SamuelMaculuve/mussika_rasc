@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "PagamentoSucesso";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container margin-bottom-75">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="utf_booking_listing_confirmation_section">
+                <i class="sl sl-icon-check"></i>
+                <h2>Pagamento Efectuado com Sucessso!</h2>
+                <p>Em breve vai receber um Email com a respectiva Factura!</p>
+                @if (ViewBag.oque_fazer == "video")
+                {
+                    <a href="@ViewBag.linkVideo" class="button margin-top-30">@ViewBag.accao</a>
+                }
+                else if (ViewBag.oque_fazer == "musica")
+                {
+                    <a href="@ViewBag.link" class="button margin-top-30">@ViewBag.accao</a>
+                }
+                else
+                {
+                    <a href="@ViewBag.linkAlbum" class="button margin-top-30">@ViewBag.accao</a>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+

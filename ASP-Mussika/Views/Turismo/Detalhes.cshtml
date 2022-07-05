@@ -1,0 +1,789 @@
+﻿@model ASP_Mussika.Models.TurismoViewModel
+
+@{
+    ViewBag.Title = "Detalhes";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mussika | Zambézia</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/Repository/images/logo/favicon_mussika 16x16.png">
+
+
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="~/Content/library/css/stylesheet.css">
+    <link rel="stylesheet" href="~/Content/library/css/style.css" id="colors">
+
+
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap&subset=latin-ext,vietnamese" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800" rel="stylesheet" type="text/css">
+
+    <link href="~/Content/library/css/jquery-confirm.min.css" rel="stylesheet" />
+</head>
+<body>
+
+    <!-- Wrapper -->
+    <div id="main_wrapper">
+
+        <div class="clearfix">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <div class="list-inline">
+
+                        <a style="padding-left:4px; padding-right:4px;" href="#">PT <img src="~/Repository/images/flags/portugal.png" /></a>
+                        <a style="padding-left:4px; padding-right:4px;" href="#">FR <img src="~/Repository/images/flags/france.png" /></a>
+                        <a style="padding-left:4px; padding-right:4px;" href="#">ENG <img src="~/Repository/images/flags/united-kingdom.png" /></a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <header id="header_part">
+            <div id="header">
+                <div class="container">
+                    <div class="utf_left_side">
+                        <div id="logo"> <a href="/inicio/principal"><img src="~/Repository/images/logo/logo 38 x 50.png" alt=""></a> </div>
+                        <div class="nav_responsive"> <i class="fa fa-reorder menu-trigger"></i> </div>
+                        <nav id="navigation" class="style_one">
+                            <ul id="responsive">
+                                <li>
+                                    <a class="current" href="#!">Inicio</a>
+                                    <ul>
+                                        <li><a href="/inicio/Distritos">Distritos</a></li>
+                                        <li><a href="/PubAcomodacao/Acomodacoes">Acomodações</a></li>
+                                        <li><a href="/inicio/restaurantes">Restaurantes</a></li>
+                                        <li><a href="/PubShopMussika/Index">Shop Mussika</a></li>
+                                        <li><a href="/servico_taxi/listar">Taxi</a></li>
+                                        <li><a href="#">Música</a></li>
+                                        <li><a href="#">Arte e Cultura</a></li>
+                                        <li><a href="#">Eventos</a></li>
+
+                                        <li><a href="#">Aluguer de Viaturas</a></li>
+
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a class="" href="/inicio/empresa">Empresa</a>
+                                </li>
+
+                                <li>
+                                    <a class="" href="/inicio/produtos">Publicidade</a>
+                                </li>
+
+                                <li>
+                                    <a class="" href="/inicio/seguranca">Segurança</a>
+                                </li>
+
+                                <li>
+                                    <a class="" href="/inicio/como_pagar">Como Pagar</a>
+                                </li>
+
+                                <li>
+                                    <a class="" href="/inicio/ajuda">Ajuda</a>
+                                </li>
+
+
+                            </ul>
+                        </nav>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="utf_right_side">
+                        @if (Session["idusario"] == null)
+                        {
+                            <div id="semLogin" class="header_widget"> <a href="#dialog_signin_part" class="button border sign-in popup-with-zoom-anim"><i class="fa fa-sign-in"></i> Entrar</a> @*<a href="#" class="button border with-icon"><i class="sl sl-icon-user"></i> Cadastre-se</a>*@</div>
+                        }
+                        else
+                        {
+                            <div comLogin class="header_widget">
+                                <div class="dashboard_header_button_item has-noti js-item-menu">
+                                    <i class="sl sl-icon-bell"></i>
+                                    <div class="dashboard_notifi_dropdown js-dropdown">
+                                        <div class="dashboard_notifi_title">
+                                            <p>Você Tem 2 Notificações</p>
+                                        </div>
+                                        <div class="dashboard_notifi_item">
+                                            <div class="bg-c1 red">
+                                                <i class="fa fa-check"></i>
+                                            </div>
+                                            <div class="content">
+                                                <p>Pedido de suporte</p>
+                                                <span class="date">2 horas atrás </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="dashboard_notify_bottom text-center pad-tb-20">
+                                            <a href="#">Ver todas as Notificações </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="utf_user_menu">
+                                    <div class="utf_user_name"><span><img src="@Session["imagem"].ToString()" alt=""></span>Olá,  @Session["nome"].ToString()!</div>
+                                    <ul>
+                                        @if (@Session["tipo"].ToString() == "1")
+                                        {
+                                            <li><a href="#"><i class="sl sl-icon-layers"></i> Mensagens</a></li>
+                                            <li><a href="/Carteira/Index?id_usuario=@Session["idusario"].ToString()"><i class="sl sl-icon-layers"></i> Minha Carteira</a></li>
+                                            <li><a href="/CarrinhoCompra/Index?id_usuario=@Session["idusario"].ToString()"><i class="sl sl-icon-layers"></i> Meu Carinho</a></li>
+                                        }
+                                        else if (@Session["tipo"].ToString() == "2")
+                                        {
+                                            <li><a href="#"><i class="sl sl-icon-layers"></i> Painel Publico</a></li>
+                                            <li><a href="/Carteira/Index?id_usuario=@Session["idusario"].ToString()"><i class="sl sl-icon-layers"></i> Minha Carteira</a></li>
+                                            <li><a href="/CarrinhoCompra/Index?id_usuario=@Session["idusario"].ToString()"><i class="sl sl-icon-layers"></i> Meu Carinho</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a href="/administracao/DashBoard"><i class="sl sl-icon-layers"></i> Painel</a></li>
+                                        }
+
+                                        <li><a href="#"><i class="sl sl-icon-user"></i> Meu Perfil</a></li>
+
+                                        <li><a href="/Login/RedifinirSenha?usuario=@Session["usuario"].ToString()"><i class="sl sl-icon-envelope-open"></i> Redifinir Senha</a></li>
+                                        <li><a href="/Login/Sair"><i class="sl sl-icon-power"></i>  Sair</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+
+                    <div id="dialog_signin_part" class="zoom-anim-dialog mfp-hide">
+                        <div class="small_dialog_header">
+                            <h3>Entrar</h3>
+                        </div>
+                        <div class="utf_signin_form style_one">
+                            <ul class="utf_tabs_nav">
+                                <li class=""><a href="#tab1">Entrar</a></li>
+                                <li><a href="#tab2">Cadastre-se</a></li>
+                            </ul>
+                            <div class="tab_container alt">
+                                <div class="tab_content" id="tab1" style="display:none;">
+                                    <form method="post" class="login">
+                                        <p class="utf_row_form utf_form_wide_block">
+                                            <label for="username">
+                                                <input type="text" class="input-text" name="username" id="username" value="" placeholder="Informe seu Email" />
+                                            </label>
+                                        </p>
+                                        <p class="utf_row_form utf_form_wide_block">
+                                            <label for="password">
+                                                <input class="input-text" type="password" name="password" id="password" placeholder="senha" />
+                                            </label>
+                                        </p>
+                                        <div class="utf_row_form utf_form_wide_block form_forgot_part">
+                                            <span class="lost_password fl_left"> <a href="/Login/EsqueceuSenha">Esqueceu a senha?</a> </span>
+                                            <div class="checkboxes fl_right">
+                                                <input id="remember-me" type="checkbox" name="check">
+                                                <label for="remember-me">Guardar</label>
+                                            </div>
+                                        </div>
+                                        <div class="utf_row_form">
+                                            <input type="button" onclick="" id="entrar" class="button" style="" name="login" value="Entrar" />
+                                        </div>
+                                        <div class="utf_row_form" style="margin-top:20px;">
+                                            <ul class="utf_tabs_nav">
+                                                <li><a href="#" onclick="login(); return false;" class="instagram-link"><i class="fa fa-google"></i> Gmail</a></li>
+                                                <li><a href="#" onclick="loginWithFacebook(); return false" class="facebook-link"><i class="fa fa-facebook"></i> Facebook</a></li>
+
+                                            </ul>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="tab_content" id="tab2" style="display:none;">
+                                    <form method="post" class="register">
+                                        <p class="utf_row_form utf_form_wide_block">
+                                            <label for="username2">
+                                                <input type="text" class="input-text" name="username" id="username2" value="" placeholder="utilizador" />
+                                            </label>
+                                        </p>
+                                        <p class="utf_row_form utf_form_wide_block">
+                                            <label for="email2">
+                                                <input type="text" class="input-text" name="email" id="email2" value="" placeholder="e-mail" />
+                                            </label>
+                                        </p>
+                                        <p class="utf_row_form utf_form_wide_block">
+                                            <label for="Telefone">
+                                                <text>Telefone: Prefixo do numero é obrigatorio! </text>
+                                                <input type="text" class="input-text" name="telefone" id="telefone" value="" placeholder="Ex: 258 841111111" />
+                                            </label>
+                                        </p>
+                                        <p class="utf_row_form utf_form_wide_block">
+                                            <label for="password1">
+                                                <input class="input-text" type="password" name="password1" id="password1" placeholder="senha" />
+                                            </label>
+                                        </p>
+                                        <p class="utf_row_form utf_form_wide_block">
+                                            <label for="password2">
+                                                <input class="input-text" type="password" name="password2" id="password2" placeholder="Confirmar Senha" />
+                                            </label>
+                                        </p>
+                                        <input type="button" id="registar" class="button border fw margin-top-10" name="register" value="Registar" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @* modal *@
+                    <div id="dialog_signin_part_" class="zoom-anim-dialog mfp-hide">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+
+
+                                    <img src="~/Repository/images/index.ajax-spinner-gif.gif" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+        <div class="clearfix"></div>
+        <div id="titlebar" class="gradient">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>@Model.nome</h2>
+                        <nav id="breadcrumbs">
+                            <ul>
+                                <li><a href="/inicio/principal">Inicio</a></li>
+                                <li>@Model.nome</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="blog-page">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+                        <div class="utf_blog_post utf_single_post">
+                            <img class="utf_post_img" src="~/Repository/images/turismo/@Model.foto_capa" alt="">
+                            <div class="utf_post_content">
+                                <h3><a href="#">@Model.nome</a></h3>
+                                <ul class="utf_post_text_meta">
+
+                                    <li>Distrito: <a href="#">@Model.nome_distrito</a>, Local: @Model.localizacao</li>
+                                    <li><a href="#">@Model.comentarios Comentario(s)</a></li>
+                                </ul>
+                                @{ var html_descricao = new HtmlString(Model.descricao); }
+                            <text>
+
+                                @html_descricao
+                            </text>
+
+                                <div class="social-contact">
+                                    @*<a href="#" class="facebook-link"><i class="fa fa-facebook"></i> Facebook</a>
+            <a href="#" class="twitter-link"><i class="fa fa-twitter"></i> Twitter</a>
+            <a href="#" class="instagram-link"><i class="fa fa-instagram"></i> Instagram</a>
+            <a href="#" class="linkedin-link"><i class="fa fa-linkedin"></i> Linkedin</a>
+            <a href="#" class="youtube-link"><i class="fa fa-youtube-play"></i> Youtube</a>*@
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+
+                        <div id="utf_listing_reviews" class="utf_listing_section">
+                            @{Html.RenderAction("carregarComentarios", "Turismo", new { id = Model.id });}
+                        </div>
+                        <div id="utf_add_review" class="utf_add_review-box">
+
+                            <h3 class="utf_listing_headline_part margin-bottom-20">Adicione teu Comentario</h3>
+
+                            <div class="row">
+
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="add-review-photos margin-bottom-30">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <form id="utf_add_comment" class="utf_add_comment">
+                                <fieldset>
+                                    @if (Session["idusario"] == null)
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Nome:</label>
+                                                <input type="text" id="nomeUsuarioComentario" placeholder="Nome" value="" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Email:</label>
+                                                <input type="text" id="emailComentario" placeholder="Email" value="" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Assunto:</label>
+                                                <input type="text" id="assunto" placeholder="Assunto" value="" />
+                                            </div>
+                                        </div>
+                                    }
+
+                                    <div>
+                                        <label>Comentario:</label>
+                                        <textarea cols="40" id="comentario" placeholder="Seu Comentario..." rows="3"></textarea>
+                                    </div>
+                                </fieldset>
+                                <button type="button" id="btnComentar" class="button">Comentar</button>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4">
+                        <div class="sidebar right">
+                            @*<div class="utf_box_widget">
+                                    <h3><i class="sl sl-icon-magnifier"></i> Search Blog</h3>
+                                    <div class="utf_search_blog_input">
+                                        <div class="input">
+                                            <input class="search-field" type="text" placeholder="Search..." value="" />
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>*@
+
+                            <div class="utf_box_widget margin-top-35">
+                                <h3><i class="sl sl-icon-folder-alt"></i> Categorias</h3>
+                                <ul class="utf_listing_detail_sidebar">
+                                    <li><i class="fa fa-angle-double-right"></i> <a href="/inicio/Distritos">Distritos</a></li>
+                                    <li><i class="fa fa-angle-double-right"></i> <a href="/PubAcomodacao/Acomodacoes">Acomodações</a></li>
+                                    <li><i class="fa fa-angle-double-right"></i> <a href="/inicio/restaurantes">Restaurantes</a></li>
+                                    <li><i class="fa fa-angle-double-right"></i> <a href="/servico_taxi/listar">Taxis</a></li>
+                                    <li><i class="fa fa-angle-double-right"></i> <a href="#">Shop Mussika</a></li>
+                                    <li><i class="fa fa-angle-double-right"></i> <a href="#">Eventos</a></li>
+                                </ul>
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Footer -->
+        <div style="margin-top:10px;" id="footer" class="footer_sticky_part">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <h4>Links Uteis</h4>
+                        <ul class="social_footer_link">
+                            <li><a href="/inicio/principal">Inicio</a></li>
+                            <li><a href="/inicio/empresa">Empresa</a></li>
+                            <li><a href="/inicio/produtos">Produtos</a></li>
+                            <li><a href="/inicio/seguranca">Segurança</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <h4>Minha Conta</h4>
+                        <ul class="social_footer_link">
+                            <li><a href="#">Pefil</a></li>
+                            <li><a href="#">Mensagens</a></li>
+                            <li><a href="#">Favoritos</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <h4>Páginas</h4>
+                        <ul class="social_footer_link">
+                            <li><a href="/inicio/Distritos">Distritos</a></li>
+                            <li><a href="#">Serviços</a></li>
+                            <li><a href="#">Música</a></li>
+                            <li><a href="#">Arte & Cultura</a></li>
+                            <li><a href="/Restaurante/Index">Restaurantes</a></li>
+                            <li><a href="#">Eventos</a></li>
+                            <li><a href="#">Aluguer de Viaturas</a></li>
+                            <li><a href="#">Taxi</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <h4>Ajuda</h4>
+                        <ul class="social_footer_link">
+                            @*<li><a href="#">Entrar</a></li>
+                                <li><a href="#">Registar</a></li>*@
+                            <li><a href="#">Como Pagar</a></li>
+                            <li><a href="#">Contacte-nos</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <h4>Quem somos</h4>
+                        <p>O Mussika é uma plataforma online que visa apresentar as potêncialidades da provincia da Zambézia com o especial enfoque para as áreas de Turismos, Musicas e Cultura</p>
+                        <p><a href="/inicio/empresa" class="btn btn-primary"> Saber Mais</a></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="footer_copyright_part">Copyright ©  Mussika - Todos os Direitos Reservados.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="bottom_backto_top"><a href="#"></a></div>
+    </div>
+
+    <script src="~/Content/library/scripts/jquery-2.2.0.min.js"></script>
+    <script src="~/Content/library/scripts/jpanelmenu.min.js"></script>
+    <script src="~/Content/library/scripts/chosen.min.js"></script>
+    <script src="~/Content/library/scripts/slick.min.js"></script>
+    <script src="~/Content/library/scripts/rangeslider.min.js"></script>
+    <script src="~/Content/library/scripts/magnific-popup.min.js"></script>
+    <script src="~/Content/library/scripts/waypoints.min.js"></script>
+    <script src="~/Content/library/scripts/counterup.min.js"></script>
+    <script src="~/Content/library/scripts/jquery-ui.min.js"></script>
+    <script src="~/Content/library/scripts/tooltips.min.js"></script>
+    <script src="~/Content/library/scripts/color_switcher.js"></script>
+    <script src="~/Content/library/scripts/jquery_custom.js"></script>
+    <script type="text/javascript" src="~/Content/library/scripts/loadingoverlay.min.js"></script>
+    <script src="~/Content/library/scripts/jquery-confirm.min.js"></script>
+
+    <script src="~/Content/library/Dialogos.js"></script>
+
+    <script src="~/Content/loginGmail.js"></script>
+    <script src="~/Content/comentar_distrito.js"></script>
+
+    <!-- Style Switcher -->
+    <div id="color_switcher_preview">
+        <h2>Choose Your Color <a href="#"><i class="fa fa-gear fa-spin (alias)"></i></a></h2>
+        <div>
+            <ul class="colors" id="color1">
+                <li><a href="#" class="stylesheet"></a></li>
+                <li><a href="#" class="stylesheet_1"></a></li>
+                <li><a href="#" class="stylesheet_2"></a></li>
+                <li><a href="#" class="stylesheet_3"></a></li>
+                <li><a href="#" class="stylesheet_4"></a></li>
+                <li><a href="#" class="stylesheet_5"></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Maps -->
+    <script src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
+
+    <script src="~/Content/library/scripts/infobox.min.js"></script>
+    <script src="~/Content/library/scripts/markerclusterer.js"></script>
+    <script src="~/Content/library/scripts/maps.js"></script>
+    <script src="~/Content/library/scripts/quantityButtons.js"></script>
+    <script src="~/Content/library/scripts/moment.min.js"></script>
+    <script src="~/Content/library/scripts/daterangepicker.js"></script>
+    <script>
+        $(function () {
+        $('#date-picker').daterangepicker({
+            "opens": "left",
+            // singleDatePicker: true,
+            isInvalidDate: function (date) {
+                var disabled_start = moment('09/02/2018', 'MM/dd/yyyy');
+                var disabled_end = moment('09/06/2018', 'MM/dd/yyyy');
+                return date.isAfter(disabled_start) && date.isBefore(disabled_end);
+            }
+        });
+    });
+
+$('#date-picker').on('showCalendar.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').addClass('calendar-animated');
+});
+$('#date-picker').on('show.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').addClass('calendar-visible');
+	$('.daterangepicker').removeClass('calendar-hidden');
+});
+$('#date-picker').on('hide.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').removeClass('calendar-visible');
+	$('.daterangepicker').addClass('calendar-hidden');
+});
+
+function close_panel_dropdown() {
+$('.panel-dropdown').removeClass("active");
+	$('.fs-inner-container.content').removeClass("faded-out");
+}
+$('.panel-dropdown a').on('click', function(e) {
+	if ($(this).parent().is(".active")) {
+		close_panel_dropdown();
+	} else {
+		close_panel_dropdown();
+		$(this).parent().addClass('active');
+		$('.fs-inner-container.content').addClass("faded-out");
+	}
+	e.preventDefault();
+});
+$('.panel-buttons button').on('click', function(e) {
+	$('.panel-dropdown').removeClass('active');
+	$('.fs-inner-container.content').removeClass("faded-out");
+});
+var mouse_is_inside = false;
+$('.panel-dropdown').hover(function() {
+	mouse_is_inside = true;
+}, function() {
+	mouse_is_inside = false;
+});
+$("body").mouseup(function() {
+	if (!mouse_is_inside) close_panel_dropdown();
+});
+
+//var startDate = 0;
+//var endDate = 0;
+
+
+
+
+
+
+        ///////////////autenticacao//////////////////////////////////////
+        function loginWithFacebook() {
+            $("#dialog_signin_part").LoadingOverlay("show");
+            location.href = '/Login/Facebook';
+        }
+        ////////////////////////////////////
+        $(document).ready(function () {
+             $('#telefone').keypress(function (event) {
+                    if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                        event.preventDefault();
+                    }
+                })
+            $("#registar").click(function () {
+
+
+
+                if ($("#username2").val().trim() == "") {
+                    informarErro("Informe o Nome Completo do Utilizador")
+                    throw new Error('')
+                }
+                if ($("#email2").val().trim() == '') {
+
+                    $("#email2").focus();   //focus on email field
+                    informarErro("Email Incorrecto, Informe um Email Valido");
+                    throw new Error('')
+
+                }
+
+                if ($("#password1").val().trim() == "") {
+                    informarErro("Informe uma senha com Mais de 6 caracteres")
+                    throw new Error('')
+                }
+                if ($("#password1").val().trim().length <= 6) {
+                    informarErro("Informe uma senha com Mais de 6 caracteres")
+                    throw new Error('')
+                }
+                if ($("#password2").val().trim() != $("#password1").val().trim()) {
+                    informarErro("Senhas nao Coincidem!")
+                    throw new Error('')
+                }
+
+                criarUsuario()
+            })
+
+            function criarUsuario() {
+
+                $("#dialog_signin_part").LoadingOverlay("show");
+                var data = {
+                    nome: $("#username2").val(),
+                    usuario1: $("#email2").val(),
+                    senha: $("#password1").val(),
+                };
+
+                $.ajax({
+                    method: "POST",
+                    url: "/Login/CriarUsuario",
+                    data: data,
+                    //processData: false,
+                    //contentType: false,
+                })
+                    .done(function (msg) {
+                        if (msg == "false") {
+
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            informarErro("Nao foi possivel cadastrar este Usuario");
+
+
+                        } else if (msg == "existe") {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            informarErro("Ja existe uma usuario com este email");
+                        } else if (msg == "emailincorrecto") {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            informarErro("Email Incorrecto, Informe um Email Valido");
+                        }
+                        else {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+
+                            location.href = '/Login/ConfirmarEmailCriacao?id=' + msg.idusario;
+                            //informarSucesso("Usuario Cadastrado com Sucesso")
+                            //$('.with-forms').find("input[type=text], textarea").val("");
+
+
+                            //$("#check-f1").prop("checked", false)
+                        }
+
+                    });
+            }
+
+            $("#entrar").click(function () {
+
+                if ($("#username").val().trim() == "") {
+                    informarErro("Informe o Email")
+                    throw new Error('')
+                }
+                if ($("#password").val().trim() == "") {
+                    informarErro("Informe a Senha")
+                    throw new Error('')
+                }
+
+                entrar();
+            })
+
+            function entrar() {
+                $("#dialog_signin_part").LoadingOverlay("show");
+                var data = {
+
+                    usuario1: $("#username").val(),
+                    senha: $("#password").val(),
+                };
+
+                $.ajax({
+                    method: "POST",
+                    url: "/Login/Entrar",
+                    data: data,
+                    //processData: false,
+                    //contentType: false,
+                })
+                    .done(function (msg) {
+                        if (msg == "false") {
+
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            informarErro("Nao foi possivel fazer com este Usuario, consulte o Administrador do Sistema");
+
+
+                        } else if (msg == "naoexiste") {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            informarErro("Usuario nao Existe");
+
+                        } else if (msg == "senhapadrao") {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            location.href = '/Login/RedifinirSenha?usuario=' + $("#username").val();
+
+                        } else if (msg == "senhainvalida") {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            informarErro("Usuario ou Senha Invalido, Informe Credenciais Validas");
+                        }
+                        else if (msg == "naoautorizado") {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            location.href = '/Login/confirmarContaInactiva?usuario=' + $("#username").val();
+                        }
+                        else {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            location.href = msg;
+
+                        }
+
+                    });
+            }
+        });
+        //////////////////////////////////////
+        $("#btnComentar").click(function () {
+
+                debugger
+                if ('@Session["idusario"]' == '') {
+                    if ($("#nomeUsuarioComentario").val().trim() == "") {
+                        informarErro("Impossivel Adicionar Comentario, ou classificar, verifique os campos");
+                        throw new Error("");
+                    }
+                    if ($("#emailComentario").val().trim() == "") {
+                        informarErro("Impossivel Adicionar Comentario, ou classificar, verifique os campos");
+                        throw new Error("");
+                    }
+                    if ($("#assunto").val().trim() == "") {
+                        informarErro("Impossivel Adicionar Comentario, ou classificar, verifique os campos");
+                        throw new Error("");
+                    }
+                }
+
+
+            if ($("#comentario").val().trim() != "") {
+                debugger
+                if ('@Session["idusario"]' == '') {
+                    if ($("#nomeUsuarioComentario").val().trim() == "") {
+                        informarErro("Impossivel Adicionar Comentario, ou classificar, verifique os campos");
+                         throw new Error("");
+                    }
+                    if ($("#emailComentario").val().trim() == "") {
+                        informarErro("Impossivel Adicionar Comentario, ou classificar, verifique os campos");
+                         throw new Error("");
+                    }
+                    if ($("#assunto").val().trim() == "") {
+                        informarErro("Impossivel Adicionar Comentario, ou classificar, verifique os campos");
+                         throw new Error("");
+                    }
+                }
+            }
+            $.LoadingOverlay("show");
+
+            var data = {
+                id_turismo:'@Model.id',
+                id_usuario:'@Session["idusario"]',
+                nomeUsuario:$("#nomeUsuarioComentario").val(),
+                email:$("#emailComentario").val(),
+                assunto:$("#assunto").val(),
+                comentario:$("#comentario").val(),
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/Turismo/Comentar",
+                data: data,
+
+            })
+                    .done(function (msg) {
+                        if (msg == "false") {
+
+                            $.LoadingOverlay("hide", true);
+                            informarErro("Nao foi possivel Comentar");
+
+
+                        }
+                        else {
+                            $.LoadingOverlay("hide", true);
+                            estrelas = 0;
+                            $('.with-forms').find("input[type=text], textarea").val("");
+                             informarSucesso("Comentario Adicionado com Sucesso");
+                            setTimeout(function(){
+
+                                location.reload();
+                                 }, 2000);
+
+
+                            @*//actualizarComentarios('@Model.id');*@
+
+                        }
+
+                    });
+
+        })
+
+    </script>
+</body>
+</html>
+

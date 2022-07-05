@@ -1,0 +1,52 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.categoria_obra_arte>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="headline_part centered margin-top-75"> Procure por Categorias de Artes</h3>
+        </div>
+    </div>
+    <div class="row margin-bottom-60">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <a href="/arte_cultura/Artistas?categoria=@item.id" class="img-box" data-background-image="../Repository/images/ArteCultura/artecultura.png">
+                    <div class="utf_img_content_box visible">
+                        <h4>@item.descricao  </h4>
+                       
+                    </div>
+                </a>
+            </div>
+        }
+        <div class="col-md-4">
+            <a href="/arte_cultura/Cinema" class="img-box" data-background-image="../Repository/images/ArteCultura/artecultura.png">
+                <div class="utf_img_content_box visible">
+                    <h4>Cinema </h4>
+                   
+                </div>
+            </a>
+        </div>
+
+
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="utf_pagination_container_part margin-bottom-70">
+            <nav class="pagination">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action("Index",
+                        new { page }))
+            </nav>
+        </div>
+    </div>
+</div>
+

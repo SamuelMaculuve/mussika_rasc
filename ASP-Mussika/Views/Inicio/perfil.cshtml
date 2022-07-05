@@ -1,0 +1,209 @@
+﻿@model ASP_Mussika.Models.UsuarioViewModel
+
+@{
+    ViewBag.Title = "perfil";
+    Layout = "~/Views/Shared/_LayoutPerfil.cshtml";
+}
+
+ 
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="utf_dashboard_list_box margin-top-0">
+            <h4 class="gray"><i class="sl sl-icon-user"></i> Detalhes do Perfil</h4>
+            <div class="utf_dashboard_list_box-static">
+                <div class="edit-profile-photo">
+                    @if (Model.foto_capa != null)
+                    {
+                       if (Model.foto_capa.Trim() == "" || Model.foto_capa.Trim() == "noimage.jpg")
+                        {
+                            <img src="../Repository/images/usuario/noimage.jpg" height="200" width="200" alt="" />
+
+                        }
+                        else
+                        {
+                            <img src="../Repository/images/usuario/@Model.foto_capa" height="200" width="200" alt="" />
+                        }
+                    }
+                    else
+                    {
+                        <img src="../Repository/images/usuario/@Model.foto_capa" height="200" width="200" alt="" />
+                    }
+                   
+
+                    <div class="change-photo-btn">
+                        <div class="photoUpload">
+                            <span><i class="fa fa-upload"></i> Upload Photo</span>
+                            <input id="foto" type="file" class="upload" />
+                        </div>
+                    </div>
+                </div>
+                <div class="my-profile">
+                    <div class="row with-forms">
+                        <div class="col-md-4">
+                            <label>Nome</label>
+                            <input type="text" class="input-text" id="nomeperfil" placeholder="nome" value="@Model.nome">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Telefone</label>
+                            <input type="text" class="input-text" id="teleperfil" placeholder="Telefone" value="@Model.telefone">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Email</label>
+                            <input type="text" class="input-text" id="email" placeholder="tipo" value="@Model.usuario1" disabled >
+                        </div>
+                        @*<div class="col-md-4">
+                            <label>Email</label>
+                            <input type="text" class="input-text" placeholder="test@example.com" value="">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Designation</label>
+                            <input type="text" class="input-text" placeholder="Account Manager" value="">
+                        </div>
+                        <div class="col-md-4">
+                            <label>State</label>
+                            <input type="text" class="input-text" placeholder="London" value="">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Birth</label>
+                            <input type="text" class="input-text" placeholder="20 March 2000" value="">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Country</label>
+                            <input type="text" class="input-text" placeholder="England" value="">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Age</label>
+                            <input type="text" class="input-text" placeholder="18 Year" value="">
+                        </div>
+                        <div class="col-md-12">
+                            <label>Address</label>
+                            <textarea name="notes" cols="30" rows="10">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.</textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <label>Notes</label>
+                            <textarea name="notes" cols="30" rows="10">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.</textarea>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Facebook</label>
+                            <input type="text" class="input-text" placeholder="https://www.facebook.com" value="">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Twitter</label>
+                            <input type="text" class="input-text" placeholder="https://www.twitter.com" value="">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Linkedin</label>
+                            <input type="text" class="input-text" placeholder="https://www.linkedin.com" value="">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Google+</label>
+                            <input type="text" class="input-text" placeholder="https://plus.google.com" value="">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Instagram</label>
+                            <input type="text" class="input-text" placeholder="http://instagram.com" value="">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Skype</label>
+                            <input type="text" class="input-text" placeholder="https://www.skype.com" value="">
+                        </div>*@
+                    </div>
+                </div>
+                <button class="button preview btn_center_item margin-top-15" id="btnFinalizar">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="footer_copyright_part">Copyright © 2019 All Rights Reserved.</div>
+    </div>
+</div>
+<script>
+    $('#foto').on('change', function (e) {
+    var files = e.target.files;
+    //var myID = 3; //uncomment this to make sure the ajax URL works
+    if (files.length > 0) {
+       if (window.FormData !== undefined) {
+           var data = new FormData();
+           for (var x = 0; x < files.length; x++){
+               data.append("file" + x, files[x]);
+           }
+            $.LoadingOverlay("show");
+           $.ajax({
+               type: "POST",
+               url: '/inicio/UploadFoto?id=' + @Model.idusario,
+               contentType: false,
+               processData: false,
+               data: data,
+               success: function (result) {
+                   $.LoadingOverlay("hide", true);
+                   location.reload();
+               },
+               error: function (xhr, status, p3, p4){
+                   var err = "Error " + " " + status + " " + p3 + " " + p4;
+                   if (xhr.responseText && xhr.responseText[0] == "{")
+                       err = JSON.parse(xhr.responseText).Message;
+                       console.log(err);
+                    }
+                });
+        } else {
+            alert("This browser doesn't support HTML5 file uploads!");
+          }
+     }
+    });
+
+    $("#btnFinalizar").click(function () {
+    debugger
+        if ($("#nomeperfil").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o nome do perfil");
+            throw new Error();
+        }
+
+        if ($("#teleperfil").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o Numero de telefone");
+            throw new Error();
+        }
+        
+
+
+        salvar();
+    })
+
+
+
+    function salvar() {
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('idusario', '@Model.idusario');
+        model.append('nome', $("#nomeperfil").val());
+        model.append('telefone', $("#teleperfil").val());
+      
+
+        $.ajax({
+            method: "POST",
+            url: "/inicio/salvarPerfil",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar este Restaurante");
+
+
+                } else if (msg == "existe") {
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Este Quarto ja Existe");
+                }
+                else {
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/inicio/principal';
+                  
+                }
+
+            });
+    }
+</script>

@@ -1,0 +1,315 @@
+﻿@model ASP_Mussika.Models.arteCulturaViewModel
+
+@{
+    ViewBag.Title = "Perfil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+<div id="utf_listing_gallery_part" class="utf_listing_section">
+    <div class="utf_listing_slider utf_gallery_container margin-bottom-0">
+        @if (ViewBag.imagens != null)
+        {
+            foreach (var item in ViewBag.imagens)
+            {
+                if (item.caminho_imagem.Trim() == "noimage.png") { continue; }
+                <a href="@Url.Content("~/Repository/images/ArteCultura/"+@item.caminho_imagem)" data-background-image="@Url.Content("~/Repository/images/ArteCultura/"+@item.caminho_imagem)" class="item utf_gallery"></a>
+            }
+        }
+        else
+        {
+            <a href="@Url.Content("~/Repository/images/bg/background.jpg")" data-background-image="@Url.Content("~/Repository/images/bg/background.jpg")" class="item utf_gallery"></a>
+        }
+
+    </div>
+
+</div>
+
+<div class="container">
+    <div class="row utf_sticky_main_wrapper">
+        <div class="col-lg-8 col-md-8">
+            <div id="titlebar" class="utf_listing_titlebar">
+                <div class="utf_listing_titlebar_title">
+                    <h2>@Model.titulo <span class="listing-tag">@Model.nome_categoria_obra</span></h2>
+                    @if (Model.nome_categoria_obra.Trim() == "Teatro" || Model.nome_categoria_obra.Trim() == "Dança")
+                    {
+                        <span>Proxima Sessão: Dia 14/05/2020</span><br />
+                    }
+                    else
+                    {
+
+
+                    }
+                    <span> <a href="#utf_listing_location" class="listing-address"> <i class="sl sl-icon-location"></i> @Model.materia </a> </span>
+                    <span class="call_now"><i class="sl sl-icon-size-actual"></i> Dimensões: @Model.dimensoes</span>
+                    <span class="call_now"><i class="sl sl-icon-wrench"></i> Técnica: @Model.tecnica</span>
+                    <span class="call_now"><i class="sl sl-icon-support"></i> Suporte: @Model.suporte</span>
+                    <span class="call_now"><i class="sl sl-icon-graph"></i> Autoria Produção: @Model.autoria_producao</span>
+                    @*<div class="utf_star_rating_section" data-rating="4.5">
+                    <div class="utf_counter_star_rating">(4.5) / (14 Reviews)</div>
+                </div>*@
+                    <ul class="listing_item_social">
+                        @if (Model.nome_categoria_obra.Trim().ToLower() == "Teatro" || Model.nome_categoria_obra.Trim().ToLower() == "Dança")
+                        {
+
+                        }
+                        else
+                        {
+                            @*<li><a href="#" class="now_open">@string.Format("{0:N}MT", Model.preco_venda)</a></li>*@
+                            <li><a href="#" class="now_open">@string.Format("{0:N}MT", Model.preco_venda)</a></li>
+                        }
+
+                    </ul>
+
+                </div>
+            </div>
+            <div id="utf_listing_overview" class="utf_listing_section">
+                <h3 class="utf_listing_headline_part margin-top-30 margin-bottom-30">Descrição</h3>
+                @{var de_ = @Html.Raw(HttpUtility.HtmlDecode(Model.informacao_tecnica));
+
+                    var html_descricao = new HtmlString(de_.ToHtmlString());
+                }
+
+                <p>  @html_descricao</p>
+               
+
+                <div id="utf_listing_tags" class="utf_listing_section listing_tags_section margin-bottom-10 margin-top-0">
+                    <a href="#"><i class="sl sl-icon-phone" aria-hidden="true"></i> +(258) 000 000 000</a>
+                    <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> venda@mussika.co.mz</a>
+
+                </div>
+
+            </div>
+
+            
+
+
+
+
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4 col-md-4 margin-top-75 sidebar-search">
+            
+            @if (Session["idusario"] != null)
+            {
+                if (Model.nome_categoria_obra.Trim() == "Teatro" || Model.nome_categoria_obra.Trim() == "Dança")
+                {
+                    <h4>Clique em uma das sessões abaixo que pretende reservar/Comprar Bilhete</h4>
+                }
+                if (Model.nome_categoria_obra.Trim() == "Teatro" || Model.nome_categoria_obra.Trim() == "Dança")
+                {
+                    <div class="utf_box_widget margin-top-35 margin-bottom-75">
+                        <h3><i class="sl sl-icon-folder-alt"></i>Sessões de hoje</h3>
+
+                        <ul class="utf_listing_detail_sidebar">
+
+                            <li>
+                                <i class="fa fa-angle-double-right"></i>
+                                <a href="/Pagamento/Index"><span>Tema: @Model.titulo!</span> || <span>Data: </span>    29/03/2020 16:30H || Local: Cine Atlantico</a>
+                            </li>
+                            <li>
+                                <i class="fa fa-angle-double-right"></i>
+                                <a href="/Pagamento/Index"><span>Tema: @Model.titulo!</span> || <span>Data: </span>    29/03/2020 16:30H || Local: Cine Atlantico</a>
+                            </li>
+
+
+
+                        </ul>
+                    </div>
+
+                    <div class="utf_box_widget margin-top-35 margin-bottom-75">
+                        <h3><i class="sl sl-icon-folder-alt"></i>Próximas Sessões</h3>
+                        <ul class="utf_listing_detail_sidebar">
+                            <li>
+                                <i class="fa fa-angle-double-right"></i>
+                                <a href="/Pagamento/Index"><span>Tema: @Model.titulo!</span> || <span>Data: </span>    29/03/2020 16:30H || Local: Cine Atlantico</a>
+                            </li>
+                            <li>
+                                <i class="fa fa-angle-double-right"></i>
+                                <a href="/Pagamento/Index"><span>Tema: @Model.titulo</span> || <span>Data: </span> 31/03/2020: 18:30H || Local: Cine Atlantico</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    if (ViewBag.comprou != true)
+                    {
+                        <div class="verified-badge with-tip margin-bottom-30" data-tip-content="Listing has been verified and belongs business owner or manager."> <i class="sl sl-icon-check"></i> Obra</div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button class="utf_progress_button button fullwidth_block margin-top-5" id="btnAddCarrinho" type="button">Add. Carrinho</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="utf_progress_button button fullwidth_block margin-top-5" id="btnAddPagarAgora" type="button">Comprar Agora</button>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="verified-badge with-tip margin-bottom-30" data-tip-content="Listing has been verified and belongs business owner or manager."> <i class="sl sl-icon-check"></i> Obra Adquirida</div>
+                       
+                    }
+                    
+                }
+
+
+
+            }
+            else
+            {
+                <p>Faça login para Comprar esta Obra/Bilhete</p>
+            }
+
+
+
+        </div>
+    </div>
+</div>
+
+<section class="fullwidth_block padding-top-20 padding-bottom-50">
+    <div class="container">
+        <div class="row slick_carousel_slider">
+            <div class="col-md-12">
+                <h3 class="headline_part centered margin-bottom-25">Obras Similares</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="simple_slick_carousel_block utf_dots_nav">
+                        @if (ViewBag.artigos_similares != null)
+                        {
+                            foreach (var item in ViewBag.artigos_similares)
+                            {
+                                <div class="utf_carousel_item">
+                                    <a href="listings_single_page_1.html" class="utf_listing_item-container compact">
+                                        <div class="utf_listing_item">
+                                            <img src="../Repository/images/ArteCultura/@item.caminho_imagem" alt=""> <span class="tag"><i class="im im-icon-Chef-Hat"></i> @Model.nome_categoria_obra</span>
+                                            <span class="utf_open_now">Disponivel</span>
+                                            <div class="utf_listing_item_content">
+                                                <div class="utf_listing_prige_block">
+                                                    <span class="utf_meta_listing_price"><i class="fa fa-tag"></i> @string.Format("{0:N}MT", item.preco_venda)</span>
+                                                    <span class="utp_approve_item"><i class="utf_approve_listing"></i></span>
+                                                </div>
+                                                <h3>@item.titulo</h3>
+                                                <span><i class="sl sl-icon-location"></i>@Model.nome_distrito</span>
+                                                @*<span><i class="sl sl-icon-phone"></i> @item.telefone</span>*@
+                                            </div>
+                                        </div>
+                                        <div class="utf_star_rating_section" data-rating="4.5">
+                                            <div class="utf_counter_star_rating">(4.5)</div>
+                                            <span class="utf_view_count"><i class="fa fa-eye"></i>78+</span>
+                                            <span class="like-icon"></span>
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="~/Content/library/scripts/quantityButtons.js"></script>
+<script src="~/Content/library/scripts/moment.min.js"></script>
+<script src="~/Content/library/scripts/daterangepicker.js"></script>
+
+<script>
+    $(function () {
+        $('#date-picker').daterangepicker({
+            "opens": "left",
+            // singleDatePicker: true,
+            isInvalidDate: function (date) {
+                var disabled_start = moment('09/02/2018', 'DD/MM/YYYY');
+                var disabled_end = moment('09/06/2018', 'DD/MM/YYYY');
+                return date.isAfter(disabled_start) && date.isBefore(disabled_end);
+            }
+        });
+    });
+
+$('#date-picker').on('showCalendar.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').addClass('calendar-animated');
+});
+$('#date-picker').on('show.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').addClass('calendar-visible');
+	$('.daterangepicker').removeClass('calendar-hidden');
+});
+$('#date-picker').on('hide.daterangepicker', function(ev, picker) {
+	$('.daterangepicker').removeClass('calendar-visible');
+	$('.daterangepicker').addClass('calendar-hidden');
+});
+
+function close_panel_dropdown() {
+$('.panel-dropdown').removeClass("active");
+	$('.fs-inner-container.content').removeClass("faded-out");
+}
+$('.panel-dropdown a').on('click', function(e) {
+	if ($(this).parent().is(".active")) {
+		close_panel_dropdown();
+	} else {
+		close_panel_dropdown();
+		$(this).parent().addClass('active');
+		$('.fs-inner-container.content').addClass("faded-out");
+	}
+	e.preventDefault();
+});
+$('.panel-buttons button').on('click', function(e) {
+	$('.panel-dropdown').removeClass('active');
+	$('.fs-inner-container.content').removeClass("faded-out");
+});
+var mouse_is_inside = false;
+$('.panel-dropdown').hover(function() {
+	mouse_is_inside = true;
+}, function() {
+	mouse_is_inside = false;
+});
+$("body").mouseup(function() {
+	if (!mouse_is_inside) close_panel_dropdown();
+});
+
+$("#btnAddPagarAgora").click(function () {
+    $.LoadingOverlay("show");
+    setTimeout(function () {
+        location.href =  '/Pagamento/paymentGateway?oque=arteCultura&id_produto=@Model.id';
+        $.LoadingOverlay("hide");
+    }, 2000);
+
+});
+
+    @*$("#btnAddCarrinho").click(function () {
+        debugger
+          $.LoadingOverlay("show");
+         var data = {
+
+                    id_obra: '@Model.id',
+                    id_usuario: '@Session["idusario"]',
+
+                };
+
+                $.ajax({
+                    method: "POST",
+                    url: "/CarrinhoCompra/adicionarObraNoCarrinho",
+                    data: data,
+
+                })
+                    .done(function (msg) {
+                        if (msg == "false") {
+
+                            $.LoadingOverlay("hide");
+                            informarErro("Nao foi possivel Adicionar no carrinho");
+
+
+                        } else {
+                            $.LoadingOverlay("hide");
+                            informarSucesso("Artigo Adicionado ao carinho!");
+                        }
+                    });
+    })*@
+</script>
+

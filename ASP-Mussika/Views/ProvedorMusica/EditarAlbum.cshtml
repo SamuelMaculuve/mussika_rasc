@@ -1,0 +1,169 @@
+﻿@model ASP_Mussika.Models.musica_album
+@{
+    ViewBag.Title = "CriarAlbum";
+    Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-tag"></i>Dados do Album</h3>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-3">
+            <div class="col-md-12" id="divRestaurante">
+                <h5>Artista<strong style="color:orangered"><a href="/Musica/CriarAutor?layout=_LayoutProvedor&accao=album" style="color:orangered"> (Criar novo Artista)</a></strong></h5>
+                @*<input type="text" class="search-field" name="nomeAutor" id="nomeAutor" placeholder="Autor" value="@ViewBag.autor">*@
+                <select class="js-example-basic-single" name="state">
+                    <option></option>
+                    <option value="-1">Criar Novo Artista</option>
+                    @foreach (var item in ViewBag.artistas)
+                    {
+                        <option value="@item.id">@item.nome</option>
+                    }
+
+                </select>
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <h5>Nome do Album<strong style="color:orangered">*</strong></h5>
+            <input type="text" name="titulo" id="titulo" placeholder="Titulo..." value="@Model.nome">
+        </div>
+        <div class="col-md-3">
+
+            <h5>Genero<strong style="color:orangered">*</strong></h5>
+            @Html.DropDownListFor(m => m.id_genero, ViewBag.categorias as SelectList, "--seleccione a categoria--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%;", @id = "descricao", @name = "id" })
+
+        </div>
+        <div class="col-md-3">
+            <h5>Ano Lançamento<strong style="color:orangered">*</strong></h5>
+            <input type="number" name="ano" id="ano" placeholder="Ano..." value="@Model.ano_lancamento">
+        </div>
+
+
+    </div>
+    <div class="row with-forms">
+
+        <div class="col-md-3">
+            <h5>Produtor</h5>
+            <input type="text" name="produtor" id="produtor" placeholder="Produtor..." value="@Model.produtor">
+        </div>
+        <div class="col-md-3">
+            <h5>Gravadora</h5>
+            <input type="text" name="gravadora" id="gravadora" placeholder="Gravadora..." value="@Model.gravadora">
+        </div>
+        <div class="col-md-3">
+            <h5>Preço</h5>
+            <input type="number" name="preco" id="preco" placeholder="Preço..." value="@Model.preco">
+        </div>
+        <div class="col-md-3">
+            <h5>Quantidade de Musicas</h5>
+            <input type="number" name="Qmusicas" id="Qmusicas" placeholder="Quantidade de Musicas..." value="@Model.quantidade_musicas">
+        </div>
+    </div>
+    <button id="btnMusica" style="margin-top:10px; margin-left:20px; margin-bottom:30px" class="button gray">Prosseguir</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('.js-example-basic-single').select2({
+            placeholder: "Seleccione um Artista",
+            allowClear: true
+
+        });
+
+        $('.js-example-basic-single').change(function() {
+            if ($('.js-example-basic-single').val() == -1) {
+                location.href = "/Musica/CriarAutor?layout=_LayoutProvedor&accao=album";
+            }
+        });
+
+            $('.js-example-basic-single').val('@Model.id_artista')
+            $('.js-example-basic-single').trigger('change');
+        
+        $('#descricao').val(@Model.id_genero)
+    });
+     $("#btnMusica").click(function () {
+
+
+          $('#preco').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+         if ($(".js-example-basic-single").val() == "" || $(".js-example-basic-single").val() == "-1") {
+
+            informarErro("Informe o nome do artista");
+            throw new Error();
+        }
+
+          if ($("#titulo").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o Titulo");
+            throw new Error();
+         }
+
+         if ($("#descricao").val().trim().toLowerCase() == "") {
+
+             informarErro("Informe o genero do Album");
+             throw new Error();
+         }
+            if ($("#ano").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o ano");
+            throw new Error();
+         }
+
+
+        salvar();
+     })
+
+     function salvar() {
+        $.LoadingOverlay("show");
+         var model = new FormData();
+
+         model.append('id', @Model.id);
+         model.append('id_artista', $(".js-example-basic-single").val());
+         model.append('id_genero', $("#descricao").val());
+         model.append('nome', $("#titulo").val());
+         model.append('ano_lancamento', $("#ano").val());
+         model.append('produtor', $("#produtor").val());
+        model.append('gravadora', $("#gravadora").val());
+         model.append('preco', $("#preco").val());
+         model.append('quantidade_musicas', $("#Qmusicas").val());
+         
+
+
+
+
+        $.ajax({
+            method: "POST",
+            url: "/ProvedorMusica/SalvarAlbum",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar este Album");
+
+
+                } else if (msg == "existe") {
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Este Quarto ja Existe");
+                }
+                else {
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/ProvedorMusica/carregarFotoAlbum?id='+msg;
+
+
+                }
+
+            });
+    }
+</script>
+

@@ -1,0 +1,229 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="titlebar" class="gradient margin-bottom-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Músicas</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="/inicio/principal">Inicio</a></li>
+                        <li>Músicas</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 listing_grid_item">
+            <div class="listing_filter_block margin-top-30">
+                
+                <div class="col-md-12 col-xs-12">
+                    @*<div class="sort-by utf_panel_dropdown sort_by_margin float-right">
+                        <a href="#">Destination</a>
+                        <div class="utf_panel_dropdown-content">
+                            <input class="distance-radius" type="range" min="1" max="999" step="1" value="1" data-title="Select Range">
+                            <div class="panel-buttons">
+                                <button class="panel-apply">Apply</button>
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="sort-by">
+                        <div class="utf_sort_by_select_item sort_by_margin">
+                            <select data-placeholder="Ordenar por" class="utf_chosen_select_single">
+                                <option>Ordenar por</option>
+                                <option>Ultimos Lançamentos</option>
+                                <option>Mais Populares</option>                              
+                                <option>Antigos</option>
+                                <option>Aleatórios</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="sort-by">
+                        <div class="utf_sort_by_select_item sort_by_margin">
+                            <select data-placeholder="Tipo:" class="utf_chosen_select_single">
+                                <option>Genero</option>
+                                <option>Rap/Rnb</option>
+                                <option>Zouk</option>
+                                <option>Kizomba</option>
+                                <option>Nhambarro</option>
+                                <option>AfroBeat</option>
+                                <option>Hip-hop</option>
+                                <option>Pandza</option>
+                               
+                            </select>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-4 col-lg-4 col-md-12">
+                    <a href="#" class="utf_listing_item-container" data-marker-id="2">
+                        <div class="utf_listing_item">
+                            <img src="~/Repository/images/musica/musica_3.jpg" alt=""> <span class="tag"><i class="im im-icon-Music-Note"></i> Música</span>
+
+                            <div class="utf_listing_item_content">
+                                <div class="utf_listing_prige_block">
+                                    @*<span class="utf_meta_listing_price"><i class="fa fa-tag"></i> $25 - $55</span>*@
+                                </div>
+                                <h3>
+                                    Abuchamo Munhoto ft Euridse Jeque
+                                </h3>
+                                <span><i class="sl sl-icon-tag"></i> Como Nosso Amor</span>
+                                <span><i class="sl sl-icon-target"></i> Zouk</span>
+                            </div>
+                        </div>
+                        <div class="utf_star_rating_section" data-rating="4.5">
+                            <div class="utf_counter_star_rating"></div>
+                            <span class="utf_view_count"><i class="fa fa-eye"></i> 822+</span>
+                            <span class="like-icon"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-lg-4 col-md-12">
+                    <a href="#" class="utf_listing_item-container" data-marker-id="2">
+                        <div class="utf_listing_item">
+                            <img src="~/Repository/images/musica/musica_1.jpg" alt=""> <span class="tag"><i class="im im-icon-Music-Note"></i> Música</span>
+
+                            <div class="utf_listing_item_content">
+                                <div class="utf_listing_prige_block">
+                                    @*<span class="utf_meta_listing_price"><i class="fa fa-tag"></i> $25 - $55</span>*@
+                                </div>
+                                <h3>
+                                    Fábula da Silva
+                                </h3>
+                                <span><i class="sl sl-icon-tag"></i> Meu Deus é tão bom</span>
+                                <span><i class="sl sl-icon-target"></i> Zouk</span>
+                            </div>
+                        </div>
+                        <div class="utf_star_rating_section" data-rating="4.5">
+                            <div class="utf_counter_star_rating"></div>
+                            <span class="utf_view_count"><i class="fa fa-eye"></i> 822+</span>
+                            <span class="like-icon"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-lg-4 col-md-12">
+                    <a href="#" class="utf_listing_item-container" data-marker-id="2">
+                        <div class="utf_listing_item">
+                            <img src="~/Repository/images/musica/musica_2.jpg" alt=""> <span class="tag"><i class="im im-icon-Music-Note"></i> Música</span>
+
+                            <div class="utf_listing_item_content">
+                                <div class="utf_listing_prige_block">
+                                    @*<span class="utf_meta_listing_price"><i class="fa fa-tag"></i> $25 - $55</span>*@
+                                </div>
+                                <h3>
+                                    Banda N’zua
+                                </h3>
+                                <span><i class="sl sl-icon-tag"></i> Maria</span>
+                                <span><i class="sl sl-icon-target"></i> Nhambarro</span>
+                            </div>
+                        </div>
+                        <div class="utf_star_rating_section" data-rating="4.5">
+                            <div class="utf_counter_star_rating"></div>
+                            <span class="utf_view_count"><i class="fa fa-eye"></i> 822+</span>
+                            <span class="like-icon"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-lg-4 col-md-12">
+                    <a href="#" class="utf_listing_item-container" data-marker-id="2">
+                        <div class="utf_listing_item">
+                            <img src="~/Repository/images/musica/musica_4.jpg" alt=""> <span class="tag"><i class="im im-icon-Music-Note"></i> Música</span>
+
+                            <div class="utf_listing_item_content">
+                                <div class="utf_listing_prige_block">
+                                    @*<span class="utf_meta_listing_price"><i class="fa fa-tag"></i> $25 - $55</span>*@
+                                </div>
+                                <h3>
+                                    Patricio
+                                </h3>
+                                <span><i class="sl sl-icon-tag"></i> I'm Drug</span>
+                                <span><i class="sl sl-icon-target"></i>Hip-hop</span>
+                            </div>
+                        </div>
+                        <div class="utf_star_rating_section" data-rating="4.5">
+                            <div class="utf_counter_star_rating"></div>
+                            <span class="utf_view_count"><i class="fa fa-eye"></i> 822+</span>
+                            <span class="like-icon"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-lg-4 col-md-12">
+                    <a href="#" class="utf_listing_item-container" data-marker-id="2">
+                        <div class="utf_listing_item">
+                            <img src="~/Repository/images/musica/musica_6.jpg" alt=""> <span class="tag"><i class="im im-icon-Music-Note"></i> Música</span>
+
+                            <div class="utf_listing_item_content">
+                                <div class="utf_listing_prige_block">
+                                    @*<span class="utf_meta_listing_price"><i class="fa fa-tag"></i> $25 - $55</span>*@
+                                </div>
+                                <h3>
+                                    Moços Da Zona
+                                </h3>
+                                <span><i class="sl sl-icon-tag"></i> Tio Joaquim</span>
+                                <span><i class="sl sl-icon-target"></i> Afro Beat</span>
+                            </div>
+                        </div>
+                        <div class="utf_star_rating_section" data-rating="4.5">
+                            <div class="utf_counter_star_rating"></div>
+                            <span class="utf_view_count"><i class="fa fa-eye"></i> 822+</span>
+                            <span class="like-icon"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 col-lg-4 col-md-12">
+                    <a href="#" class="utf_listing_item-container" data-marker-id="2">
+                        <div class="utf_listing_item">
+                            <img src="~/Repository/images/musica/musica_5.jpg" alt=""> <span class="tag"><i class="im im-icon-Music-Note"></i> Música</span>
+
+                            <div class="utf_listing_item_content">
+                                <div class="utf_listing_prige_block">
+                                    @*<span class="utf_meta_listing_price"><i class="fa fa-tag"></i> $25 - $55</span>*@
+                                </div>
+                                <h3>
+                                    Lilos Vide Ft Tayobo Jr
+                                </h3>
+                                <span><i class="sl sl-icon-tag"></i> Quero Ver Ai</span>
+                                <span><i class="sl sl-icon-target"></i>Kizomba</span>
+                            </div>
+                        </div>
+                        <div class="utf_star_rating_section" data-rating="4.5">
+                            <div class="utf_counter_star_rating"></div>
+                            <span class="utf_view_count"><i class="fa fa-eye"></i> 822+</span>
+                            <span class="like-icon"></span>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="utf_pagination_container_part margin-top-20 margin-bottom-75">
+                        <nav class="pagination">
+                            <ul>
+                                <li><a href="#"><i class="sl sl-icon-arrow-left"></i></a></li>
+                                <li><a href="#" class="current-page">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

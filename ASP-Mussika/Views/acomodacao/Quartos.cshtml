@@ -1,0 +1,145 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.acomodacao_quarto>
+@using PagedList.Mvc;
+
+@{
+    if (Session["tipo"].ToString() == "4")
+    {
+        ViewBag.Title = "Criar";
+        Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+    }
+    else
+    {
+        ViewBag.Title = "Criar";
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="notification success closeable margin-bottom-30">
+            <h2>Acomodação - <strong>@ViewBag.Acomodacao.nome</strong></h2>
+            <p>Gerenciamento de <strong>Quartos</strong>!</p>
+            <a class="close" href="#"></a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <button id="btnSalvar" style="margin-top:40px; margin-left:20px;" class="button gray">Adicionar Quarto</button>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="col-lg-12 col-md-12 mb-4">
+            <div class="utf_dashboard_list_box table-responsive recent_booking">
+                <h4>Quartos Cadastrados</h4>
+                <div class="dashboard-list-box table-responsive invoices with-icons">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Quarto</th>
+                                <th>Preco Diario</th>
+                                <th>Quantidade</th>
+                               
+                                <th>Acções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @foreach (var item in Model)
+                          {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.descricao)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.custo_diaria)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.quantidade)
+                                </td>
+                                <td>
+                                    <a href="javascript:ver(@item.id)" class="button gray"><i class="fa fa-eye"></i> Ver/Editar</a> 
+                                   
+                                   
+                                    
+                                </td>
+                            </tr>
+                          }
+                           
+                        </tbody>
+                    </table>
+                   
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="utf_pagination_container_part margin-top-20 margin-bottom-70">
+                    <nav class="pagination">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                        @Html.PagedListPager(Model, page => Url.Action("Quartos",
+                            new { page, id = @ViewBag.Acomodacao.id, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                        @*<ul>
+                            <li><a href="#"><i class="sl sl-icon-arrow-left"></i></a></li>
+                            <li><a href="#" class="current-page">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+                        </ul>*@
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+         @*<div class="col-md-6">
+             <td><a href="dashboard_bookings.html" class="button gray"><i class="fa fa-eye"></i> View</a></td>
+            <div class="col-lg-12 col-md-12 mb-4">
+                <div class="utf_dashboard_list_box table-responsive recent_booking">
+                    <h4>Quartos Cadastrados</h4>
+
+                </div>
+            </div>
+
+
+        </div>*@
+</div>
+<div class="row">
+    <button id="btnAcomodacoes" style="margin-top:10px; margin-left:20px; margin-bottom:30px" class="button gray">Ir para Acomodações</button>
+</div>
+<script>
+
+    var ver = function (id) {
+        location.href = '/acomodacao/EditarQuarto?id=' + id;
+    }
+    $("#btnAcomodacoes").click(function () {
+        debugger
+        $.LoadingOverlay("show");
+        setTimeout(function () {
+            if ("@Session["tipo"].ToString()" == "4") {
+                window.location.href = '/ProvedorAcomodacao/Index?id=@Session["idusario"]';
+            } else {
+                window.location.href = '/acomodacao/Index';
+            }
+
+            $.LoadingOverlay("hide");
+        }, 2000);
+
+    })
+    $("#btnSalvar").click(function () {
+        debugger
+        $.LoadingOverlay("show");
+        setTimeout(function () {
+            $.LoadingOverlay("hide");
+        }, 2000);
+        location.href = '/acomodacao/CriarQuarto?id=' + '@ViewBag.Acomodacao.id';
+    })
+</script>

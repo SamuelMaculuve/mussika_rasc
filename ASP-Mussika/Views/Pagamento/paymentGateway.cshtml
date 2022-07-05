@@ -1,0 +1,611 @@
+﻿@model ASP_Mussika.Models.CompraViewModel
+@{
+    ViewBag.Title = "paymentGateway";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.11.0.css" type="text/css" media="all">
+<div class="clearfix"></div>
+<div id="titlebar" class="gradient">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Escolha o método de Pagamento</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="/inicio/Principal">Inicio</a></li>
+                        <li>Escolha o método de Pagamento</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container margin-bottom-75">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 utf_listing_payment_section">
+            <div class="utf_booking_listing_section_form margin-bottom-40">
+                <h3><i class="sl sl-icon-paper-plane"></i> Aviso Importante</h3>
+                <text style="text-align:justify;">
+                    Caro utilizador, ao efectuar o pagamento de um produto ou serviço, evite expor os dados da sua conta bancária, paypal ou m-pesa, para tal, recomenda-se que preencha os dados sem que outras pessoas possam vê-los (cobrindo a tela ou simplemente mantendo uma certa distância). Este procedimento visa garantir a segurança das suas contas evitando o roubo ou clonagem de infomações sensíveis.
+                    Caso tenha alguma dúvida, por favor contacte a nossa equipe de suporte ou acesse a página COMO PAGAR clicando neste link - <a style="color:red" href="https://mussika.co.mz/inicio/como_pagar">Como Pagar no Mussika</a>
+                </text>
+
+            </div>
+            <div style="background-color:#f5f5f5; padding: 20px;">
+                <h3><i class="sl sl-icon-paper-plane"></i> Transporte</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="checkboxes in-row amenities_checkbox">
+                            <ul>
+                                <li>
+                                    <input id="check-a1" type="checkbox" name="check">
+                                    <label for="check-a1">Incluir Transporte</label>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="delivery" style="display:none">
+                        <div class="col-md-5">
+                            <div class="card-label">
+                                <label for="Transportadora">Transportadora</label>
+                                <select style="height:52px;" onchange="carregar_parametro()" id="transportadora" name="transportadora" class=" transportadora">
+                                    <option value="0">Seleccione o serviço de Transporte</option>
+
+                                    @foreach (var item in ViewBag.transportadoras)
+                                    {
+                                        <option value="@item.id_transportadora">@item.nome</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="parametros" hidden>
+                        <div class="col-md-4">
+                            <div class="card-label">
+                                <label for="Transportadora">Tipo de Carga</label>
+                                <select style="height:52px;" onchange="CalcularTotal()" id="tipo_carga" disabled name="tipo_carga" class="tipo_carga">
+                                    <option selected value="simples">Carga Pequena</option>
+                                    <option value="media">Carga Média</option>
+                                    <option value="grande">Carga Grande</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card-label">
+                                <label for="Transportadora">Carga Sensivel</label>
+                                <select style="height:52px;" onchange="CalcularTotal()" id="sensivel" name="sensivel" class="sensivel">
+                                    <option value="sim">SIM</option>
+                                    <option selected value="nao">NAO</option>
+
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card-label">
+                                <label for="distancia">Distancia(km)</label>
+                                <input type="number" min="0" max="0" id="distancia" class="input-field" name="car" title="card number" value="">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card-label">
+                                <label for="distancia">Local de Levantamento</label>
+                                <input type="text" id="local_levantamento" class="input-field" name="local_entrega" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="info_destinatario" hidden>
+                    
+                    <div class="col-md-4">
+                        <div class="card-label">
+                            <label for="distancia">Local de Entrega</label>
+                            <input type="text" id="local_entrega" class="input-field" name="local_entrega" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card-label">
+                            <label for="destinatario">Nome Destinatário</label>
+                            <input type="text" id="nome_destinatario" class="input-field" name="destinatario" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card-label">
+                            <label for="distancia">Contacto</label>
+                            <input type="number" id="contacto_destinatario" class="input-field" name="contacto" value="">
+                        </div>
+                    </div>
+                </div>
+               
+
+            </div>
+
+            <br />
+            <div class="utf_booking_payment_option_form">
+                <h3><i class="sl sl-icon-credit-card "></i> Métodos de Pagamentos</h3>
+                <div class="payment">
+                    <div class="utf_payment_tab_block">
+                        <div class="utf_payment_trigger_tab">
+                            <input checked="" id="stripe" name="cardType" type="radio" value="stripe">
+                            <label for="stripe">Pagar Com Mpesa</label>
+                            <img class="utf_payment_logo stripe" src="~/Content/library/images/mpesa.png" alt="">
+
+                        </div>
+                        <div class="utf_payment_tab_block_content">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="phoneNumbermpesa">Numero de Telefone</label>
+                                        <input class="simple-field-data-mask" data-mask="000-000-000" id="phoneNumbermpesa" placeholder="Numero de Telefone" required="" type="text">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="utf_payment_tab_block" style="display:none" hidden>
+                        <div class="utf_payment_trigger_tab">
+                            <input checked="" id="paypal" name="cardType" type="radio" value="paypal">
+                            <label for="paypal">PayPal</label>
+                            <img class="utf_payment_logo paypal" src="~/Content/library/images/paypal_pay.png" alt="">
+                        </div>
+                        <div class="utf_payment_tab_block_content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="payPalname">PayPal Name</label>
+                                        <input id="nameOnCard" name="payPalname" placeholder="Paypal Name" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="payPalemail">PayPal Email</label>
+                                        <input id="payPalemail" name="payPalemail" placeholder="Paypal Email" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="phoneNumber">Phone Number</label>
+                                        <input id="phoneNumber" placeholder="Phone Number" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="couponCode">Coupon Code?</label>
+                                        <input id="couponCode" placeholder="Coupon Code" required="" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="utf_payment_tab_block utf_payment_tab_block_active">
+                        <div class="utf_payment_trigger_tab">
+                            <input type="radio" name="cardType" id="creditCart" value="creditCard">
+                            <label for="creditCart">Cartão de Debito/Crédito</label>
+                            <img class="utf_payment_logo" src="~/Content/library/images/pay_icon.png" alt="">
+                        </div>
+                        <div class="utf_payment_tab_block_content">
+                            <div class="row" hidden>
+                                <div class="col-md-6">
+
+                                    <div class="card-label">
+                                        <label for="card-number">Card Number</label>
+                                        <input type="text" id="card-number" class="input-field" name="card-number" title="card number" aria-label="enter your card number" value="" tabindex="1" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="cardholder-name">Card Holder Name</label>
+                                        <input type="text" id="cardholder-name" class="input-field" name="cardholder-name" title="cardholder name" aria-label="enter name on card" value="" tabindex="5" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-label">
+                                        <label for="expiry-month">Expiry Month</label>
+                                        <input type="text" id="expiry-month" class="input-field" title="expiry month" aria-label="two digit expiry month" value="" tabindex="2" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-label">
+                                        <label type="text" for="expiry-year">Expiry Year</label>
+                                        <input type="text" id="expiry-year" class="input-field" title="expiry year" aria-label="two digit expiry year" value="" tabindex="3" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-label">
+                                        <label for="security-code">CVV Code</label>
+                                        <input type="text" id="security-code" class="input-field" title="security code" aria-label="three digit CCV security code" value="" tabindex="4" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <a id="link" href="javascript:pagarMpesa();" class="button utf_booking_confirmation_button margin-top-20 margin-bottom-10">Confirmar Agora</a>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 margin-top-0 utf_listing_payment_section">
+            <div class="utf_booking_listing_item_container compact utf_order_summary_widget_section">
+                <div class="listing-item">
+                    <img src="@Model.foto_capa" alt="">
+                    <div class="utf_listing_item_content">
+                        <h3>@Model.nome</h3>
+                        <h4 style="color:white">@Model.oque_e</h4>
+                        <div class="utf_star_rating_section" data-rating="4.5">
+                            <div class="utf_counter_star_rating">Mozambique</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="boxed-widget opening-hours summary margin-top-0">
+                <h3><i class="fa fa-calendar-check-o"></i> Detalhes da Pagamento</h3>
+                <ul>
+                   
+                    <li>Deposito <span> 0,00MT</span></li>
+                    <li>I.V.A <span>% 17.00</span></li>
+                    <li class="total-costs">Sub Total <span id="sub_total">@string.Format("{0:N} MT", Model.valor)</span></li>
+
+                    <li class="total-costs">Custo Total <span id="preco_total">@string.Format("{0:N} MT", Model.valor)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.11.0.js"></script>
+<script src="/Content/sinon-1.10.3.js"></script>
+<script src="/Content/sinon-qunit-1.0.0.js"></script>
+<script src="/Content/jquery.mask.js"></script>
+<script src="/Content/jquery.mask.test.js"></script>
+<script type="text/javascript" src="~/Content/library/scripts/loadingoverlay.min.js"></script>
+
+
+<script>
+
+    var distancia_maxima = 0;
+    var distancia_minima = 0;
+    var preco_transportadora = 0;
+    var sensivel = false;
+    var tota_pagar =@Model.valor;
+    var peso_grande = false;
+
+    var percentagem_sensivel = 0;
+    var percentagem_peso_grande = 0;
+    var percentagem_peso_medio = 0;
+
+    var peso_max_carga_pequena = 0;
+    var peso_max_carga_media = 0;
+    var peso_max_carga_grande = 0;
+
+    function carregar_parametro() {
+        if ($("#transportadora").val() != "0") {
+
+            $.LoadingOverlay("show");
+            var model = new FormData();
+            model.append('id_transporte', $("#transportadora").val());
+
+
+
+            $.ajax({
+                method: "POST",
+                url: "/Transporte/CarregarParametro",
+                data: model,
+                processData: false,
+                contentType: false,
+            })
+                .done(function (msg) {
+                    
+                    if (msg == "false") {
+
+                        $.LoadingOverlay("hide", true);
+                        informarErro("Nao foi possivel continuar com o processo");
+
+
+                    }
+                    else {
+                        
+                        $.LoadingOverlay("hide", true);
+                        $("#parametros").show();
+                        $("#info_destinatario").show();
+                        $("#distancia").prop("min", msg.distancia_minima);
+                        $("#distancia").prop("max", msg.distancia_maxima);
+                        $("#distancia").prop("value", msg.distancia_minima);
+
+                        distancia_maxima = msg.distancia_maxima;
+                        distancia_minima = msg.distancia_minima;
+                        preco_transportadora = msg.valor;
+                        percentagem_sensivel = msg.percentagem_sensivel;
+                        percentagem_peso_grande = msg.peso_grande;
+                        percentagem_peso_medio = msg.peso_medio;
+                        sensivel = msg.sensivel;
+                        peso_max_carga_grande = msg.peso_max_carga_grande;
+                        peso_max_carga_media = msg.peso_max_carga_media;
+                        peso_max_carga_pequena = msg.peso_max_carga_pequena;
+                        CalcularTotal();
+                    }
+
+                });
+        } else {
+            $("#transportadora").val("0");
+        }
+    }
+
+    $("#distancia").keyup(function () {
+        CalcularTotal();
+    })
+    function CalcularTotal() {
+
+        var distancia = parseFloat($("#distancia").val());
+        var preco_por_km = parseFloat(preco_transportadora);
+        var total_transporte = distancia * preco_por_km;
+
+        
+        var produto_sensivel = $("#sensivel").val();
+        var tipo_carga = $("#tipo_carga").val();
+
+        var calculo_peso_grande = percentagem_peso_grande / 100;
+        var calculo_peso_medio = percentagem_peso_medio / 100;
+        var calculo_peso_sensivel = percentagem_sensivel / 100;
+        var preco_com_peso = 0;
+
+        debugger
+        if (parseFloat(@Model.peso) <= parseFloat(peso_max_carga_pequena)) { $("#tipo_carga").val("simples"); tipo_carga = "simples" }
+        else if (parseFloat(@Model.peso) <= parseFloat(peso_max_carga_media)) { $("#tipo_carga").val("media"); tipo_carga = "media" }
+        else if (parseFloat(@Model.peso) <= parseFloat(peso_max_carga_grande)) { $("#tipo_carga").val("grande"); tipo_carga = "grande" }
+        debugger
+        if (tipo_carga == "grande") { peso_grande = true; preco_com_peso = total_transporte * calculo_peso_grande + total_transporte } 
+        if (tipo_carga == "media") { peso_grande = true; preco_com_peso = total_transporte * calculo_peso_medio + total_transporte }
+        if (tipo_carga == "simples") { peso_grande = false; preco_com_peso = distancia * preco_por_km; }
+        if (produto_sensivel == "sim") { sensivel = true; total_transporte = preco_com_peso * calculo_peso_sensivel + preco_com_peso } else { sensivel = false; total_transporte = preco_com_peso }
+
+        tota_pagar = total_transporte + parseFloat(@Model.valor);
+        $("#sub_total").text(tota_pagar.toFixed(2) + " MT");
+        $("#preco_total").text(tota_pagar.toFixed(2) + " MT");
+    }
+    $("#check-a1").change(function () {
+        if ($("#check-a1").prop("checked") == true) {
+            $("#delivery").show();
+
+            $("#distancia").val("0");
+            $("#transportadora").prop("value","0");
+
+        } else {
+            $("#delivery").hide();
+            $("#parametros").hide();
+            $("#info_destinatario").hide();
+            tota_pagar=@Model.valor;
+            $("#sub_total").text('@string.Format("{0:N} MT", Model.valor)');
+            $("#preco_total").text('@string.Format("{0:N} MT", Model.valor)');
+            $("#transportadora").val("0");
+
+        }
+    })
+
+
+
+    var pagamentoActual = "paypal";
+    $(document).ready(function () {
+
+
+
+        $('#phoneNumbermpesa').mask('(258) 000-000-000');
+
+        $("#paypal").click(function () {
+            pagamentoActual = "paypal";
+        })
+        $("#stripe").click(function () {
+            pagamentoActual = "mpesa";
+        })
+        $("#creditCart").click(function () {
+            if ($("#check-a1").prop("checked") == true) {
+                if ($("#transportadora").val() == "0") {
+                    informarErro("Campo 'Incluir Transporte Activado, informe a transportadora e a distancia necessaria para entregar o produto partindo do local da compra ate o destinatario'");
+                    throw new Error("");
+                }
+                if ($("#distancia").val() == "0") {
+                    informarErro("Campo 'Incluir Transporte Activado, informe a transportadora e a distancia necessaria para entregar o produto partindo do local da compra ate o destinatario'");
+                    throw new Error("");
+                }
+                if ($("#distancia").val().trim() == "") {
+                    informarErro("Campo 'Incluir Transporte Activado, informe a transportadora e a distancia necessaria para entregar o produto partindo do local da compra ate o destinatario'");
+                    throw new Error("");
+                }
+                if (parseFloat($("#distancia").val()) < parseFloat(distancia_minima)) {
+
+                    informarErro("A transportadaora não efectua entrega de produtos em lugares com menos de " + distancia_minima + "KM e maior que" + distancia_maxima + "KM.");
+                    throw new Error("");
+                }
+                if (parseFloat($("#distancia").val()) > parseFloat(distancia_maxima)) {
+
+                    informarErro("A transportadaora não efectua entrega de produtos em lugares com menos de " + distancia_minima + " KM e mais de " + distancia_maxima + " KM.");
+                    throw new Error("");
+                }
+                if ($("#local_entrega").val().trim() == "") {
+                    informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                    throw new Error("");
+                }
+                if ($("#nome_destinatario").val().trim() == "") {
+                    informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                    throw new Error("");
+                }
+                if ($("#contacto_destinatario").val().trim() == "") {
+                    informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                    throw new Error("");
+                }
+                if ($("#local_levantamento").val().trim() == "") {
+                    informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                    throw new Error("");
+                }
+                
+            }
+            pagamentoActual = "creditCart";
+            //location.href = 'https://payment.bim.mussika.co.mz/home/index?id='+@Model.id_produto+'&valor=@Model.valor'+'&oque_e=@Model.oque_e';
+            location.href = '/Pagamento/pay_master_card?id=' +@Model.id_produto+'&valor=' + tota_pagar.toFixed(2) + '&oque_e=@Model.oque_e' + "&tem_entrega=" + $("#check-a1").prop("checked") + "&id_transportadora=" + $("#transportadora").val() + '&local_entrega=' + $("#local_entrega").val() + '&nome_destinatario=' + $("#nome_destinatario").val() + "&contacto_destinatario=" + $("#contacto_destinatario").val() + "&local_levantamento=" + $("#local_levantamento").val() + "&sensivel=" + sensivel + "&peso_grande=" + peso_grande;
+        })
+
+
+
+    });
+     function pagarMpesa() {
+         if ($("#check-a1").prop("checked") == true) {
+             if ($("#transportadora").val() == "0") {
+                 informarErro("Campo 'Incluir Transporte Activado, informe a transportadora e a distancia necessaria para entregar o produto partindo do local da compra ate o destinatario'");
+                 throw new Error("");
+             }
+             if ($("#distancia").val() == "0") {
+                 informarErro("Campo 'Incluir Transporte Activado, informe a transportadora e a distancia necessaria para entregar o produto partindo do local da compra ate o destinatario'");
+                 throw new Error("");
+             }
+             if ($("#distancia").val().trim() == "") {
+                 informarErro("Campo 'Incluir Transporte Activado, informe a transportadora e a distancia necessaria para entregar o produto partindo do local da compra ate o destinatario'");
+                 throw new Error("");
+             }
+             if (parseFloat($("#distancia").val()) < parseFloat(distancia_minima)) {
+
+                 informarErro("A transportadaora não efectua entrega de produtos em lugares com menos de " + distancia_minima + "KM e maior que" + distancia_maxima + "KM.");
+                 throw new Error("");
+             }
+             if (parseFloat($("#distancia").val()) > parseFloat(distancia_maxima)) {
+
+                 informarErro("A transportadaora não efectua entrega de produtos em lugares com menos de " + distancia_minima + " KM e mais de " + distancia_maxima + " KM.");
+                 throw new Error("");
+             }
+             if ($("#local_entrega").val().trim() == "") {
+                 informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                 throw new Error("");
+             }
+             if ($("#nome_destinatario").val().trim() == "") {
+                 informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                 throw new Error("");
+             }
+             if ($("#contacto_destinatario").val().trim() == "") {
+                 informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                 throw new Error("");
+             }
+             if ($("#local_levantamento").val().trim() == "") {
+                 informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                 throw new Error("");
+             }
+
+         }
+         if (pagamentoActual == "paypal") {
+
+             informarErro("Seleccione um metodo de Pagamento");
+             throw new Error("");
+
+         } else if (pagamentoActual == "creditCart") {
+
+             if ($("#check-a1").prop("checked") == true) {
+                 if ($("#transportadora").val() == "0") {
+                     informarErro("Campo 'Incluir Transporte Activado, informe a transportadora e a distancia necessaria para entregar o produto partindo do local da compra ate o destinatario'");
+                     throw new Error("");
+                 }
+                 if ($("#distancia").val() == "0") {
+                     informarErro("Campo 'Incluir Transporte Activado, informe a transportadora e a distancia necessaria para entregar o produto partindo do local da compra ate o destinatario'");
+                     throw new Error("");
+                 }
+                 if ($("#distancia").val().trim() == "") {
+                     informarErro("Campo 'Incluir Transporte Activado, informe a transportadora e a distancia necessaria para entregar o produto partindo do local da compra ate o destinatario'");
+                     throw new Error("");
+                 }
+                 if (parseFloat($("#distancia").val()) < parseFloat(distancia_minima)) {
+
+                     informarErro("A transportadaora não efectua entrega de produtos em lugares com menos de " + distancia_minima + "KM e maior que" + distancia_maxima + "KM.");
+                     throw new Error("");
+                 }
+                 if (parseFloat($("#distancia").val()) > parseFloat(distancia_maxima)) {
+
+                     informarErro("A transportadaora não efectua entrega de produtos em lugares com menos de " + distancia_minima + " KM e mais de " + distancia_maxima + " KM.");
+                     throw new Error("");
+                 }
+                 if ($("#local_entrega").val().trim() == "") {
+                     informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                     throw new Error("");
+                 }
+                 if ($("#nome_destinatario").val().trim() == "") {
+                     informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                     throw new Error("");
+                 }
+                 if ($("#contacto_destinatario").val().trim() == "") {
+                     informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                     throw new Error("");
+                 }
+                 if ($("#local_levantamento").val().trim() == "") {
+                     informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                     throw new Error("");
+                 }
+             }
+
+
+             //location.href = 'https://payment.bim.mussika.co.mz/home/index?id='+@Model.id_produto+'&valor=@Model.valor'+'&oque_e=@Model.oque_e';
+             location.href = '/Pagamento/pay_master_card?id=' +@Model.id_produto+'&valor=' + tota_pagar.toFixed(2) + '&oque_e=@Model.oque_e' + "&tem_entrega=" + $("#check-a1").prop("checked") + "&id_transportadora=" + $("#transportadora").val() + '&local_entrega=' + $("#local_entrega").val() + '&nome_destinatario=' + $("#nome_destinatario").val() + "&contacto_destinatario=" + $("#contacto_destinatario").val() + "&local_levantamento=" + $("#local_levantamento").val() + "&sensivel=" + sensivel + "&peso_grande=" + peso_grande;
+         } else {
+             if ($("#check-a1").prop("checked") == true) {
+                 if ($("#transportadora").val() == "0") {
+                     informarErro("Campo 'Incluir Transporte Activado, informe a transportadora e a distancia necessaria para entregar o produto partindo do local da compra ate o destinatario'");
+                     throw new Error("");
+                 }
+                 if ($("#distancia").val() == "0") {
+                     informarErro("Campo 'Incluir Transporte Activado, informe a transportadora e a distancia necessaria para entregar o produto partindo do local da compra ate o destinatario'");
+                     throw new Error("");
+                 }
+                 if ($("#distancia").val().trim() == "") {
+                     informarErro("Campo 'Incluir Transporte Activado, informe a transportadora e a distancia necessaria para entregar o produto partindo do local da compra ate o destinatario'");
+                     throw new Error("");
+                 }
+                 if (parseFloat($("#distancia").val()) < parseFloat(distancia_minima)) {
+
+                     informarErro("A transportadaora não efectua entrega de produtos em lugares com menos de " + distancia_minima + " KM e maior que" + distancia_maxima + " KM.");
+                     throw new Error("");
+                 }
+                 if (parseFloat($("#distancia").val()) > parseFloat(distancia_maxima)) {
+
+                     informarErro("A transportadaora não efectua entrega de produtos em lugares com menos de " + distancia_minima + " KM e mais de " + distancia_maxima + " KM.");
+                     throw new Error("");
+                 }
+                 if ($("#local_entrega").val().trim() == "") {
+                     informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                     throw new Error("");
+                 }
+                 if ($("#nome_destinatario").val().trim() == "") {
+                     informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                     throw new Error("");
+                 }
+                 if ($("#contacto_destinatario").val().trim() == "") {
+                     informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                     throw new Error("");
+                 }
+                 if ($("#local_levantamento").val().trim() == "") {
+                     informarErro("Campo 'Incluir Transporte Activado, preencha os campos relacionados a entrega'");
+                     throw new Error("");
+                 }
+             }
+                 if ($('#phoneNumbermpesa').val() == "(258) 000-000-00") {
+
+                    informarErro("Numero Invalido");
+                    throw new Error('');
+             }
+             debugger
+             location.href = "/Pagamento/pagarViaMpesa?id=@Model.id_produto&numero=" + $('#phoneNumbermpesa').val() + "&valor=" + tota_pagar.toFixed(2) + "&oque_e=@Model.oque_e" + "&tem_entrega=" + $("#check-a1").prop("checked") + "&id_transportadora=" + $("#transportadora").val() + '&local_entrega=' + $("#local_entrega").val() + '&nome_destinatario=' + $("#nome_destinatario").val() + "&contacto_destinatario=" + $("#contacto_destinatario").val() + "&local_levantamento=" + $("#local_levantamento").val() + "&sensivel=" + sensivel + "&peso_grande=" + peso_grande;
+
+
+            }
+    }
+
+
+
+
+</script>
+

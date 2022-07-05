@@ -1,0 +1,125 @@
+﻿@using ASP_Mussika.Models;
+@model List<TaxiViewModel>
+
+
+@{
+    string current_page = (string)ViewBag.current_page;
+    int rpp = ViewBag.records_perpage;
+    List<TaxiViewModel> lista_registos = (List<TaxiViewModel>)ViewBag.lista_taxis;
+    //rpp -> records per page
+}
+
+
+<div class="row">
+    <ul>
+        @foreach (TaxiViewModel sv in Model)
+        {
+
+            <li>
+                <div class="utf_list_box_listing_item">
+
+                    
+                    <div class="utf_list_box_listing_item-img"><a href="#"><img src="~/Repository/images/diversos/taxi.jpg" alt=""></a></div>
+                    <div class="utf_list_box_listing_item_content">
+                        <div class="inner">
+                            <h3>@sv.nome</h3>
+                            <span><i class="im im-icon-User"></i> @sv.condutor</span><br />
+                            <span><i class="sl sl-icon-location"></i> @sv.praca_fixa</span><br />
+                            @*<span><i class="sl sl-icon-phone"></i> @sv.telefone</span><br />*@
+                            <span><a href="javascript:solicitar(@sv.id)" class="button gray" style="color:white;height:40px;width:120px; font-size:16px; border-radius:6px"> Solicitar</a></span><br />
+                            
+
+                        </div>
+                    </div>
+                </div>
+               
+            </li>
+        }
+    </ul>
+   
+</div>
+
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="utf_pagination_container_part margin-top-0 margin-bottom-70">
+            <nav class="pagination">
+                @{
+
+                    int total_records = lista_registos.Count;
+                    int pageCount = (total_records + rpp - 1) / rpp;
+                    int initial_index = int.Parse(current_page);
+                    int current_index = int.Parse(current_page);
+                    int nextpage_index = current_index + rpp;
+
+                    if (total_records > 0)
+                    {
+                        bool search_bykey = false;
+
+                        if (search_bykey == false)
+                        {
+
+
+                            <ul>
+
+                                @if (initial_index == 0)
+                                {
+                                    if (pageCount == 1) { }
+                                    <li><a href="#!" class="current-page">1</a></li>
+
+                                    for (int i = 1; i <= pageCount - 1; i++)
+                                    {
+                                        int bt_index = current_index + rpp;
+                                        current_index = bt_index;
+                                        int pg = i + 1;
+
+                                        <li><a id="@bt_index" href="#!" onclick="SelectPage(this.id)">@pg</a></li>
+                                    }
+                                }
+                                @if (initial_index > 0)
+                                {
+                                    int prevpage = current_index - rpp;
+                                    int count = (-1) * rpp;
+
+                                    for (int i = 0; i <= pageCount - 1; i++)
+                                    {
+                                        count = count + rpp;
+                                        current_index = count;
+                                        int pg = i + 1;
+
+                                        if (initial_index == count)
+                                        {
+                                            <li><a href="#!" class="current-page">@pg</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a id="@count" href="#!" onclick="SelectPage(this.id)">@pg</a></li>
+                                        }
+                                    }
+                                }
+
+                            </ul>
+
+                            current_index = 0;
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                    else
+                    {
+                        <h5 style="color:black;"> ("Nenhum resultado encontrado")  </h5> <br /> <br />
+                    }
+                }
+            </nav>
+        </div>
+    </div>
+</div>
+<script>
+
+    function solicitar(id) {
+
+        location.href = '/servico_taxi/solicitar?id=' + id;
+    }
+</script>

@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "subscricoes";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row" style="margin-top:10px;">
+
+    <div class="col-md-12" style="margin-top:-20px;">
+
+
+
+        <div class="row with-forms">
+            <div class="row" style="margin:20px 40px 20px 0px;">
+                <table id="example" class="display" style="width:100%">
+                    <thead style="background-color:#ff2222; ">
+                        <tr>
+                            <th style="color:white">Codigo</th>
+                            <th style="color:white">Entidade</th>
+                            <th style="color:white">Usuario</th>
+                            <th style="color:white">Tipo Actividade</th>
+                            <th style="color:white">Validade</th>
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+
+                </table>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+
+    });
+
+
+    $(function () {
+        $('#example').DataTable({
+
+            "lengthChange": false,
+            "scrollY": 300,
+            "autoWidth": true,
+            "scrollX": true,
+            "processing": true,
+            "serverSide": true,
+            "responsive": true,
+            "filter": true,
+            "orderMulti": true,
+            "ajax": {
+                "url": "/administracao/carregarTabelaSubscricoesByAjax",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "id" },
+                { "data": "nome_entidade" },
+                { "data": "nome_usuario" },
+                { "data": "tipo_actividade" },
+                { "data": "validade_" },
+
+            ],
+            //Descricao
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                //$('td:eq(0)', nRow).html("<a href='javascript:ver('" + aData.id + "')' class='button gray'><i class='fa fa-eye'></i> Ver/Editar</a> ");
+                //$('td:eq(4)', nRow).html("<a href='javascript:void(0);' ><button type='button'  id='editar'  class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.id + "') > Verificar Consulta</button></a>");
+                //$('td:eq(1)', nRow).html("<a href='javascript:void(0);' ><button type='button' id='ver' class='btn btn-icons btn-sm btn-primary'onclick=verProduto('" + aData.id_produto + "')></button>|<button type='button'  id='editar' class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.idproduto + "') ></button></a>");
+                //$('td:eq(10)', nRow).html("<a href='javascript:void(0);' onclick=alert('" + aData.FuncionarioId + "')><button type='button' class='btn btn-icons btn-rounded btn-warning'><i class='fa fa-edit'></i></button></a>");
+                //$('td:eq(3)', nRow).html("<a href='javascript:void(0);' onclick=apagar('" + aData.IdCategoria + "')><button type='button' class='btn btn-icons btn-rounded btn-danger'><i class='fa fa-trash'></i></button></a>");
+                return nRow;
+            },
+        });
+    });
+
+
+    var editar = function (id) {
+        location.href = '/PubSaude/ProcessarConsulta?id_consulta=' + id;
+    }
+</script>
+

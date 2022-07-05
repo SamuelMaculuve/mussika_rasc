@@ -1,0 +1,652 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mussika | Zambézia</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/Repository/images/logo/favicon_mussika 16x16.png">
+
+
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="~/Content/library/css/stylesheet.css">
+    <link rel="stylesheet" href="~/Content/library/css/style.css" id="colors">
+
+
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap&subset=latin-ext,vietnamese" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800" rel="stylesheet" type="text/css">
+
+    <link href="~/Content/library/css/jquery-confirm.min.css" rel="stylesheet" />
+    <style type="text/css">
+               #google_translate_element {
+                   display: none;
+               }
+               
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+        body {
+            position: static !important;
+            top: 0 !important;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="google_translate_element" class="boxTradutor"></div>
+
+   
+    <!-- Wrapper -->
+    <div id="main_wrapper">
+
+        <div class="clearfix">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <div class="list-inline">
+
+                        <a style="padding-left:4px; padding-right:4px;" href="javascript:trocarIdioma('pt')">PRT <img src="~/Repository/images/flags/portugal.png" /></a>
+                        <a style="padding-left:4px; padding-right:4px;" href="javascript:trocarIdioma('fr')">FR <img src="~/Repository/images/flags/france.png" /></a>
+                        <a style="padding-left:4px; padding-right:4px;" href="javascript:trocarIdioma('en')">ENG <img src="~/Repository/images/flags/united-kingdom.png" /></a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <header id="header_part">
+            <div id="header">
+                <div class="container">
+                    <div class="utf_left_side">
+                        <div style="margin-top:-7px;" id="logo"> <a href="/inicio/principal"><img src="~/Repository/images/logo/logo100x132.png" alt=""></a> </div>
+                        <div class="nav_responsive"> <i class="fa fa-reorder menu-trigger"></i> </div>
+                        <nav id="navigation" class="style_one">
+                            <ul id="responsive">
+                                <li>
+                                    <a class="current" href="#!">Inicio</a>
+                                    <ul>
+                                        <li><a href="/inicio/Distritos">Distritos</a></li>
+                                        <li><a href="/PubAcomodacao/Categorias">Acomodações</a></li>
+                                        <li><a href="/inicio/restaurantes">Restaurantes</a></li>
+                                        <li><a href="/PubShopMussika/Loja_Shop">Shop Mussika</a></li>
+                                        <li><a href="/servico_taxi/Index">Taxi</a></li>
+                                        <li><a href="/PubMusica/Index">Música</a></li>
+                                        <li><a href="/PubArte/Index">Arte e Cultura</a></li>
+                                        <li><a href="/Eventos/categorias">Eventos</a></li>
+                                        <li><a href="/PubSaude/Index">Saúde</a></li>
+                                        <li><a href="/Turismo/categorias">Turismo</a></li>
+                                        <li><a href="/ServicoMussika/Index">Serviços Mussika</a></li>
+
+
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a class="" href="/inicio/empresa">Empresa</a>
+                                </li>
+
+                                <li>
+                                    <a class="" href="/inicio/produtos">Subscrições</a>
+                                </li>
+
+                                <li>
+                                    <a class="" href="/inicio/seguranca">Segurança</a>
+                                </li>
+
+                                <li>
+                                    <a class="" href="/inicio/como_pagar">Como Pagar</a>
+                                </li>
+
+                                @*<li>
+                                        <a class="" href="/inicio/ajuda">Ajuda</a>
+                                    </li>*@
+
+
+                            </ul>
+                        </nav>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="utf_right_side">
+                        @if (Session["idusario"] == null)
+                        {
+                            <div id="semLogin" class="header_widget"> <a href="#dialog_signin_part" class="button border sign-in popup-with-zoom-anim"><i class="fa fa-sign-in"></i> Entrar</a> @*<a href="#" class="button border with-icon"><i class="sl sl-icon-user"></i> Cadastre-se</a>*@</div>
+                        }
+                        else
+                        {
+                            <div comLogin class="header_widget">
+                                <div class="dashboard_header_button_item has-noti js-item-menu">
+                                    <i class="sl sl-icon-bell"></i>
+                                    <div class="dashboard_notifi_dropdown js-dropdown">
+                                        <div class="dashboard_notifi_title">
+                                            <p>Você Tem 0 Notificações</p>
+                                        </div>
+                                        @*<div class="dashboard_notifi_item">
+                                            <div class="bg-c1 red">
+                                                <i class="fa fa-check"></i>
+                                            </div>
+                                            <div class="content">
+                                                <p>Pedido de suporte</p>
+                                                <span class="date">2 horas atrás </span>
+                                            </div>
+                                        </div>*@
+
+                                        <div class="dashboard_notify_bottom text-center pad-tb-20">
+                                            <a href="#">Ver todas as Notificações </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="utf_user_menu">
+                                    <div class="utf_user_name"><span><img height="40" width="40" src="@Session["imagem"].ToString()" alt=""></span>Olá,  @Session["nome"].ToString()!</div>
+                                    <ul>
+                                        @if (@Session["tipo"].ToString() == "1")
+                                        {
+                                            <li><a href="#"><i class="sl sl-icon-layers"></i> Mensagens</a></li>
+                                            <li><a href="/Carteira/Index?id_usuario=@Session["idusario"].ToString()"><i class="sl sl-icon-layers"></i> Minha Carteira</a></li>
+                                            <li><a href="/CarrinhoCompra/Index?id_usuario=@Session["idusario"].ToString()"><i class="sl sl-icon-layers"></i> Meu Carinho</a></li>
+                                            <li><a href="/inicio/PlayMussika"><i class="sl sl-icon-layers"></i> Mussika Play</a></li>
+                                        }
+                                        else if (@Session["tipo"].ToString() == "2")
+                                        {
+                                            <li><a href="#"><i class="sl sl-icon-layers"></i> Painel Publico</a></li>
+                                            <li><a href="/Carteira/Index?id_usuario=@Session["idusario"].ToString()"><i class="sl sl-icon-layers"></i> Minha Carteira</a></li>
+                                            <li><a href="/CarrinhoCompra/Index?id_usuario=@Session["idusario"].ToString()"><i class="sl sl-icon-layers"></i> Meu Carinho</a></li>
+                                            <li><a href="/inicio/PlayMussika"><i class="sl sl-icon-layers"></i> Mussika Play</a></li>
+                                        }
+                                        else if (@Session["tipo"].ToString() == "4")
+                                        {
+                                            <li><a href="/Provedor/DashBoard"><i class="sl sl-icon-layers"></i> Painel Provedor</a></li>
+                                            <li><a href="/Carteira/Index?id_usuario=@Session["idusario"].ToString()"><i class="sl sl-icon-layers"></i> Minha Carteira</a></li>
+                                            <li><a href="/CarrinhoCompra/Index?id_usuario=@Session["idusario"].ToString()"><i class="sl sl-icon-layers"></i> Meu Carinho</a></li>
+                                            <li><a href="/inicio/PlayMussika"><i class="sl sl-icon-layers"></i> Mussika Play</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a href="/administracao/DashBoard"><i class="sl sl-icon-layers"></i> Painel</a></li>
+
+                                        }
+
+                                        <li><a href="/inicio/perfil?id=@Session["idusario"].ToString()"><i class="sl sl-icon-user"></i> Meu Perfil</a></li>
+
+                                        <li><a href="/Login/RedifinirSenha?usuario=@Session["usuario"].ToString()"><i class="sl sl-icon-envelope-open"></i> Redifinir Senha</a></li>
+                                        <li><a href="/Login/Sair"><i class="sl sl-icon-power"></i>  Sair</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+
+                    <div id="dialog_signin_part" class="zoom-anim-dialog mfp-hide">
+                        <div class="small_dialog_header">
+                            <h3>Entrar</h3>
+                        </div>
+                        <div class="utf_signin_form style_one">
+                            <ul class="utf_tabs_nav">
+                                <li class=""><a href="#tab1">Entrar</a></li>
+                                <li><a href="#tab2">Cadastre-se</a></li>
+                            </ul>
+                            <div class="tab_container alt">
+                                <div class="tab_content" id="tab1" style="display:none;">
+                                    <form method="post" class="login">
+                                        <p class="utf_row_form utf_form_wide_block">
+                                            <label for="username">
+                                                <input type="text" class="input-text" name="username" id="username" value="" placeholder="Informe seu Email" />
+                                            </label>
+                                        </p>
+                                        <p class="utf_row_form utf_form_wide_block">
+                                            <label for="password">
+                                                <input class="input-text" type="password" name="password" id="password" placeholder="senha" />
+                                            </label>
+                                        </p>
+                                        <div class="utf_row_form utf_form_wide_block form_forgot_part">
+                                            <span class="lost_password fl_left"> <a href="/Login/EsqueceuSenha">Esqueceu a senha?</a> </span>
+                                            <div class="checkboxes fl_right">
+                                                <input id="remember-me" type="checkbox" name="check">
+                                                <label for="remember-me">Guardar</label>
+                                            </div>
+                                        </div>
+                                        <div class="utf_row_form">
+                                            <input type="button" onclick="" id="entrar" class="button" style="" name="login" value="Entrar" />
+                                        </div>
+                                        <div class="utf_row_form" style="margin-top:20px;">
+                                            <ul class="utf_tabs_nav">
+                                                <li><a href="#" onclick="login(); return false;" class="instagram-link"><i class="fa fa-google"></i> Gmail</a></li>
+                                                <li><a href="#" onclick="loginWithFacebook(); return false" class="facebook-link"><i class="fa fa-facebook"></i> Facebook</a></li>
+
+                                            </ul>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="tab_content" id="tab2" style="display:none;">
+                                    <form method="post" class="register">
+                                        <p class="utf_row_form utf_form_wide_block">
+                                            <label for="username2">
+                                                <input type="text" class="input-text" name="username" id="username2" value="" placeholder="utilizador" />
+                                            </label>
+                                        </p>
+                                        <p class="utf_row_form utf_form_wide_block">
+                                            <label for="email2">
+                                                <input type="text" class="input-text" name="email" id="email2" value="" placeholder="e-mail" />
+                                            </label>
+                                        </p>
+                                        <p class="utf_row_form utf_form_wide_block">
+                                            <label for="Telefone">
+                                                <text>Telefone: Prefixo do numero é obrigatorio! </text>
+                                                <input type="text" class="input-text" name="telefone" id="telefone" value="" placeholder="Ex: 258 841111111" />
+                                            </label>
+                                        </p>
+                                        <p class="utf_row_form utf_form_wide_block">
+                                            <label for="password1">
+                                                <input class="input-text" type="password" name="password1" id="password1" placeholder="senha" />
+                                            </label>
+                                        </p>
+                                        <p class="utf_row_form utf_form_wide_block">
+                                            <label for="password2">
+                                                <input class="input-text" type="password" name="password2" id="password2" placeholder="Confirmar Senha" />
+                                            </label>
+                                        </p>
+                                        <div class="utf_row_form utf_form_wide_block form_forgot_part">
+                                            <span class="lost_password fl_left"> <a href="javascript:showModalTermos()">Termos e Condições</a> </span>
+                                            <div class="checkboxes fl_right">
+                                                <input id="aceitarTermos" type="checkbox" name="aceitarTermos">
+                                                <label for="aceitarTermos">Aceitar?</label>
+                                            </div>
+                                        </div>
+                                        <div class="utf_row_form utf_form_wide_block form_forgot_part">
+                                            
+                                            <div class="checkboxes fl_left">
+                                                <input id="provedor" type="checkbox" name="aceitarTermos">
+                                                <label for="provedor">Sou Provedor de Serviços</label>
+                                            </div>
+                                        </div>
+                                        <input type="button" id="registar" class="button border fw margin-top-10" name="register" value="Registar" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @* modal *@
+                    <div id="dialog_signin_part_" class="zoom-anim-dialog mfp-hide">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+
+
+                                    <img src="~/Repository/images/index.ajax-spinner-gif.gif" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+        <!-- Scripts -->
+        <script src="~/Content/library/scripts/jquery-2.2.0.min.js"></script>
+        <script src="~/Content/library/scripts/jpanelmenu.min.js"></script>
+        <script src="~/Content/library/scripts/chosen.min.js"></script>
+        <script src="~/Content/library/scripts/slick.min.js"></script>
+        <script src="~/Content/library/scripts/rangeslider.min.js"></script>
+        <script src="~/Content/library/scripts/magnific-popup.min.js"></script>
+        <script src="~/Content/library/scripts/waypoints.min.js"></script>
+        <script src="~/Content/library/scripts/counterup.min.js"></script>
+        <script src="~/Content/library/scripts/jquery-ui.min.js"></script>
+        <script src="~/Content/library/scripts/tooltips.min.js"></script>
+        <script src="~/Content/library/scripts/color_switcher.js"></script>
+        <script src="~/Content/library/scripts/jquery_custom.js"></script>
+        <script type="text/javascript" src="~/Content/library/scripts/loadingoverlay.min.js"></script>
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        @RenderBody()
+        @*<section class="utf_cta_area_item utf_cta_area2_block">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="utf_subscribe_block clearfix">
+                                <div class="col-md-8 col-sm-7">
+                                    <div class="section-heading">
+                                        <h2 class="utf_sec_title_item utf_sec_title_item2">Subscreva-se e receba Novidades</h2>
+                                        <p class="utf_sec_meta">
+                                           Receba as últimas atualizações e informações por e-mail.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-5">
+                                    <div class="contact-form-action">
+                                        <form method="post">
+                                            <span class="la la-envelope-o"></span>
+                                            <input class="form-control" type="email" placeholder="Escreva seu e-mail" required="">
+                                            <button class="utf_theme_btn" type="submit">Subscrever</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>*@
+
+        <!-- Footer -->
+        <div style="margin-top:10px;" id="footer" class="footer_sticky_part">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <h4>Links Uteis</h4>
+                        <ul class="social_footer_link">
+                            <li><a href="/inicio/principal">Inicio</a></li>
+                            <li><a href="/inicio/empresa">Empresa</a></li>
+                            <li><a href="/inicio/produtos">Publicidade</a></li>
+                            <li><a href="/inicio/seguranca">Segurança</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <h4>Minha Conta</h4>
+                        <ul class="social_footer_link">
+                            <li><a href="#">Perfil</a></li>
+                            <li><a href="#">Mensagens</a></li>
+                            <li><a href="#">Favoritos</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <h4>Páginas</h4>
+                        <ul class="social_footer_link">
+                            <li> <a href="/inicio/Distritos">Distritos</a></li>
+                            <li> <a href="/PubAcomodacao/Acomodacoes">Acomodações</a></li>
+                            <li><a href="/inicio/restaurantes">Restaurantes</a></li>
+                            <li><a href="/servico_taxi/listar">Taxis</a></li>
+                            <li><a href="/PubShopMussika/Index">Shop Mussika</a></li>
+                            <li><a href="/Eventos/index">Eventos</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-6">
+                        <h4>Ajuda</h4>
+                        <ul class="social_footer_link">
+                            @*<li><a href="#">Entrar</a></li>
+                                <li><a href="#">Registar</a></li>*@
+                            <li><a href="/inicio/como_pagar">Como Pagar</a></li>
+                            @*<li><a href="#">Contacte-nos</a></li>*@
+                        </ul>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <h4>Quem somos</h4>
+                        <p>O Mussika é uma plataforma online que visa apresentar as potêncialidades da provincia da Zambézia com o especial enfoque para as áreas de Turismos, Musicas e Cultura</p>
+                        <p><a href="/inicio/empresa" class="btn btn-primary"> Saber Mais</a></p>
+                        <div class="row">
+                            <center>Aplicativo Disponivel em:</center>
+                            <div class="col-md-6">
+
+                                <img src="~/Repository/images/diversos/available-on-google-play-png-2.png" />
+
+                            </div>
+                            <div class="col-md-6">
+                                <img src="~/Repository/images/diversos/pngkey.com-available-on-app-store-3435978.png" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="footer_copyright_part">Copyright ©  Mussika - Todos os Direitos Reservados.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="bottom_backto_top"><a href="#"></a></div>
+    </div>
+
+    <script src="~/Content/library/scripts/jquery-confirm.min.js"></script>
+
+    <script src="~/Content/library/Dialogos.js"></script>
+
+    <script src="~/Content/loginGmail.js"></script>
+
+    <script type="text/javascript">
+        //function myFunction() {
+        //    var left = (screen.width / 2) - (500 / 2);
+        //    var top = (screen.height / 2) - (450 / 2);
+        //    var myWindow = window.open("/inicio/mussikaPlay", "MsgWindow", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + 500 + ', height=' + 450 + ', top=' + top + ', left=' + left);
+           
+        //}
+
+        var comboGoogleTradutor = null; //Varialvel global
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'pt',
+                includedLanguages: 'en,fr,pt',
+                layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+            }, 'google_translate_element');
+
+            comboGoogleTradutor = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        }
+
+        function changeEvent(el) {
+            if (el.fireEvent) {
+                el.fireEvent('onchange');
+            } else {
+                var evObj = document.createEvent("HTMLEvents");
+
+                evObj.initEvent("change", false, true);
+                el.dispatchEvent(evObj);
+            }
+        }
+
+        function trocarIdioma(sigla) {
+            $.LoadingOverlay("show");
+            if (comboGoogleTradutor) {
+                comboGoogleTradutor.value = sigla;
+                changeEvent(comboGoogleTradutor);//Dispara a troca
+            }
+            $.LoadingOverlay("hide", true);
+        }
+        ////////////////////////////////
+        function showModalTermos() {
+            $.confirm({
+                columnClass: 'col-md-8 col-md-offset-2',
+                title: 'Termos e Condições !',
+                content: '<H3>Bem-vindo à Mussika!</H3><p>Mussika é um produto/serviço online, propriedade de e disponibilizado por “Mussika,lda”, empresa com sede em Quelimane, Mocambique.'+
+'Os presentes Termos e Condições regulam a Utilização de todos os produtos e serviços Mussika, incluindo o website “Mussika.co.mz” e o conteúdo deste.</p> Os Termos e Condições contêm vários documentos, incluindo os Termos de Serviço (MK), Política de Nomes de Domínio, Política de Privacidade e o Contrato de Processamento de Dados .'+
+                    'AO UTILIZAR O WEBSITE WEBNODE (INCLUINDO O SEU CONTEÚDO) E/OU PRODUTOS E/OU SERVIÇOS, DEMONSTRA QUE CONCORDA COM OS TERMOS E CONDIÇÕES SEGUINTES. SE NÃO CONCORDAR COM ESTES TERMOS E CONDIÇÕES OU NÃO DESEJAR SER LIMITADO POR ESTES, NÃO UTILIZE O WEBSITE DO MUSSIKA, OS SEUS PRODUTOS OU SERVIÇOS.' +
+                    '<H2>TERMOS DE SERVIÇO (MUSSIKA)</H2>' +
+                    '<p>O website Mussika, todos os seus produtos e serviços estão acessíveis para todos os indivíduos maiores de idade que reúnam todas as condições legais necessárias para estabelecer contratos (acordos vinculativos). Aquando do acesso a um ou mais produtos/serviços pode ser requerido ao Utilizador uma prova em como reúne os critérios acima mencionados. Esta prova pode ser feita com informações pessoais ou de contacto.</p>' +
+                '<p>Os presentes termos e condições são estabelecidos entre Nós (Mussika) e o Utilizador, não podendo qualquer outra pessoa ou entidade obter benefícios destes.</p>'+
+
+'Caso algum tribunal ou legislador manifeste a invalidade ou inaplicabilidade de uma ou mais provisões do presente documento, estas serão removidas do Mussika, no entanto as restantes continuam válidas e aplicáveis sem qualquer limitação da sua efetividade.'+
+
+                    '<p>Caso exista alguma discrepância entre o Mussika e os termos e condições expressos no ato do Seu registo na Mussika os TS prevalecem desde que não tenha em Sua posse documentação legal suplementar fornecida pelo Nosso Atendimento ao Cliente.</p>' +
+                    '<h2>1. Definições</h2>' +
+                    '<p>Sempre que nos Termos e Condições estiver expresso, ”Você”, “Si” e “Utilizador” refere-se a si o utilizador do website Mussika e de todos os serviços e produtos Mussika e “Seu, Sua, Seus, Suas” será interpretado em conformidade. Quando estiver expresso “Nós” e “Mussika” refere-se a Mussika,lda e “Nosso, Nossa, Nossos, Nossas” será interpretado em conformidade. “Detalhes do Utilizador” refere-se aos Seus dados pessoais recolhidos por Nós no Nosso website webnode.pt no decurso do registo e/ou aquisição de qualquer dos serviços ou produtos Webnode. O “Nosso Website” refere-se ao website “Mussika.co.mz” e a todas as páginas web a ele associadas. No entanto “Site Mussika” refere-se aos websites dos Utilizadores, criados com o sistema Webnode. “Terceiros, Terceiras” refere-se a qualquer pessoa particular, entidade, instituição ou companhia que não esteja associada a Mussika,lda . “mk” refere-se a estes Termos e Condições.</p>' +
+                '<p>No que diz respeito à legislação existente, é feita uma distinção entre um Utilizador, que é um Consumidor que não celebrou um contrato com a Webnode ou que utiliza a Mussika como parte das suas atividades empresariais, e um Utilizador que é um Empresário. Ao fornecer o número de registo da sua empresa durante o processo de aquisição dos serviços da Mussika, reconhece que estes Termos e Condições do Consumidor não se aplicam a Si.</p>',
+                type: 'dark',
+                typeAnimated: true,
+                buttons: {
+                    fechar: function () {
+                    }
+                }
+            });
+        }
+
+        function loginWithFacebook() {
+            $("#dialog_signin_part").LoadingOverlay("show");
+            location.href = '/Login/Facebook';
+        }
+
+        $(document).ready(function () {
+
+            $('#telefone').keypress(function (event) {
+                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    event.preventDefault();
+                }
+            })
+
+            $("#registar").click(function () {
+                
+
+                if ($("#aceitarTermos").prop("checked") == false) {
+                    informarErro("Impossível Prosseguir, usuário não aceitou termos e condições!");
+                    throw new Error('')
+                }
+                if ($("#username2").val().trim() == "") {
+                    informarErro("Informe o Nome Completo do Utilizador")
+                    throw new Error('')
+                }
+                if ($("#email2").val().trim() == '') {
+
+                    $("#email2").focus();   //focus on email field
+                    informarErro("Email Incorrecto, Informe um Email Valido");
+                    throw new Error('')
+
+                }
+
+                if ($("#password1").val().trim() == "") {
+                    informarErro("Informe uma senha com Mais de 6 caracteres")
+                    throw new Error('')
+                }
+                if ($("#password1").val().trim().length <= 6) {
+                    informarErro("Informe uma senha com Mais de 6 caracteres")
+                    throw new Error('')
+                }
+                if ($("#password2").val().trim() != $("#password1").val().trim()) {
+                    informarErro("Senhas nao Coincidem!")
+                    throw new Error('')
+                }
+
+                criarUsuario()
+            })
+
+            function criarUsuario() {
+                
+                $("#dialog_signin_part").LoadingOverlay("show");
+                var data = {
+
+                    provedor: $("#provedor").prop("checked"),
+                    telefone: $("#telefone").val(),
+                    nome: $("#username2").val(),
+                    usuario1: $("#email2").val(),
+                    senha: $("#password1").val(),
+                };
+
+                $.ajax({
+                    method: "POST",
+                    url: "/Login/CriarUsuario",
+                    data: data,
+                    //processData: false,
+                    //contentType: false,
+                })
+                    .done(function (msg) {
+                        if (msg == "false") {
+
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            informarErro("Nao foi possivel cadastrar este Usuario");
+
+
+                        } else if (msg == "existe") {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            informarErro("Ja existe uma usuario com este email");
+                        } else if (msg == "emailincorrecto") {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            informarErro("Email Incorrecto, Informe um Email Valido");
+                        }
+                        else {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            debugger
+                            if (msg.provedor == true) {
+                                debugger
+                                location.href = '/Login/provedor?id=' + msg.idusario;
+                            } else {
+                                debugger
+                                location.href = '/Login/ConfirmarEmailCriacao?id=' + msg.idusario;
+                            }
+                            
+                            
+                        }
+
+                    });
+            }
+
+            $("#entrar").click(function () {
+
+                if ($("#username").val().trim() == "") {
+                    informarErro("Informe o Email")
+                    throw new Error('')
+                }
+                if ($("#password").val().trim() == "") {
+                    informarErro("Informe a Senha")
+                    throw new Error('')
+                }
+
+                entrar();
+            })
+
+            function entrar() {
+                $("#dialog_signin_part").LoadingOverlay("show");
+                var data = {
+
+                    usuario1: $("#username").val(),
+                    senha: $("#password").val(),
+                };
+
+                $.ajax({
+                    method: "POST",
+                    url: "/Login/Entrar",
+                    data: data,
+                    //processData: false,
+                    //contentType: false,
+                })
+                    .done(function (msg) {
+                        if (msg == "false") {
+
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            informarErro("Nao foi possivel fazer com este Usuario, consulte o Administrador do Sistema");
+
+
+                        } else if (msg == "naoexiste") {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            informarErro("Usuario nao Existe");
+
+                        } else if (msg == "senhapadrao") {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            location.href = '/Login/RedifinirSenha?usuario=' + $("#username").val();
+
+                        } else if (msg == "senhainvalida") {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            informarErro("Usuario ou Senha Invalido, Informe Credenciais Validas");
+                        }
+                        else if (msg == "naoautorizado") {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            location.href = '/Login/confirmarContaInactiva?usuario=' + $("#username").val();
+                        }
+                        else if (msg == "provedornaoautenticado") {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            location.href = '/Login/ProvedorInactivo';
+                        }
+                        
+                        else {
+                            $("#dialog_signin_part").LoadingOverlay("hide", true);
+                            location.href = msg;
+
+                        }
+
+                    });
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+@RenderSection("Scripts", required: false)

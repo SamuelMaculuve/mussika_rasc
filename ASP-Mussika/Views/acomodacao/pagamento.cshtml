@@ -1,0 +1,212 @@
+﻿
+@using ASP_Mussika.Models;
+@using ASP_Mussika.Models.ViewModel;
+@model pagamentoHotel_ViewModel
+
+@{
+    ViewBag.Title = "pagamento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<div class="clearfix"></div>
+@*<div id="titlebar" class="gradient">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Choose Payment Option</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li>Escolha o método de pagamento</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>*@
+<div class="container margin-bottom-75">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 utf_listing_payment_section">
+            <div class="utf_booking_listing_section_form margin-bottom-40">
+                <h3><i class="sl sl-icon-paper-plane"></i> Resumo da Compra</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Nome</label>
+                        <input type="text" value="" placeholder="Nome">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Apelido</label>
+                        <input type="text" value="" placeholder="Apelido">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="medium-icons">
+                            <label>E-Mail</label>
+                            <input type="text" value="" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="medium-icons">
+                            <label>Telefone</label>
+                            <input type="text" value="" placeholder="Telefone">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="utf_booking_payment_option_form">
+                <h3><i class="sl sl-icon-credit-card "></i> Método de pagamento</h3>
+                <div class="payment">
+                    <div class="utf_payment_tab_block">
+                        <div class="utf_payment_trigger_tab">
+                            <input checked="" id="stripe" name="cardType" type="radio" value="stripe">
+                            <label for="stripe">Pagar com M-Pesa</label>
+                            @*<img class="utf_payment_logo stripe" src="~/Repository/images/mpesa-logo.png" width="206" height="60" alt="">*@
+                        </div>
+                        <div class="utf_payment_tab_block_content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="name">Nome</label>
+                                        <input id="nameOnCard" name="stripename" placeholder="Nome" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="email">Email</label>
+                                        <input id="email" name="email" placeholder="Email" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="phoneNumber">Celular</label>
+                                        <input id="phoneNumber" placeholder="Celular" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="couponCode">Código de confirmação</label>
+                                        <input id="couponCode" placeholder="Código de confirmação" required="" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="utf_payment_tab_block">
+                        <div class="utf_payment_trigger_tab">
+                            <input checked="" id="paypal" name="cardType" type="radio" value="paypal">
+                            <label for="paypal">PayPal</label>
+                            @*<img class="utf_payment_logo paypal" src="~/Repository/images/paypal_pay.png" alt="">*@
+                        </div>
+                        <div class="utf_payment_tab_block_content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="payPalname">Nome Paypal</label>
+                                        <input id="nameOnCard" name="payPalname" placeholder="Nome Paypal" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="payPalemail">E-mail Paypal</label>
+                                        <input id="payPalemail" name="payPalemail" placeholder="E-mail Paypal" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="phoneNumber">Celular</label>
+                                        <input id="phoneNumber" placeholder="Celular" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="couponCode">Coupon Code?</label>
+                                        <input id="couponCode" placeholder="Cód. de confirmação" required="" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="utf_payment_tab_block utf_payment_tab_block_active">
+                        <div class="utf_payment_trigger_tab">
+                            <input type="radio" name="cardType" id="creditCart" value="creditCard">
+                            <label for="creditCart">Cartão de Crédito/Débito</label>
+                            <img class="utf_payment_logo" src="images/pay_icon.png" alt="">
+                        </div>
+                        <div class="utf_payment_tab_block_content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="cardNumber">Número do Cartão</label>
+                                        <input id="cardnumber" name="cardNumber" placeholder="0000  0000  0000  0000" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="nameOnCard">Titular da Conta</label>
+                                        <input id="cardname" name="cardName" placeholder="Titular da Conta" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-label">
+                                        <label for="expirynDate">Mês de vencimento </label>
+                                        <input id="expiryDate" placeholder="MM" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-label">
+                                        <label for="expiryDate">Ano de vencimento </label>
+                                        <input id="expirynDate" placeholder="AAAA" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-label">
+                                        <label for="cvv">Código CVV</label>
+                                        <input id="cvv" required="" placeholder="***" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="/acomodacao/confirmacao_booking" class="button utf_booking_confirmation_button margin-top-20 margin-bottom-10">Confirmar agora!</a>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 margin-top-0 utf_listing_payment_section">
+            <div class="utf_booking_listing_item_container compact utf_order_summary_widget_section">
+                <div class="listing-item">
+                    <img src="~/Content/library/images/listing-item-04.jpg" alt="">
+                    <div class="utf_listing_item_content">
+                        <h3>Hotel Mussika</h3>
+                        <span><i class="sl sl-icon-location"></i> Nome Hotel</span>
+                        <span><i class="sl sl-icon-phone"></i> +258</span>
+                        <div class="utf_star_rating_section" data-rating="4.5">
+                            <div class="utf_counter_star_rating">(18) votos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="boxed-widget opening-hours summary margin-top-0">
+                <h3><i class="fa fa-calendar-check-o"></i> Booking Summary</h3>
+                <ul>
+                    <li>Chegada <span></span>-</li>
+                    <li>Saída <span></span>-</li>
+                    <li>Adiantamento <span>-</span></li>
+                    <li>I.V.A <span>-</span></li>
+                    <li class="total-costs">Sub Total <span>-</span></li>
+                    @*<li class="total-costs">
+                        <div class="col-md-8">
+                            <input id="couponCode" placeholder="Cód.Desconto..." required="" type="text">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="submit" class="coupon_code" value="Aplicar">
+                        </div>
+                        <div class="clearfix"></div>
+                    </li>*@
+                    <li class="total-costs">Custo Total <span>-</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

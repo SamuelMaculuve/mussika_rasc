@@ -1,0 +1,176 @@
+﻿
+@{
+    ViewBag.Title = "gestao";
+    Layout = "~/Views/Shared/" + ViewBag.layout + ".cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="notification notice closeable margin-bottom-30">
+            <h2>Gerenciamento de <strong>Artistas</strong></h2>
+
+            <a class="close" href="#"></a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <button id="btnNovaAcomodacao" style="margin-left:20px;" class="button gray">Novo Artista</button>
+</div>
+
+<div class="row">
+
+    <div class="col-md-9">
+
+        <div class="row with-forms">
+            <div class="row" style="margin:20px 40px 20px 20px;">
+                <table id="example" class="display" style="width:100%">
+                    <thead style="background-color:#ff2222; ">
+                        <tr>
+                            <th style="color:white">Codigo</th>
+                            <th style="color:white">Artista </th>
+                            <th style="color:white">Distrito</th>
+                            <th style="color:white">Telefone</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#btnNovaAcomodacao").click(function () {
+            debugger
+            $.LoadingOverlay("show");
+
+            // Hide it after 3 seconds
+            setTimeout(function () {
+                window.location.href = '/Musica/CriarAutor?layout=_LayoutProvedor&accao=gestao';
+                $.LoadingOverlay("hide");
+
+            }, 2000);
+
+        })
+
+
+
+
+
+    });
+
+
+    if ("@ViewBag.layout"== "_LayoutAdmin") {
+        $(function () {
+            $('#example').DataTable({
+
+
+                "scrollY": 400,
+                "autoWidth": true,
+                "scrollX": true,
+                "lengthChange": false,
+                "processing": true,
+                "serverSide": true,
+                "responsive": true,
+                "filter": true,
+                "orderMulti": true,
+                "ajax": {
+                    "url": "/Musica/carregarTabelaAutoresByAjax",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "id" },
+
+
+                    { "data": "nome" },
+
+                    { "data": "NomeDistrito" },
+
+                    { "data": "telefone" },
+
+                ],
+                //Descricao
+                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                    //$('td:eq(0)', nRow).html("<a href='javascript:ver('" + aData.id + "')' class='button gray'><i class='fa fa-eye'></i> Ver/Editar</a> ");
+                    $('td:eq(0)', nRow).html("<a href='javascript:void(0);' ><button type='button'style='background-color:#ff2222;color:white;border:none' id='ver' class='btn btn-icons btn-sm btn-primary'onclick=verQuartos('" + aData.id + "')>Músicas </button>|<button type='button'  id='editar'  class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.id + "') > Editar</button></a>");
+                    //$('td:eq(1)', nRow).html("<a href='javascript:void(0);' ><button type='button' id='ver' class='btn btn-icons btn-sm btn-primary'onclick=verProduto('" + aData.id_produto + "')></button>|<button type='button'  id='editar' class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.idproduto + "') ></button></a>");
+                    //$('td:eq(10)', nRow).html("<a href='javascript:void(0);' onclick=alert('" + aData.FuncionarioId + "')><button type='button' class='btn btn-icons btn-rounded btn-warning'><i class='fa fa-edit'></i></button></a>");
+                    //$('td:eq(3)', nRow).html("<a href='javascript:void(0);' onclick=apagar('" + aData.IdCategoria + "')><button type='button' class='btn btn-icons btn-rounded btn-danger'><i class='fa fa-trash'></i></button></a>");
+                    return nRow;
+                },
+            });
+        });
+    } else {
+        $(function () {
+            $('#example').DataTable({
+
+
+                "scrollY": 400,
+                "autoWidth": true,
+                "scrollX": true,
+                "lengthChange": false,
+                "processing": true,
+                "serverSide": true,
+                "responsive": true,
+                "filter": true,
+                "orderMulti": true,
+                "ajax": {
+                    "url": "/Musica/carregarTabelaAutoresByAjaxProvedor",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "id" },
+
+
+                    { "data": "nome" },
+
+                    { "data": "NomeDistrito" },
+
+                    { "data": "telefone" },
+
+                ],
+                //Descricao
+                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                    //$('td:eq(0)', nRow).html("<a href='javascript:ver('" + aData.id + "')' class='button gray'><i class='fa fa-eye'></i> Ver/Editar</a> ");
+                    $('td:eq(0)', nRow).html("<a href='javascript:void(0);' ><button type='button'  id='editar'  class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.id + "') > Editar</button></a>");
+                    //$('td:eq(1)', nRow).html("<a href='javascript:void(0);' ><button type='button' id='ver' class='btn btn-icons btn-sm btn-primary'onclick=verProduto('" + aData.id_produto + "')></button>|<button type='button'  id='editar' class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.idproduto + "') ></button></a>");
+                    //$('td:eq(10)', nRow).html("<a href='javascript:void(0);' onclick=alert('" + aData.FuncionarioId + "')><button type='button' class='btn btn-icons btn-rounded btn-warning'><i class='fa fa-edit'></i></button></a>");
+                    //$('td:eq(3)', nRow).html("<a href='javascript:void(0);' onclick=apagar('" + aData.IdCategoria + "')><button type='button' class='btn btn-icons btn-rounded btn-danger'><i class='fa fa-trash'></i></button></a>");
+                    return nRow;
+                },
+            });
+        });
+    }
+
+    var verQuartos = function (id) {
+        $.LoadingOverlay("show");
+
+        // Hide it after 3 seconds
+        setTimeout(function () {
+            
+                window.location.href = '/Musica/Musicas?id=' + id;
+            
+            $.LoadingOverlay("hide");
+
+        }, 2000);
+
+    }
+    var editar = function (id) {
+        $.LoadingOverlay("show");
+
+        // Hide it after 3 seconds
+        setTimeout(function () {
+            window.location.href = '/Musica/EditarAutor?id=' + id +"&layout=_LayoutProvedor";
+            $.LoadingOverlay("hide");
+
+        }, 2000);
+
+    }
+</script>

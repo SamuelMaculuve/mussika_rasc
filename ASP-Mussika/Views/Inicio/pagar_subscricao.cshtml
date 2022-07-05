@@ -1,0 +1,145 @@
+﻿@model ASP_Mussika.Models.pacote_subscricao
+
+@{
+    ViewBag.Title = "pagar_subscricao";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+<div id="titlebar" class="gradient">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Assinatura  de pacote @Model.nome</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="/inicio/Principal">Inicio</a></li>
+                        <li>Pacote @Model.nome</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container margin-bottom-75">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 utf_listing_payment_section">
+            <div class="utf_booking_listing_section_form margin-bottom-40">
+                <h3><i class="sl sl-icon-paper-plane"></i> Informações da Entidade/Provedor</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Nome da Entidade/Provedor</label>
+                        <input type="text" value="" id="paciente" placeholder="Nome da Entidade ou Provedor">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Endereço</label>
+                        <input type="text" value="" id="endereco" placeholder="Endereço">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="medium-icons">
+                            <label>celular</label>
+                            <input type="text" value="" id="celular" placeholder="Celular">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Email</label>
+                        <input type="text" value="" id="email" placeholder="Email">
+
+                    </div>
+                    <div class="col-md-6">
+                        <label>Tipo de Actividade</label>
+                        <input type="text" value="" id="tipo_negocio" placeholder="Exemplo: Musica">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Informações Adicionais </label>
+                        <textarea name="descricao" cols="40" rows="7" id="sintomas" placeholder="Informações Adicionais..." spellcheck="true"></textarea>
+                    </div>
+
+                </div>
+                <a href="javascript:solicitar()" class="button utf_booking_confirmation_button margin-top-20 margin-bottom-10">Pagar Subscrição</a>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    function solicitar() {
+        if ($("#paciente").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o nome da entidade/provedor");
+            throw new Error();
+        }
+       
+        if ($("#tipo_negocio").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o tipo de negocio");
+            throw new Error();
+        }
+        if ($("#endereco").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o endereco");
+            throw new Error();
+        }
+        if ($("#celular").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o Celular");
+            throw new Error();
+        }
+        if ($("#email").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o Email");
+            throw new Error();
+        }
+        salvar();
+    }
+    function salvar() {
+
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('nome_entidade', $("#paciente").val());
+        model.append('endereco', $("#endereco").val());
+        model.append('celular', $("#celular").val());
+        model.append('informacao_adicional', $("#sintomas").val());
+        model.append('id_pacote_subscricao',@Model.id);
+      
+        model.append('email', $("#email").val());
+        model.append('tipo_actividade', $("#tipo_negocio").val());
+       
+
+        $.ajax({
+            method: "POST",
+            url: "/inicio/salvar_pagamento_subscricao",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel Processar esta Subscrição");
+
+
+                }
+                else {
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/Pagamento/paymentGateway?oque=subscricao&id_produto=@Model.id';
+                    $('.with-forms').find("input[type=text], textarea").val("");
+
+                }
+
+            });
+
+
+
+
+    }
+</script>
+

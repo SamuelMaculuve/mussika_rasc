@@ -1,0 +1,103 @@
+﻿@{
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mussika - Imprimir Factura Recibo</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/Repository/images/logo/favicon_mussika 16x16.png">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="/Content/library/css/bootstrap.css">
+    <link rel="stylesheet" href="/Content/library/css/invoice.css">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap&subset=latin-ext,vietnamese" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <a href="javascript:window.print()" class="print-button">Imprimir</a>
+    <!-- Invoice -->
+    <div id="invoice">
+        <div class="row">
+            <div class="col-md-6">
+                <div id="logo"><a href="index_1.html"><img src="~/Repository/images/logo/logo100x132.png" alt=""></a></div>
+            </div>
+            <div class="col-md-6">
+                <p id="details">
+                    <strong>Nro. Factura:-</strong> 00102<br>
+                    <strong>Email:-</strong> comercial@mussika.co.mz<br>
+                    <strong>Telefone:-</strong> (258) 873 2000 32
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="invoice_title">Factura/Recibo</h2>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    <strong>Facturado a:</strong><br>
+                    Cliente Indifenciado, CLI,<br> CLI, 111000000 Quelimane
+                </p>
+            </div>
+            <div class="col-md-6 fl_right">
+                <p>
+                    <strong>Entregue Em:</strong><br>
+                    Endereço não especificado,<br> Nro. 000000, Zambezia
+                </p>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    <strong>Método de pagamento:</strong><br>
+                    VISA/MPESA/E-MOLA<br>
+                    comercial@mussika.co.mz
+                </p>
+            </div>
+            <div class="col-md-6 fl_right">
+                <p>
+                    <strong>Data da compra:</strong><br>
+                    17-03-2019
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="margin-top-20">
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantidade</th>
+                        <th>Preço</th>
+                    </tr>
+                    <tr>
+                        <td>Desc.Item 001</td>
+                        <td>1</td>
+                        <td>5.000,00 MT</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <table id="totals">
+                    <tr>
+                        <th>Transporte</th>
+                        <th><span>1000,00 MT</span></th>
+                    </tr>
+                    <tr>
+                        <th>Valor Total</th>
+                        <th><span>6.000,00 MT</span></th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

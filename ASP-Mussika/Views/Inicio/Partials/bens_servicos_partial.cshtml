@@ -1,0 +1,105 @@
+﻿@using ASP_Mussika.Models;
+
+@model List<servicoViewModel>
+
+
+@{
+    string current_page = (string)ViewBag.current_page;
+    int rpp = ViewBag.records_perpage;
+    List<servicoViewModel> lista_registos = (List<servicoViewModel>)ViewBag.lista_distritos;
+    //rpp -> records per page
+}
+
+
+<div class="row">
+
+    @foreach (servicoViewModel sv in Model)
+    {
+        <div class="col-xs-12">
+            <div style="margin-top:10px;" class="utf_listing_titlebar_title">
+                <h2>@sv.nome <span class="listing-tag">@sv.nomeCategoria</span></h2>
+                <span> <a href="#utf_listing_location" class="listing-address"> <i class="sl sl-icon-location"></i> @sv.endereco </a> </span>
+                <span class="call_now"><i class="sl sl-icon-phone"></i>@sv.telefone</span>
+                <span class="call_now"><i class="sl sl-icon-envolope"></i> @sv.email</span>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="utf_pagination_container_part margin-top-0 margin-bottom-70">
+            <nav class="pagination">
+                @{
+
+                    int total_records = lista_registos.Count;
+                    int pageCount = (total_records + rpp - 1) / rpp;
+                    int initial_index = int.Parse(current_page);
+                    int current_index = int.Parse(current_page);
+                    int nextpage_index = current_index + rpp;
+
+                    if (total_records > 0)
+                    {
+                        bool search_bykey = false;
+
+                        if (search_bykey == false)
+                        {
+
+
+                            <ul>
+
+                                @if (initial_index == 0)
+                                {
+                                    if (pageCount == 1) { }
+                                    <li><a href="#!" class="current-page">1</a></li>
+
+                                    for (int i = 1; i <= pageCount - 1; i++)
+                                    {
+                                        int bt_index = current_index + rpp;
+                                        current_index = bt_index;
+                                        int pg = i + 1;
+
+                                        <li><a id="@bt_index" href="#!" onclick="SelectPage(this.id)">@pg</a></li>
+                                    }
+                                }
+                                @if (initial_index > 0)
+                                {
+                                    int prevpage = current_index - rpp;
+                                    int count = (-1) * rpp;
+
+                                    for (int i = 0; i <= pageCount - 1; i++)
+                                    {
+                                        count = count + rpp;
+                                        current_index = count;
+                                        int pg = i + 1;
+
+                                        if (initial_index == count)
+                                        {
+                                            <li><a href="#!" class="current-page">@pg</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a id="@count" href="#!" onclick="SelectPage(this.id)">@pg</a></li>
+                                        }
+                                    }
+                                }
+
+                            </ul>
+
+                            current_index = 0;
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                    else
+                    {
+                        <h5 style="color:black;"> ("Nenhum resultado encontrado")  </h5> <br /> <br />
+                    }
+                }
+            </nav>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+﻿@model ASP_Mussika.Models.UsuarioViewModel
+
+@{
+    ViewBag.Title = "confirmarContaInactiva";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="notification warning margin-top-100  margin-bottom-30 center">
+                        <h2>Esta Conta esta Inactiva!</h2>
+                        <h3>Um Codigo foi Enviado Para <strong>@Model.usuario1</strong>, <strong>@Model.telefone</strong></h3>
+                       
+                        <button id="btnEnviarEmail" class="button">Enviar Novamente</button>
+                        <h4 style="color:black;">Copie e Cole o Codigo Recebibo no Campo abaixo para Confirmar!</h4>
+                        <a class="close" href="#"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-lg-offset-3">
+                    <div class="main_input_search_part gray-style margin-top-50 margin-bottom-10">
+                        <div class="main_input_search_part_item">
+                            <input style="font-size:25px;" type="text" id="campoCodigo" placeholder="Digite o Codigo" value="" />
+                        </div>
+                        <button id="btnConfirmar" class="button">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+   
+    $('#campoCodigo').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+    var codigoUsuario = 0;
+    codigoUsuario = '@Model.cod_autenticao';
+    $("#btnConfirmar").click(function () {
+        debugger
+        $.LoadingOverlay("show");
+        setTimeout(function () {
+            debugger
+            
+            var codigoFornecedido = $('#campoCodigo').val().trim();
+            if (codigoUsuario == codigoFornecedido) {
+                $.LoadingOverlay("hide");
+                //informarSucesso("Codigos Coincidem")
+                location.href = '/Login/autenticarCriacao?id='+@Model.idusario;
+            } else {
+                $.LoadingOverlay("hide");
+                informarErro("Codigo Invalido, copie o codigo que recebeu no Email e cole no Campo Exibido");
+            }
+
+        }, 2000);
+
+
+    })
+    var cod=""
+    $("#btnEnviarEmail").click(function(){
+        $.LoadingOverlay("show");
+       
+        var data = {
+            id: '@Model.idusario',
+           
+        };
+
+        $.ajax({
+            method: "POST",
+            url: "/Login/EnviarEmailActivacao",
+            data: data,
+            //processData: false,
+            //contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide");
+                    informarErro("Nao foi possivel Enviar novamente O Email, contacte o Administrador!");
+
+
+                } 
+                else {
+                    $.LoadingOverlay("hide");
+                    cod = msg;
+                     codigoUsuario = msg;
+                    
+                    informarSucesso("Codigo Enviado! Abra seu email ou Mensagem que recebeu no Celular e copie o codigo recebido!")
+                   
+                }
+
+            });
+    })
+</script>
+

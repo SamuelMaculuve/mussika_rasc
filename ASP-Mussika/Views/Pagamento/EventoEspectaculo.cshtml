@@ -1,0 +1,232 @@
+﻿
+@{
+    ViewBag.Title = "EventoEspectaculo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+<div id="titlebar" class="gradient">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Escolha o método de Pagamento</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="/inicio/Principal">Inicio</a></li>
+                        <li>Escolha o método de Pagamento</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container margin-bottom-75">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 utf_listing_payment_section">
+            <div class="utf_booking_listing_section_form margin-bottom-40">
+                <h3><i class="sl sl-icon-paper-plane"></i> Informações de pagamento</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Lotes</label>
+                        <select id="" data-placeholder="Bilhete:" class="utf_chosen_select_single">
+                            <option value="">--Selecione o Lote--</option>
+                            <option value="1000,00 MT" disabled>Lote 1(<text style="color:red">Não disponivel</text>)</option>
+                            <option value="500,00 MT">Lote 2</option>
+                            <option value="500,00 MT">Lote 3</option>
+
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Tipo de Bilhete</label>
+                        <select id="filtroCategorias" data-placeholder="Bilhete:" class="utf_chosen_select_single">
+                            <option value="">--Selecione o Bilhete--</option>
+                            <option value="1000,00 MT">VIP(Lote 2)</option>
+                            <option value="1200,00 MT">VIP(Lote 3)</option>
+                            <option value="500,00 MT">Normal(Lote 2)</option>
+                            <option value="700,00 MT">Normal(Lote 3)</option>
+                            <option value="500,00 MT">Porta</option>
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Nome Completo</label>
+                        <input type="text" value="" placeholder="Nome Completo">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>B.I</label>
+                        <input type="text" value="" placeholder="B.I">
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="medium-icons">
+                            <label>Telefone</label>
+                            <input type="text" value="" placeholder="Telefone">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="utf_booking_payment_option_form">
+                <h3><i class="sl sl-icon-credit-card "></i> Métodos de Pagamentos</h3>
+                <div class="payment">
+                    <div class="utf_payment_tab_block">
+                        <div class="utf_payment_trigger_tab">
+                            <input checked="" id="stripe" name="cardType" type="radio" value="stripe">
+                            <label for="stripe">Pagar Com Mpesa</label>
+                            <img class="utf_payment_logo stripe" src="~/Content/library/images/mpesa.png" alt="">
+
+                        </div>
+                        <div class="utf_payment_tab_block_content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="name">Nome</label>
+                                        <input id="nameOnCard" name="stripename" placeholder="Nome" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="email">Email</label>
+                                        <input id="email" name="email" placeholder="Email" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="phoneNumber">Numero de Telefone</label>
+                                        <input id="phoneNumber" placeholder="Numero de Telefone" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="couponCode">Codigo Cupon?</label>
+                                        <input id="couponCode" placeholder="Codigo Cupon" required="" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="utf_payment_tab_block">
+                        <div class="utf_payment_trigger_tab">
+                            <input checked="" id="paypal" name="cardType" type="radio" value="paypal">
+                            <label for="paypal">PayPal</label>
+                            <img class="utf_payment_logo paypal" src="~/Content/library/images/paypal_pay.png" alt="">
+
+                        </div>
+                        <div class="utf_payment_tab_block_content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="payPalname">Nome Paypal</label>
+                                        <input id="nameOnCard" name="payPalname" placeholder="Nome Paypal" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="payPalemail">Email Paypal</label>
+                                        <input id="payPalemail" name="payPalemail" placeholder="Email Paypal" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="phoneNumber">Numero de Telefone</label>
+                                        <input id="phoneNumber" placeholder="Numero de Telefone" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="codigoCoupon">Codigo Cupon?</label>
+                                        <input id="couponCode" placeholder="Codigo Cupon" required="" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="utf_payment_tab_block utf_payment_tab_block_active">
+                        <div class="utf_payment_trigger_tab">
+                            <input type="radio" name="cardType" id="creditCart" value="creditCard">
+                            <label for="creditCart">Cartao de Crédito/Débito</label>
+                            <img class="utf_payment_logo" src="~/Content/library/images/pay_icon.png" alt="">
+                        </div>
+                        <div class="utf_payment_tab_block_content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="cardNumber">Numero de Cartao</label>
+                                        <input id="cardnumber" name="cardNumber" placeholder="0000  0000  0000  0000" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-label">
+                                        <label for="nameOnCard">Nome do Titular</label>
+                                        <input id="cardname" name="cardName" placeholder="Nome do Titular" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-label">
+                                        <label for="expirynDate">Mês de Vencimento</label>
+                                        <input id="expiryDate" placeholder="mês de vencimento" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-label">
+                                        <label for="expiryDate">Ano Vencimento</label>
+                                        <input id="expirynDate" placeholder="YYYY" required="" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-label">
+                                        <label for="cvv">Codigo CVV</label>
+                                        <input id="cvv" required="" placeholder="***" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="/CarrinhoCompra/factura_recibo" class="button utf_booking_confirmation_button margin-top-20 margin-bottom-10">Confirmar Agora</a>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 margin-top-0 utf_listing_payment_section">
+            <div class="utf_booking_listing_item_container compact utf_order_summary_widget_section">
+                <div class="listing-item">
+                    <img src="../Repository/images/MussikaServico/mussika_pagamento.jpg" alt="">
+                    <div class="utf_listing_item_content">
+                        <h3>Pagamento de Serviço</h3>
+                        <span><i class="sl sl-icon-location"></i> Zambézia</span>
+                        @*<span><i class="sl sl-icon-phone"></i> +(258) @Model.telefone</span>*@
+                        <div class="utf_star_rating_section" data-rating="4.5">
+                            <div class="utf_counter_star_rating">Quelimane</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="boxed-widget opening-hours summary margin-top-0">
+                <h3><i class="fa fa-calendar-check-o"></i> Detalhes do Artigo</h3>
+                <ul>
+                    <li>Categoria <span>Pagamentos</span></li>
+
+                    <li>Depósito <span> 0,00MT</span></li>
+                    <li>I.V.A <span>% 17.00</span></li>
+                    <li class="total-costs">Sub Total <span id="valorSubtotal">500,00MT</span></li>
+
+                    <li class="total-costs">Custo Total <span id="valorTotal">500,00MT</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#filtroCategorias").change(function () {
+        @{
+            decimal transporte =(decimal)1000*(decimal)0.30;
+            decimal valor = 1000 + transporte;
+        }
+
+        $("#valorSubtotal").text($("#filtroCategorias").val());
+        $("#valorTotal").text($("#filtroCategorias").val());
+    })
+</script>

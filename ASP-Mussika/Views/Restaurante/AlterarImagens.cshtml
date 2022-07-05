@@ -1,0 +1,318 @@
+﻿@model ASP_Mussika.Models.RestViewModel
+@{
+    if (Session["tipo"].ToString() == "4")
+    {
+        ViewBag.Title = "Criar";
+        Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+    }
+    else
+    {
+        ViewBag.Title = "Criar";
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+}
+
+
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-picture"></i> Imagens  - @Model.nome</h3>
+    </div>
+    <div class="row with-forms">
+        <div class="utf_submit_section col-md-4">
+            <h4>Imagem do Perfil<text style="color:red"> (1)</text></h4>
+            <form action="~/Restaurante/SaveUploadedFile" class="dropzone" id="filedrop" method="post" enctype="multipart/form-data"></form>
+        </div>
+        <div class="utf_submit_section col-md-8" id="variasFotos">
+            <h4>Imagens do Restaurante<text style="color:red"> (5)</text></h4>
+            
+
+            <form action="~/Restaurante/SaveUploadedFileVarias" id="filedropvarias" class="dropzone" method="post" enctype="multipart/form-data"></form>
+        </div>
+
+
+    </div>
+</div>
+<div class="row with-forms" style="margin-top:40px;">
+    <div class="col-md-2">
+        <button id="btnFinalizar" style="margin-top:40px;" class="button btn-sm">Finalizar Cadastro</button>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $("#btnFinalizar").click(function () {
+            $.LoadingOverlay("show");
+            setTimeout(function(){
+                $.LoadingOverlay("hide");
+                if ("@Session["tipo"].ToString()" == "4") {
+                window.location.href = '/ProvedorRestaurante/Index?id=@Session["idusario"]';
+            } else {
+            location.href = '/Restaurante/Restaurantes';
+            }
+            }, 2000);
+
+        })
+
+    });
+
+
+    var drop = null;
+    Dropzone.options.filedrop = {
+
+        acceptedFiles: ".png,.jpg,.jpeg",
+        maxFilesize: 5.00,
+        maxThumbnailFilesize: 5.00,
+        maxFiles: 1,
+        addRemoveLinks: true,
+        //renameFile:function(file){
+        //    return new date().getTime()+'_'+file.name;
+        //},
+        renameFilename: function (file) {
+            var today = new Date();
+            var time = today.getHours() + "" + today.getMinutes() + "" + today.getSeconds()+ '_'+@Model.id;
+            var date = today.getDate() + '' + (today.getMonth() + 1) + '' + today.getFullYear();
+
+            return file.renameFilename = "perfil" + date + time + "." + file.split('.').pop();
+        },
+        init: function () {
+            //drop = this;
+
+            /////////////Perfil////////////////////////////////
+            myDropzone = this;
+            debugger
+            var existingFileCount = 0;
+            if('@Model.foto_capa'.trim().toLowerCase()!='noimage.png'){
+                var mockFile = { name: '@Model.foto_capa',size: '@Model.size',serverId:'@Model.foto_capa' };
+                myDropzone.emit("addedfile", mockFile);
+                myDropzone.emit("thumbnail", mockFile, '../Repository/images/Restaurantes/'+'@Model.foto_capa');
+                myDropzone.emit("complete", mockFile);
+                existingFileCount = 1
+            }
+
+
+            /////////////////////////////////////////
+            // The number of files already uploaded
+            myDropzone.options.maxFiles = myDropzone.options.maxFiles - existingFileCount;
+
+
+
+            this.on('sending', function (file, xhr, formData) {
+
+                debugger
+                formData.append('id', '@Model.id');
+                formData.append('nome', '@Model.nome');
+                formData.append('id_distrito',' @Model.id_distrito');
+                formData.append('id_restaurante_tipo', '@Model.id_restaurante_tipo');
+
+                formData.append('endereco', '@Model.id_restaurante_tipo');
+                formData.append('telefone', '@Model.telefone');
+                formData.append('email', '@Model.email');
+                formData.append('website', '@Model.website');
+                formData.append('mapa', '@Model.mapa');
+
+            });
+
+
+            this.on("queuecomplete", function (file) {
+                ///some text
+
+            });
+            this.on("maxfilesexceeded", function (file) {
+                this.removeFile(file);
+                informarErro("Somente pode carregar no maximo 2 Imagens!");
+            });
+
+            this.on("error", function (file, message) {
+                informarErro(message);
+                this.removeFile(file);
+            });
+            this.on("addedfile", function(file, response) {
+
+            });
+            this.on("success", function(file, response) {
+                file.serverId = response.Message;
+                debugger
+                //$(file.previewTemplate).find('.dz-custom-download').attr("href", window.appBaseUrl+"file/download/" + file.serverId); // window.appBaseUrl is my custom global variable
+                $(file.previewTemplate).find('.dz-custom-delete').off().on("click", function(e) {
+                    e.preventDefault();
+                    myDropzone.emit("removedfile", file);
+                });
+
+            });
+
+            this.on("removedfile", function (file) {
+                debugger
+                myDropzone.options.maxFiles = 5;
+                $.ajax({
+                    url: '/Restaurante/RemoverFotoPerfil', //your php file path to remove specified image
+                    type: "POST",
+                    data: {
+                        filename: file.serverId,
+                        id:'@Model.id',
+                    },
+
+                })
+            .done(function (msg) {
+                if (msg != "false") {
+
+
+
+
+                }
+                else {
+
+                    informarErro("Erro");
+                    //Dropzone.forElement('#filedrop').removeAllFiles(true)
+
+                }
+
+            });;
+
+            });
+        }
+    };
+
+
+
+
+
+
+
+
+    var drop = null;
+    Dropzone.options.filedropvarias = {
+        maxFilesize: 5.00,
+        maxThumbnailFilesize: 5.00,
+        acceptedFiles: '.png, .jpg',
+        maxFiles: 5,
+        addRemoveLinks: true,
+
+        renameFilename: function (file) {
+            var today = new Date();
+            var time = today.getHours() + "" + today.getMinutes() + "" + today.getSeconds()+ '_'+@Model.id;
+            var date = today.getDate() + '' + (today.getMonth() + 1) + '' + today.getFullYear();
+
+            return file.renameFilename = "ImgRest" + date + time + "." + file.split('.').pop();
+        },
+        init: function () {
+            myDropzone2 = this;
+
+            $("#variasFotos").LoadingOverlay("show");
+
+            /////5 fotos de Restaurantes////////////
+            $.ajax({
+                url: '/Restaurante/carregarFotosRestaurante',
+                type: 'post',
+                data: {id: '@Model.id'},
+                success: function(response){
+                    debugger
+                    $("#variasFotos").LoadingOverlay("hide", true);
+                    if(response.length>0){
+                        for(a=0; a<response.length; a++){
+                            $("#variasFotos").LoadingOverlay("hide", true);
+
+                            var mockFile = { name: response[a].caminho, size: response[a].size,serverId:response[a].caminho };
+                            myDropzone2.emit("addedfile", mockFile);
+                            myDropzone2.emit("thumbnail", mockFile, '../Repository/images/Restaurantes/'+response[a].caminho);
+                            myDropzone2.emit("complete", mockFile);
+                        }
+                    }
+
+                    var existingFileCount = response.length; // The number of files already uploaded
+                    myDropzone2.options.maxFiles = myDropzone2.options.maxFiles - existingFileCount;
+
+                }
+            });
+            ///////////////////////////////////////
+
+
+            this.on('sending', function (file, xhr, formData) {
+                setTimeout(
+                         function()
+                            {
+                      //do something special
+                    }, 1000);
+                debugger
+                formData.append('id', '@Model.id');
+                formData.append('nome', '@Model.nome');
+                formData.append('id_distrito',' @Model.id_distrito');
+                formData.append('id_restaurante_tipo', '@Model.id_restaurante_tipo');
+
+                formData.append('endereco', '@Model.id_restaurante_tipo');
+                formData.append('telefone', '@Model.telefone');
+                formData.append('email', '@Model.email');
+                formData.append('website', '@Model.website');
+                formData.append('mapa', '@Model.mapa');
+
+            });
+
+
+            this.on("queuecomplete", function (file) {
+                ///some text
+
+            });
+            this.on("maxfilesexceeded", function (file) {
+                this.removeFile(file);
+                informarErro("Somente pode carregar no maximo 2 Imagens!");
+            });
+
+            this.on("error", function (file, message) {
+                informarErro(message);
+                this.removeFile(file);
+            });
+
+            this.on("success", function(file, response) {
+                file.serverId = response.Message;
+                debugger
+                //$(file.previewTemplate).find('.dz-custom-download').attr("href", window.appBaseUrl+"file/download/" + file.serverId); // window.appBaseUrl is my custom global variable
+                $(file.previewTemplate).find('.dz-custom-delete').off().on("click", function(e) {
+                    e.preventDefault();
+                    myDropzone.emit("removedfile", file);
+                });
+
+            });
+            this.on("removedfile", function (file) {
+                debugger
+                myDropzone2.options.maxFiles = 5;
+                $("#variasFotos").LoadingOverlay("show");
+
+                $.ajax({
+                    url: '/Restaurante/RemoverFotosVarias', //your php file path to remove specified image
+                    type: "POST",
+                    data: {
+                        filename: file.serverId,
+                        id:'@Model.id',
+                    },
+
+                })
+            .done(function (msg) {
+                if (msg != "false") {
+
+                    $("#variasFotos").LoadingOverlay("hide", true);
+
+
+                }
+                else {
+                    $("#variasFotos").LoadingOverlay("hide", true);
+                    informarErro("Erro");
+
+
+                }
+
+            });;
+
+            });
+        }
+    };
+
+
+</script>

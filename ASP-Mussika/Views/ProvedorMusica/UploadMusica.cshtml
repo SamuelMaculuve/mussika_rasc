@@ -1,0 +1,109 @@
+﻿@model ASP_Mussika.Models.musica
+@{
+    ViewBag.Title = "UploadMusica";
+    Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="notification success closeable margin-bottom-30">
+                <h2>Carregamento de Audio</h2>
+                <p>Caso esteja editando uma música, ou nao pretende carregar novo Audio ou alterar, clique em Prosseguir</p>
+                <a class="close" href="#"></a>
+            </div>
+        </div>
+    </div>
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-picture"></i> Ficheiro Audio - <strong>@ViewBag.autor.nome</strong></h3>
+    </div>
+    <div class="row with-forms">
+        <div class="utf_submit_section col-md-4">
+            @*@using (Html.BeginForm("UploadAudio", "ProvedorMusica", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {*@
+
+                <div class="form-group col-md-8">
+                    <label>Seleccione o ficheiro mp3:</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" id="fileupload" name="fileupload" class="custom-file-input" />
+                            <label class="custom-file-label"></label>
+                        </div>
+                        <div class="input-group-append">
+                            <input type="button" id="btnUpload" class="btn btn-secondary" value="Carregar Música" />
+                        </div>
+                    </div>
+                </div>
+            @*}*@
+        </div>
+
+
+
+    </div>
+</div>
+<div class="row with-forms" style="margin-top:40px;">
+    <div class="col-md-5">
+        <button id="btnFinalizar" style="margin-top:40px;" class="button btn-sm">Pular esta Etapa</button>
+
+    </div>
+</div>
+
+
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyCBLtkQBUlpXMtcOZItUCIW89D1FkJUv-E"></script>
+
+<script>
+
+
+
+    $("#btnFinalizar").click(function () {
+        $.confirm({
+            icon: 'fa fa-question',
+            title: 'Confirmar!',
+            type: 'blue',
+            content: "Deseja prosseguir sem carregar nenhum audio? ",
+            buttons: {
+                SIM: function () {
+                     $.LoadingOverlay("show");
+        setTimeout(function(){
+            $.LoadingOverlay("hide");
+        }, 2000);
+        location.href = '/ProvedorMusica/CarregarVideo?id='+'@Model.id';
+                },
+                NÃO: function () {
+                    
+                }
+
+            }
+        });
+
+        @*location.href = '/ProvedorMusica/CarregarFotos?id='+'@Model.id';*@
+    })
+    $("#btnUpload").click(function () {
+        var fd = new FormData();
+
+        var files = $('#fileupload')[0].files[0];
+        if (files == null){
+            informarErro("Nenhuma musica Seleccionada");
+            throw new Error('');
+        }
+        fd.append('fileupload', files);
+        $.LoadingOverlay("show");
+        $.ajax({
+            url: '/ProvedorMusica/UploadAudio?id=@Model.id',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response != "false") {
+                    $.LoadingOverlay("hide");
+                    location.href = '/ProvedorMusica/CarregarVideo?id='+'@Model.id';
+                } else {
+                    $.LoadingOverlay("hide");
+                    informarErro('Musica nao carregada, contacte o suporte');
+                }
+            },
+        });
+    })
+</script>
+

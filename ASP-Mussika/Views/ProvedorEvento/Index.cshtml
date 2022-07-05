@@ -1,0 +1,165 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="notification notice closeable margin-bottom-30">
+            <h2>Gerenciamento de <strong>Eventos</strong></h2>
+
+            <a class="close" href="#"></a>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    <button id="btnNovaAcomodacao" onclick="location.href='/AdminEvento/criar'" style="margin-left:20px;" class="button gray">Novo Evento</button>
+
+</div>
+
+<div class="row" style="margin-top:10px;">
+
+    <div class="col-md-9" style="margin-top:-20px;">
+
+        <div class="row with-forms">
+            <div class="row" style="margin:20px 40px 20px 0px;">
+                <table id="example" class="display" style="width:100%">
+                    <thead style="background-color:#ff2222; ">
+                        <tr>
+                            <th style="color:white">Codigo</th>
+                            <th style="color:white">Evento </th>
+                            <th style="color:white">Distrito</th>
+                            <th style="color:white">Local</th>
+                            <th style="color:white">Data</th>
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Evento</th>
+                            <th>Distrito</th>
+                            <th>Local</th>
+                            <th>Local</th>
+
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+
+
+
+
+    });
+
+    var BindDataTable = function (response) {
+
+
+        $("#example").DataTable({
+            dom: 'Bfrtip',
+            "lengthChange": false,
+            "aaData": response,
+            "scrollY": 300,
+            "autoWidth": true,
+            "scrollX": true,
+            "responsive": true,
+            "filter": true,
+            "orderMulti": true,
+            "aoColumns": [
+
+                { "data": "id" },
+
+
+                { "data": "nome" },
+
+                { "data": "nome_distrito" },
+
+                { "data": "localizacao" },
+                { "data": "data_evento_convertido" },
+
+
+            ],
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+
+                $('td:eq(0)', nRow).html("<a href='javascript:void(0);' ><button type='button'  id='editar'  class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.id + "') > Editar Artigo</button></a>");
+                //$('td:eq(0)', nRow).html("<a href='javascript:void(0);' > <select class='form-control input-danger input-sm'  id='accionar'><option value=''>--Seleccione--</option> <option  value='masculino'>Ver mais Detalhes</option><option id='editar' value='femenino'>Editar</option></select></a>");
+                //$('td:eq(0)', nRow).html("<a href='javascript:void(0);' >  <div class='btn-group'><button type='button' class='btn btn-danger btn-sm'>Acçao</button><button type='button' class='btn btn-sm btn-danger dropdown-toggle' data-toggle='dropdown'> <span class='caret'></span><span class='sr-only'>Toggle Dropdown</span> </button> <ul class='dropdown-menu' role='menu'> <li><a href='#'>Ver Mais Detalhes</a></li><li><a href='#'>Editar</a></li></ul></div></a>");
+                //$('td:eq(7)', nRow).html("<a href='javascript:void(0);' ><button type='button' id='ver' class='btn btn-icons btn-sm btn-info'onclick=verProduto('" + aData.idRequisicao + "') ><i class='fa fa-eye'></i></button>|<button type='button'  id='editar' class='btn btn-icons btn-sm btn-success' onclick=editar('" + aData.idRequisicao + "') ><i class='fa fa-pencil'></i></button></a>");
+                //$('td:eq(10)', nRow).html("<a href='javascript:void(0);' onclick=alert('" + aData.FuncionarioId + "')><button type='button' class='btn btn-icons btn-rounded btn-warning'><i class='fa fa-edit'></i></button></a>");
+                //$('td:eq(3)', nRow).html("<a href='javascript:void(0);' onclick=apagar('" + aData.IdCategoria + "')><button type='button' class='btn btn-icons btn-rounded btn-danger'><i class='fa fa-trash'></i></button></a>");
+                return nRow;
+            },
+
+        });
+        $("#example").LoadingOverlay("hide", true);
+    }
+    $(function () {
+        $('#example').DataTable({
+
+            "lengthChange": false,
+            "scrollY": 300,
+            "autoWidth": true,
+            "scrollX": true,
+            "processing": true,
+            "serverSide": true,
+            "responsive": true,
+            "filter": true,
+            "orderMulti": true,
+            "ajax": {
+                "url": "/ProvedorEvento/carregarTabelaEventosByAjax",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "id" },
+
+
+                { "data": "nome" },
+
+                { "data": "nome_distrito" },
+
+                { "data": "local" },
+                { "data": "data_evento_convertido" },
+
+            ],
+            //Descricao
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                //$('td:eq(0)', nRow).html("<a href='javascript:ver('" + aData.id + "')' class='button gray'><i class='fa fa-eye'></i> Ver/Editar</a> ");
+                $('td:eq(0)', nRow).html("<a href='javascript:void(0);' ><button type='button'  id='editar'  class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.id + "') > Editar Evento</button></a>");
+                //$('td:eq(1)', nRow).html("<a href='javascript:void(0);' ><button type='button' id='ver' class='btn btn-icons btn-sm btn-primary'onclick=verProduto('" + aData.id_produto + "')></button>|<button type='button'  id='editar' class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.idproduto + "') ></button></a>");
+                //$('td:eq(10)', nRow).html("<a href='javascript:void(0);' onclick=alert('" + aData.FuncionarioId + "')><button type='button' class='btn btn-icons btn-rounded btn-warning'><i class='fa fa-edit'></i></button></a>");
+                //$('td:eq(3)', nRow).html("<a href='javascript:void(0);' onclick=apagar('" + aData.IdCategoria + "')><button type='button' class='btn btn-icons btn-rounded btn-danger'><i class='fa fa-trash'></i></button></a>");
+                return nRow;
+            },
+        });
+    });
+
+
+    var editar = function (id) {
+        $.LoadingOverlay("show");
+
+        // Hide it after 3 seconds
+        setTimeout(function () {
+            window.location.href = '/AdminEvento/EditarEvento?id=' + id;
+            $.LoadingOverlay("hide");
+
+        }, 2000);
+
+    }
+</script>
+
+

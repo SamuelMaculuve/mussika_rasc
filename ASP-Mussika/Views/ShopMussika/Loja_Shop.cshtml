@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Loja_Shop";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="headline_part centered margin-top-75"> Procure por Categorias</h3>
+            </div>
+        </div>
+        <div class="row margin-bottom-60">
+            <div class="col-md-4">
+                <a href="/PubShopMussika/lojas" class="img-box" data-background-image="../Repository/images/hospitais/hospital.jpg">
+                    <div class="utf_img_content_box visible">
+                        <h4>Lojas  </h4>
+                        <span>@ViewBag.hospitais Encontrados</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/PubShopMussika/Index" class="img-box" data-background-image="../Repository/images/hospitais/clinica.jpg">
+                    <div class="utf_img_content_box visible">
+                        <h4>Shop Mussika</h4>
+                        <span>@ViewBag.clinicas Encontrados</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+
+                <a href="/PubSaude/Farmacias" class="img-box" data-background-image="../Repository/images/hospitais/farmacia.jpg">
+                    <div class="utf_img_content_box visible">
+                        <h4>Farmácias</h4>
+                        <span>@ViewBag.farmacias Encontrados</span>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ASP_Mussika.Models.publicidadeViewModel>
+@{
+    ViewBag.Title = "Publicidade";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+
+<br />
+<section class="fullwidth_block margin-top-0 padding-top-0 padding-bottom-75" data-background-color="#fff">
+    <div class="container">
+
+
+        <section class="fullwidth_block margin-top-0 padding-top-0 padding-bottom-50" data-background-color="#fff">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="headline_part centered margin-bottom-20">Pacotes de Subscrição <span>Conheça e escolha o pacote que mais se adequa ao seu negócio</span></h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="utf_pricing_container_block margin-top-30 margin-bottom-30">
+                        @foreach (var item in Model)
+                        {
+                            <div class="plan featured col-md-3 col-sm-6 col-xs-12">
+                                <div class="utf_price_plan">
+                                    <h3>@item.nome</h3>
+                                    <span class="value">@item.preco_por_mes<span>/Mês</span></span>
+                                </div>
+                                <div class="utf_price_plan_features">
+                                    <ul>
+                                        @foreach (var beneficio in item.beneficiosPacote)
+                                        {
+                                            <li>@beneficio.item_nome</li>
+                                        }
+
+                                    </ul>
+                                    @if (Session["idusario"] == null)
+                                    {
+                                <p style="color:red">Faça login para assinar este pacote</p>
+                                    }
+                                    else
+                                    {
+                                        <a class="button border" href="javascript: pagar_subscricao(@item.id)"><i class="sl sl-icon-basket"></i> Assine já</a>
+                                    }
+
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+</section>
+
+<script>
+    function pagar_subscricao(id) {
+        location.href = '/inicio/pagar_subscricao?id=' + id;
+    }
+</script>

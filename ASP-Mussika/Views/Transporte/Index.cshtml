@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+}
+<div class="row">
+    <div class="row">
+        <a onclick="location.href='/Transporte/Criar'" style="margin-left:20px; margin-top:30px" class="button gray">Nova Transportadora</a>
+    </div>
+</div>
+<div class="row">
+    <table class="table table-hover">
+        <thead style="background-color:#000000;color:white">
+            <tr>
+                <th>ID</th>
+                <th>NOME</th>
+                <th>PRECO POR KM</th>
+                <th>Acções</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.transportadoras)
+            {
+            <tr>
+                <td>
+                    @item.id_transportadora
+                </td>
+                <td>
+                    @item.nome
+                </td>
+                <td>
+                    @item.preco
+                </td>
+
+                <td>
+                    <a href="/Transporte/Editar?id=@item.id_transportadora" class="button  gray"> Editar</a>
+                   
+                </td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+

@@ -1,0 +1,101 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.farmacia_produto>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "FarmaciasProdutos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix"></div>
+<div id="titlebar" class="gradient margin-bottom-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Produtos e Serviços da @ViewBag.autor.nome</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="/inicio/principal">Inicio</a></li>
+                        <li>Produtos</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 listing_grid_item">
+            <div class="listing_filter_block margin-top-30">
+
+                <div class="col-md-12 col-xs-12">
+                    <div class="sort-by">
+                        <div class="utf_sort_by_select_item utf_search_map_section">
+                            <ul>
+                                <li><a class="utf_common_button" href="javascript:pesquisar()"><i class="fa fa-search"></i>Pesquisar</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="sort-by">
+                        <div class="col-md-5 sort_by_margin">
+
+                        </div>
+                        <div class="col-md-5 sort_by_margin">
+                            <input type="text" class="search-field" name="filtro" id="filtro" value="@ViewBag.filtro" placeholder="Digite o Nome do Produto">
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+          
+
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4 col-lg-4 col-md-12">
+                        <a href="/PubSaude/DetalhesProduto?id=@item.id" class="utf_listing_item-container" data-marker-id="2">
+                            <div class="utf_listing_item">
+                                <img src="../Repository/images/farmacias/@item.foto_capa" alt=""> <span class="tag"><i class="im im-icon-Hotel"></i> Produto</span>
+                                <div class="utf_listing_item_content">
+                                    <div class="utf_listing_prige_block">
+                                        <span class="utf_meta_listing_price"><i class="fa fa-tag"></i> MT @item.preco_venda</span>
+                                    </div>
+                                    <h3>@item.nome</h3>
+
+                                </div>
+                            </div>
+                            <div class="utf_star_rating_section" data-rating="4.5">
+                                <div class="utf_counter_star_rating">(4.5)</div>
+                                <span class="utf_view_count"><i class="fa fa-eye"></i> 822+</span>
+                                <span class="like-icon"></span>
+                            </div>
+                        </a>
+                    </div>
+                }
+
+
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="utf_pagination_container_part margin-top-20 margin-bottom-75">
+                        <nav class="pagination">
+                            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                            @Html.PagedListPager(Model, page => Url.Action("FarmaciasProdutos",
+                                    new { page, id = ViewBag.autor.id }))
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function pesquisar() {
+        location.href = '/PubSaude/FarmaciasProdutos?id='+@ViewBag.autor.id+'&filtro='+$("#filtro").val();
+    }
+</script>
+

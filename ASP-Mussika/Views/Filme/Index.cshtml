@@ -1,0 +1,119 @@
+﻿@model ASP_Mussika.Models.FilmeViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="notification notice closeable margin-bottom-30">
+            <h2>Gerenciamento de <strong>Filmes</strong></h2>
+
+            <a class="close" href="#"></a>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    <button id="btnNovaAcomodacao" onclick="location.href='/Filme/Criar'" style="margin-left:20px; background-color:deepskyblue" class="button gray">Novo Filme</button>
+
+</div>
+
+<div class="row" style="margin-top:10px;">
+
+    <div class="col-md-9" style="margin-top:-20px;">
+
+        <div class="row with-forms">
+            <div class="row" style="margin:20px 40px 20px 0px;">
+                <table id="example" class="display" style="width:100%">
+                    <thead style="background-color:deepskyblue; ">
+                        <tr>
+                            <th style="color:white">ID</th>
+                            <th style="color:white">Titulo</th>
+                            <th style="color:white">Nacionalidade </th>
+                            <th style="color:white">Minutos</th>
+                            <th style="color:white">direcao</th>
+                           
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>Titulo</th>
+                            <th>Nacionalidade</th>
+                            <th>Minutos</th>
+                            <th>direcao</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+    });
+
+    $(function () {
+        $('#example').DataTable({
+
+            "lengthChange": false,
+            "scrollY": 300,
+            "autoWidth": true,
+            "scrollX": true,
+            "processing": true,
+            "serverSide": true,
+            "responsive": true,
+            "filter": true,
+            "orderMulti": true,
+            "ajax": {
+                "url": "/Filme/carregarTabelaFimesByAjax",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "id" },
+
+
+                { "data": "titulo_original" },
+
+                { "data": "nacionalidade" },
+
+                { "data": "minutos" },
+                { "data": "direcao" },
+               
+            ],
+            //Descricao
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                //$('td:eq(0)', nRow).html("<a href='javascript:ver('" + aData.id + "')' class='button gray'><i class='fa fa-eye'></i> Ver/Editar</a> ");
+                $('td:eq(0)', nRow).html("<a href='javascript:void(0);' ><button type='button'  id='editar'  class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.id + "') > Editar Filme</button></a>");
+                //$('td:eq(1)', nRow).html("<a href='javascript:void(0);' ><button type='button' id='ver' class='btn btn-icons btn-sm btn-primary'onclick=verProduto('" + aData.id_produto + "')></button>|<button type='button'  id='editar' class='btn btn-icons btn-sm btn-primary' onclick=editar('" + aData.idproduto + "') ></button></a>");
+                //$('td:eq(10)', nRow).html("<a href='javascript:void(0);' onclick=alert('" + aData.FuncionarioId + "')><button type='button' class='btn btn-icons btn-rounded btn-warning'><i class='fa fa-edit'></i></button></a>");
+                //$('td:eq(3)', nRow).html("<a href='javascript:void(0);' onclick=apagar('" + aData.IdCategoria + "')><button type='button' class='btn btn-icons btn-rounded btn-danger'><i class='fa fa-trash'></i></button></a>");
+                return nRow;
+            },
+        });
+    });
+
+
+    var editar = function (id) {
+        $.LoadingOverlay("show");
+
+        // Hide it after 3 seconds
+        setTimeout(function () {
+            window.location.href = '/Filme/EditarFilme?id=' + id;
+            $.LoadingOverlay("hide");
+
+        }, 2000);
+
+    }
+</script>
+

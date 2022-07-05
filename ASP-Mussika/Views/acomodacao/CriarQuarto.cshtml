@@ -1,0 +1,334 @@
+﻿@model ASP_Mussika.Models.AcomodacaoViewModel
+
+@{
+    if (Session["tipo"].ToString() == "4")
+    {
+        ViewBag.Title = "Criar";
+        Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+    }
+    else
+    {
+        ViewBag.Title = "Criar";
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+}
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-tag"></i>Dados do Quarto</h3>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-6">
+            
+                <h5>Nome do Quarto<strong style="color:orangered">*</strong></h5>
+                <input type="text" class="search-field" name="nomeQuarto" id="nomeQuarto" placeholder="Quarto" value="">
+          
+            
+
+
+        </div>
+
+        <div class="col-md-2">
+
+            <h5>Max. Hospedes<strong style="color:orangered">*</strong></h5>
+            <input type="text" class="search-field" name="nomeRestaurante" id="hospede" placeholder="Max. Hospedes" value="">
+            
+
+        </div>
+        <div class="col-md-2">
+            <h5>Custo Diario<strong style="color:orangered">*</strong></h5>
+            <input type="text" class="search-field" name="nomeRestaurante" id="custoDiario" placeholder="custoDiario" value="">
+           
+
+        </div>
+        <div class="col-md-2">
+
+            <h5>Quantidade<strong style="color:orangered">*</strong></h5>
+            <input type="text" class="search-field" name="nomeRestaurante" id="quantidade" placeholder="Quantidade" value="">
+          
+
+        </div>
+       
+    </div>
+    <div class="row with-forms">
+        <h5>Descricao</h5>
+        <textarea name="descricao" cols="40" rows="3" id="descricao" placeholder="Descrição..." spellcheck="true"></textarea>
+    </div>
+   
+
+
+</div>
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-picture"></i> Fotografia Do Quarto</h3>
+    </div>
+    <div class="row with-forms">
+        <div class="utf_submit_section col-md-4">
+            <h4>Imagem do Perfil<text style="color:red"> (1)</text></h4>
+            <form action="~/acomodacao/SaveUploadedFileQuarto" class="dropzone" id="filedrop" method="post" enctype="multipart/form-data"></form>
+        </div>
+        
+
+
+    </div>
+</div>
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-docs"></i> Serviços</h3>
+    </div>
+    <div class="checkboxes in-row amenities_checkbox">
+        <ul>
+            <li>
+                <input id="check-a1" type="checkbox" name="check">
+                <label for="check-a1">Ar Condicionado</label>
+            </li>
+            <li>
+                <input id="check-b1" type="checkbox" name="check">
+                <label for="check-b1">Parqueamento</label>
+            </li>
+            <li>
+                <input id="check-c1" type="checkbox" name="check">
+                <label for="check-c1">Televisão</label>
+            </li>
+            <li>
+                <input id="check-d1" type="checkbox" name="check">
+                <label for="check-d1">Geleira</label>
+            </li>
+            <li>
+                <input id="check-e1" type="checkbox" name="check">
+                <label for="check-e1">Wifi</label>
+            </li>
+            <li>
+                <input id="check-f1" type="checkbox" name="check">
+                <label for="check-f1">Mini-Bar</label>
+            </li>
+
+        </ul>
+    </div>
+    <button id="btnFinalizar" style="margin-top:40px; margin-bottom:30px;" class="button btn-sm">Prosseguir</button>
+</div>
+
+
+<script>
+
+
+    var imagemQuarto="";
+    $('#hospede').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+    $('#custoDiario').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+
+    $('#quantidade').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+
+   
+
+    $("#btnFinalizar").click(function () {
+    debugger
+        if ($("#nomeQuarto").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o nome do Quarto");
+            throw new Error();
+        }
+
+        if ($("#hospede").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o Numero Maximo de Hospedes");
+            throw new Error();
+        }
+        if ($("#custoDiario").val().trim().toLowerCase() == "") {
+            informarErro("Informe o custo Diario");
+            throw new Error();
+        }
+        if ($("#quantidade").val().trim().toLowerCase() == "") {
+            informarErro("Informe a quantidade de quartos Disponiveis");
+            throw new Error();
+        }
+
+
+
+        salvar();
+    })
+
+
+
+    function salvar() {
+        $.LoadingOverlay("show");
+        var content = tinyMCE.activeEditor.getContent();
+        var model = new FormData();
+        model.append('id_acomodacao', '@Model.id');
+        model.append('descricao', $("#nomeQuarto").val());
+        model.append('hospedes', $("#hospede").val());
+        model.append('custo_diaria', $("#custoDiario").val());
+        model.append('Observacoes', content.trim());
+        model.append('quantidade', $("#quantidade").val());
+        model.append('foto_capa', imagemQuarto);
+        model.append('chk_ac', $("#check-a1").prop("checked"));
+        model.append('chk_parqueamento', $("#check-b1").prop("checked"));
+        model.append('chk_televisao', $("#check-c1").prop("checked"));
+        model.append('chk_geleira', $("#check-d1").prop("checked"));
+        model.append('chk_wifi', $("#check-e1").prop("checked"));
+        model.append('chk_minibar', $("#check-f1").prop("checked"));
+
+
+
+        $.ajax({
+            method: "POST",
+            url: "/Acomodacao/SalvarQuarto",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar este Restaurante");
+
+
+                } else if (msg == "existe") {
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Este Quarto ja Existe");
+                }
+                else {
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/Acomodacao/Quartos?id='+'@Model.id';
+                    //informarSucesso("Quarto Cadastrado com Sucesso")
+                    $('.with-forms').find("input[type=text], textarea").val("");
+                    Dropzone.forElement('#filedrop').removeAllFiles(true)
+                    $("#check-a1").prop("checked", false)
+                    $("#check-b1").prop("checked", false)
+                    $("#check-c1").prop("checked", false)
+                    $("#check-d1").prop("checked", false)
+                    $("#check-e1").prop("checked", false)
+                    $("#check-f1").prop("checked", false)
+                }
+
+            });
+    }
+
+
+      var drop = null;
+    Dropzone.options.filedrop = {
+
+        acceptedFiles: ".png,.jpg,.jpeg",
+        maxFilesize: 5.00,
+        maxThumbnailFilesize: 5.00,
+        maxFiles: 1,
+        addRemoveLinks: true,
+        //renameFile:function(file){
+        //    return new date().getTime()+'_'+file.name;
+        //},
+        renameFilename: function (file) {
+            var today = new Date();
+            var time = today.getHours() + "" + today.getMinutes() + "" + today.getSeconds()+ '_'+@Model.id;
+            var date = today.getDate() + '' + (today.getMonth() + 1) + '' + today.getFullYear();
+
+            return file.renameFilename = "quarto" + date + time + "." + file.split('.').pop();
+        },
+        init: function () {
+            //drop = this;
+
+            /////////////Perfil////////////////////////////////
+            myDropzone = this;
+            debugger
+            var existingFileCount = 0;
+            @*if('@Model.foto_capa'.trim().toLowerCase()!='noimage.png'){
+                var mockFile = { name: '@Model.foto_capa',size: '@Model.size',serverId:'@Model.foto_capa' };
+                myDropzone.emit("addedfile", mockFile);
+                myDropzone.emit("thumbnail", mockFile, '../Repository/images/Restaurantes/'+'@Model.foto_capa');
+                myDropzone.emit("complete", mockFile);
+                existingFileCount = 1
+            }*@
+
+
+            /////////////////////////////////////////
+            // The number of files already uploaded
+            myDropzone.options.maxFiles = myDropzone.options.maxFiles - existingFileCount;
+
+
+
+            this.on('sending', function (file, xhr, formData) {
+
+                debugger
+                formData.append('id', '@Model.id');
+               
+            });
+
+
+            this.on("queuecomplete", function (file) {
+                ///some text
+
+            });
+            this.on("maxfilesexceeded", function (file) {
+                this.removeFile(file);
+                informarErro("Somente pode carregar no maximo 2 Imagens!");
+            });
+
+            this.on("error", function (file, message) {
+                informarErro(message);
+                this.removeFile(file);
+            });
+            this.on("addedfile", function(file, response) {
+
+            });
+            this.on("success", function(file, response) {
+                debugger
+                file.serverId = response.Message;
+                imagemQuarto=response.Message;
+                debugger
+                //$(file.previewTemplate).find('.dz-custom-download').attr("href", window.appBaseUrl+"file/download/" + file.serverId); // window.appBaseUrl is my custom global variable
+                $(file.previewTemplate).find('.dz-custom-delete').off().on("click", function(e) {
+                    e.preventDefault();
+                    myDropzone.emit("removedfile", file);
+                });
+
+            });
+
+            this.on("removedfile", function (file) {
+                debugger
+                myDropzone.options.maxFiles = 1;
+                imagemQuarto="";
+                $.ajax({
+                    url: '/Acomodacao/RemoverFotoTempQuarto', //your php file path to remove specified image
+                    type: "POST",
+                    data: {
+                        filename: file.serverId,
+                        id:'@Model.id',
+                    },
+
+                })
+            .done(function (msg) {
+                if (msg != "false") {
+
+
+
+
+                }
+                else {
+
+                    informarErro("Erro");
+                    //Dropzone.forElement('#filedrop').removeAllFiles(true)
+
+                }
+
+            });;
+
+            });
+        }
+    };
+
+
+</script>
+       

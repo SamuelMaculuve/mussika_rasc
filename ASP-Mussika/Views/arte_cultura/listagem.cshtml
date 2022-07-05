@@ -1,0 +1,187 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.arteCulturaViewModel>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "listagem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <br />
+    <div class="row">
+        <div class="col-lg-8 col-md-8">
+
+            <div class="listing_filter_block">
+                @*<div class="col-md-2 col-xs-2">
+                        <div class="utf_layout_nav"> <a href="listings_grid_with_sidebar.html" class="grid"><i class="fa fa-th"></i></a> <a href="#" class="list active"><i class="fa fa-align-justify"></i></a> </div>
+                    </div>*@
+                <div class="col-md-12 col-xs-12">
+
+                    @*<div class="sort-by">
+                        <div class="utf_sort_by_select_item sort_by_margin">
+                            <select data-placeholder="Ordenar Por" class="utf_chosen_select_single">
+                                <option>Lista normal</option>
+                                <option>Preço (Ordem crescente)</option>
+                                <option>Preço (Ordem decrescente)</option>
+                            </select>
+                        </div>
+                    </div>*@
+                    <div class="sort-by">
+                        <div class="utf_sort_by_select_item sort_by_margin">
+                            <select disabled id="filtroCategorias" data-placeholder="Categorias:" class="utf_chosen_select_single">
+                                <option value="">--Selecione a Categoria--</option>
+                                @foreach (var item in ViewBag.categorias)
+                                {
+                                    <option value="@item.id">@item.descricao</option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="utf_dashboard_list_box margin-top-0">
+                <ul>
+                    @foreach (var item in Model)
+                    {
+
+                  
+                        <li onclick="perfil(@item.id)">
+                            <div class="utf_list_box_listing_item">
+                                <div class="utf_list_box_listing_item-img">
+                                    <a href="#"><img src="~/Repository/images/ArteCultura/@item.caminho_imagem" alt=""></a>
+                                    @*<span class="like-icon"></span>*@
+                                </div>
+                                <div class="utf_list_box_listing_item_content">
+                                    <div class="inner">
+                                        <h3>@item.titulo</h3>
+                                        @if (item.nome_categoria_obra.Trim() == "Teatro" || item.nome_categoria_obra.Trim() == "Dança")
+                                        {
+                                            <span>Proxima Sessão: Dia 14/05/2020</span>
+                                        }
+                                        else
+                                        {
+
+
+                                        }
+
+                                        <span><i class="sl sl-icon-location"></i> @item.nome_distrito</span>
+                                        <span><i class="sl sl-icon-user"></i> Autor : @item.autor</span>
+                                        <span><i class="sl sl-icon-star"></i> Categoria : @item.nome_categoria_obra  </span>
+                                        @if (item.nome_categoria_obra.Trim() == "Teatro" || item.nome_categoria_obra.Trim() == "Dança")
+                                        {
+
+                                        }
+                                        else
+                                        {
+
+                                            <span><i class="sl sl-icon-credit-card"></i> Preço  : @string.Format("{0:N}MT", item.preco_venda)  </span>
+                                        }
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            @if (item.nome_categoria_obra.Trim() == "Teatro" || item.nome_categoria_obra.Trim() == "Dança")
+                            {
+                                @*<div class="buttons-to-right"> <a href="#" class="button red text-light"><i style="background-color:#ff2222;" class="sl sl-icon-plus text-light"></i> Comprar Bilhete</a> </div>*@
+
+                            }
+                            else
+                            {
+
+                                @*<div class="buttons-to-right"> <a href="#" class="button red text-light"><i style="background-color:#ff2222;" class="sl sl-icon-plus text-light"></i> Comprar</a> </div>*@
+                            }
+
+                        </li>
+                   
+                    }
+
+
+
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+            <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
+                <nav class="pagination">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                    @Html.PagedListPager(Model, page => Url.Action("listagem",
+                        new { page }))
+                </nav>
+            </div>
+        </div>
+
+        @Html.Partial("~/Views/Inicio/Partials/_RightSideBar.cshtml")
+
+        @*<div class="col-lg-4 col-md-4">
+                <div class="sidebar">
+                    <div class="utf_box_widget margin-bottom-35">
+                        <h3><i class="sl sl-icon-direction"></i> Filters</h3>
+                        <div class="row with-forms">
+                            <div class="col-md-12">
+                                <input type="text" placeholder="What are you looking for?" value="">
+                            </div>
+                        </div>
+                        <div class="row with-forms">
+                            <div class="col-md-12">
+                                <div class="input-with-icon location">
+                                    <input type="text" placeholder="Search Location..." value="">
+                                    <a href="#"><i class="sl sl-icon-location"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="more-search-options-trigger margin-bottom-10 active" data-open-title="More Filters Options" data-close-title="More Filters Options"></a>
+                        <div class="more-search-options relative active" style="display: block;">
+                            <div class="checkboxes one-in-row margin-bottom-15">
+                                <input id="check-a" type="checkbox" name="check">
+                                <label for="check-a">Real Estate</label>
+                                <input id="check-b" type="checkbox" name="check">
+                                <label for="check-b">Friendly Workspace</label>
+                                <input id="check-c" type="checkbox" name="check">
+                                <label for="check-c">Instant Book</label>
+                                <input id="check-d" type="checkbox" name="check">
+                                <label for="check-d">Wireless Internet</label>
+                                <input id="check-e" type="checkbox" name="check">
+                                <label for="check-e">Free Parking</label>
+                                <input id="check-f" type="checkbox" name="check">
+                                <label for="check-f">Elevator in Building</label>
+                                <input id="check-g" type="checkbox" name="check">
+                                <label for="check-g">Restaurant</label>
+                                <input id="check-h" type="checkbox" name="check">
+                                <label for="check-h">Dance Floor</label>
+                            </div>
+                        </div>
+                        <button class="button fullwidth_block margin-top-5">Update</button>
+                    </div>
+                    <div class="utf_box_widget margin-top-35 margin-bottom-75">
+                        <h3><i class="sl sl-icon-folder-alt"></i> Categories</h3>
+                        <ul class="utf_listing_detail_sidebar">
+                            <li><i class="fa fa-angle-double-right"></i> <a href="#">Travel</a></li>
+                            <li><i class="fa fa-angle-double-right"></i> <a href="#">Nightlife</a></li>
+                            <li><i class="fa fa-angle-double-right"></i> <a href="#">Fitness</a></li>
+                            <li><i class="fa fa-angle-double-right"></i> <a href="#">Real Estate</a></li>
+                            <li><i class="fa fa-angle-double-right"></i> <a href="#">Restaurant</a></li>
+                            <li><i class="fa fa-angle-double-right"></i> <a href="#">Dance Floor</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>*@
+
+    </div>
+
+
+</div>
+<script>
+    $("#filtroCategorias").val('@ViewBag.categoria')
+     function perfil(id) {
+        
+        location.href = '/arte_cultura/Perfil?id='+id;
+    
+    }
+    function filtrar() {
+        
+        location.href = '/arte_cultura/listagem?categoria='+$("#filtroCategorias").val()+'&id=@ViewBag.id_artista';
+    
+    }
+</script>

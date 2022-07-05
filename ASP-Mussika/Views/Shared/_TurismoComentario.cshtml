@@ -1,0 +1,38 @@
+﻿@model PagedList.IPagedList<ASP_Mussika.Models.comentarioViewModel>
+@using PagedList.Mvc;
+
+
+<h3 class="utf_listing_headline_part margin-top-75 margin-bottom-20">Comentarios <span>(@ViewBag.nrComentarios)</span></h3>
+<div class="clearfix"></div>
+<div id="campoComentario" class="comments utf_listing_reviews">
+    <ul id="comentarios">
+        @foreach (var item in Model)
+        {
+            <li>
+                <div class="avatar"><img src="~/Repository/images/perfil.png" alt="" /></div>
+
+                <div class="utf_comment_content">
+                    <div class="utf_arrow_comment"></div>
+                    @*<div class="utf_star_rating_section" data-rating="@item.estrelas"></div>*@
+                    @*<a href="#" class="rate-review">Helpful Review <i class="fa fa-thumbs-up"></i></a>*@
+                    <div class="utf_by_comment">@item.nomeUsuario<span class="date"><i class="fa fa-clock-o"></i> @item.data.ToString("dd/MM/yyyy") - @item.data.ToString("HH:mm")</span> </div>
+                    <p>@item.comentario</p>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="utf_pagination_container_part margin-top-30">
+            <nav class="pagination">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action("Detalhes",
+                            new { id = ViewBag.id_distrito, page }))
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>

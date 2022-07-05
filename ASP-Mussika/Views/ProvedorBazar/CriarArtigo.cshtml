@@ -1,0 +1,241 @@
+﻿@model ASP_Mussika.Models.ArtigoViewModel
+
+@{
+    ViewBag.Title = "CriarArtigo";
+    Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+}
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-map"></i> Dados do Artigo:</h3>
+    </div>
+    <div class="utf_submit_section">
+        <div class="row with-forms">
+
+            <div id="longlat" class="col-md-12">
+
+                <div class="col-md-4">
+                    <h5>Nome do Artigo</h5>
+                    <input type="text" class="search-field" name="artigo" id="artigo" placeholder="Artigo..." value="">
+                </div>
+                <div class="col-md-4">
+                    <h5>Categoria</h5>
+                    @Html.DropDownListFor(m => m.id_categoria_artigo, ViewBag.categorias as SelectList, "--seleccione uma Categoria--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%;", @id = "descricao", @name = "id" })
+                </div>
+                <div class="col-md-4">
+                    <h5>distrito</h5>
+                    @Html.DropDownListFor(m => m.id_distrito, ViewBag.distritos as SelectList, "--seleccione um Distrito--", new { @class = "utf_chosen_select_single btn btn-mini", @style = "width: 100%;", @id = "nome", @name = "id" })
+                </div>
+            </div>
+            @*<div id="utf_listing_location" class="col-md-12 utf_listing_section">
+                    <div id="utf_single_listing_map_block">
+                        <div id="utf_single_listingmap" data-latitude="-15.472254" data-longitude="36.980683" data-map-icon="im im-icon-Hamburger"></div>
+                        <a href="#" id="utf_street_view_btn">Street View</a>
+                    </div>
+                </div>*@
+        </div>
+        <div class="row with-forms">
+
+            <div id="longlat" class="col-md-12">
+
+
+                @*<div class="col-md-4">
+            <h5>Preço  Minimo</h5>
+            <input type="text" class="search-field" name="preMin" id="preMin" placeholder="Preço Minimo..." value="">
+        </div>
+        <div class="col-md-4">
+            <h5>Preço  Maximo</h5>
+            <input type="text" class="search-field" name="preMax" id="preMax" placeholder="Preço Maximo...." value="">
+        </div>*@
+                <div class="col-md-4">
+                    <h5>Preço  Venda</h5>
+                    <input type="text" class="search-field" name="preVenda" id="preVenda" placeholder="Preço Venda...." value="">
+                </div>
+                <div class="col-md-4">
+                    <h5>Peso do Produto(KG)</h5>
+                    <input type="number" min="0" class="search-field" name="peso" id="peso" placeholder="Peso em KG" value="">
+                </div>
+            </div>
+            @*<div id="utf_listing_location" class="col-md-12 utf_listing_section">
+                    <div id="utf_single_listing_map_block">
+                        <div id="utf_single_listingmap" data-latitude="-15.472254" data-longitude="36.980683" data-map-icon="im im-icon-Hamburger"></div>
+                        <a href="#" id="utf_street_view_btn">Street View</a>
+                    </div>
+                </div>*@
+        </div>
+        <div class="row with-forms">
+
+            <div id="longlat" class="col-md-12">
+
+                <div class="col-md-12">
+                    <h5>Descrição </h5>
+                    <textarea name="descricao" cols="40" rows="2" id="desc" placeholder="Descrição do Artigo..." spellcheck="true"></textarea>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-docs"></i>Outros detalhes</h3>
+    </div>
+    <div class="checkboxes in-row amenities_checkbox">
+        <ul>
+            <li>
+                <input id="check-a1" type="checkbox" name="check">
+                <label for="check-a1">Marca Registada</label>
+            </li>
+            <li>
+                <input id="check-b1" type="checkbox" name="check">
+                <label for="check-b1">Atração Internacional</label>
+            </li>
+            <li>
+                <input id="check-c1" type="checkbox" name="check">
+                <label for="check-c1">É Serviço</label>
+            </li>
+
+
+        </ul>
+    </div>
+    <div class="row with-forms">
+
+        <div id="longlat" class="col-md-12">
+
+            <div class="col-md-4">
+                <h5>Portofolio</h5>
+                <input type="text" class="search-field" name="portfolio" id="portfolio" placeholder="Portfolio..." value="">
+            </div>
+            <div class="col-md-4">
+                <h5>Genero</h5>
+                <input type="text" class="search-field" name="genero" id="genero" placeholder="Genero...." value="">
+            </div>
+            <div class="col-md-4">
+                <h5>Bairro</h5>
+                <input type="text" class="search-field" name="bairro" id="bairro" placeholder="Bairro...." value="">
+            </div>
+
+        </div>
+
+    </div>
+    <button id="btnFinalizar" style="margin-top:40px; margin-bottom:30px;" class="button btn-sm">Prosseguir</button>
+</div>
+
+<script>
+
+    //$('#preMin').keypress(function (event) {
+    //    if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+    //        event.preventDefault();
+    //    }
+    //})
+    //$('#preMax').keypress(function (event) {
+    //    if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+    //        event.preventDefault();
+    //    }
+    //})
+    $('#preVenda').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+
+    $('#peso').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    })
+
+    $("#btnFinalizar").click(function () {
+        if ($("#artigo").val().trim() == '') {
+            informarErro("Informe o nome do Artigo");
+            throw new Error();
+        }
+
+        if ($("#nome").val() == '') {
+            informarErro("Informe o Distrito");
+            throw new Error();
+        }
+
+        if ($("#peso").val() == '') {
+            informarErro("Informe o peso");
+            throw new Error();
+        }
+        //if ($("#preMin").val().trim() == '') {
+        //    informarErro("Informe o Preco minimo");
+        //    throw new Error();
+        //}
+        //if ($("#preMax").val().trim() == '') {
+        //    informarErro("Informe o preco maximo");
+        //    throw new Error();
+        //}
+        if ($("#preVenda").val().trim() == '') {
+            informarErro("Informe o preco de venda");
+            throw new Error();
+        }
+
+
+        salvar();
+    })
+
+    function salvar() {
+         var content =  tinyMCE.activeEditor.getContent();
+        debugger
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('nome', $("#artigo").val());
+        model.append('id_categoria_artigo', $("#descricao").val());
+        model.append('descricao', content.trim());
+        model.append('id_distrito', $("#nome").val());
+
+        //model.append('preco_min', $("#preMin").val());
+        //model.append('preco_max', $("#preMax").val());
+        model.append('preco_venda', $("#preVenda").val());
+        model.append('marca_registada', $("#check-a1").prop("checked"));
+        model.append('atracao_internacional', $("#check-b1").prop("checked"));
+        model.append('e_servico', $("#check-c1").prop("checked"));
+
+        model.append('portofolio', $("#portfolio").val());
+        model.append('genero', $("#genero").val());
+        model.append('bairro', $("#bairro").val());
+        model.append('peso', $("#peso").val());
+
+        $.ajax({
+            method: "POST",
+            url: "/ProvedorBazar/SalvarArtigo",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar este Restaurante");
+
+
+                } else if (msg == "existe") {
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Este Quarto ja Existe");
+                }
+                else {
+                    debugger
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/ProvedorBazar/CarregarFotos?id=' + msg;
+                    //informarSucesso("Artigo Cadastrado com Sucesso")
+                    $('.with-forms').find("input[type=text], textarea").val("");
+                    $("#descricao").val("");
+                    $("#nome").val("");
+                    $("#check-a1").prop("checked", false)
+                    $("#check-b1").prop("checked", false)
+                    $("#check-c1").prop("checked", false)
+
+                    //$("#check-d1").prop("checked", false)
+                    //$("#check-e1").prop("checked", false)
+                    //$("#check-f1").prop("checked", false)
+                }
+
+            });
+    }
+</script>
+

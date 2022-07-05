@@ -1,0 +1,203 @@
+﻿@model ASP_Mussika.Models.transportadora
+
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/_LayoutProvedor.cshtml";
+}
+
+<div class="add_utf_listing_section margin-top-45">
+    <div class="utf_add_listing_part_headline_part">
+        <h3><i class="sl sl-icon-tag"></i>Dados da Transportadora</h3>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-4">
+            <h5>Nome<strong style="color:orangered">*</strong></h5>
+            <input type="text" name="nome" id="nome" placeholder="Nome..." value="@Model.nome">
+        </div>
+
+        <div class="col-md-4">
+            <h5>Tipo de Carga<strong style="color:orangered">*</strong></h5>
+
+            <select id="tipo" class="utf_chosen_select_single">
+                <option value="0" label="blank">Seleccione o Tipo</option>
+                @foreach (var item in ViewBag.tipo_carga)
+                {
+                    <option value="@item.id_tipo_carga">@item.descricao</option>
+                }
+
+            </select>
+        </div>
+        <div class="col-md-4">
+            <h5>Preço por distancia(1 KM)<strong style="color:orangered">*</strong></h5>
+            <input type="number" min="" name="preco" id="preco" value="@Model.preco">
+        </div>
+
+    </div>
+    <div class="row with-forms">
+
+        <div class="col-md-4">
+            <h5>Peso Máximo P/Produtos Pequenos(KG)</h5>
+            <input type="number" min="0" name="peso_max_pequeno" id="peso_max_pequeno" value="@ViewBag.paramtero.peso_max_carga_pequena">
+        </div>
+        <div class="col-md-4">
+            <h5>Peso Máximo P/Produtos Médios(KG)</h5>
+            <input type="number" min="0" name="peso_max_medio" id="peso_max_medio" value="@ViewBag.paramtero.peso_max_carga_media">
+        </div>
+        <div class="col-md-4">
+            <h5>Peso Máximo P/Produtos Grandes(KG)</h5>
+            <input type="number" min="0" name="peso_max_grande" id="peso_max_grande" value="@ViewBag.paramtero.peso_max_carga_grande">
+        </div>
+
+        <div class="col-md-4">
+            <h5>Acréscimo P/Produtos Sensiveis(%)</h5>
+            <input type="number" min="0" name="percentagem_sensivel" id="percentagem_sensivel" value="@ViewBag.paramtero.percentagem_sensivel">
+        </div>
+
+        <div class="col-md-4">
+            <h5>Acréscimo P/Peso Médio(%)</h5>
+            <input type="number" min="0" name="peso_medio" id="peso_medio" value="@ViewBag.paramtero.peso_medio">
+        </div>
+        <div class="col-md-4">
+            <h5>Acréscimo P/Peso Grande(%)</h5>
+            <input type="number" min="0" name="peso_grande" id="peso_grande" value="@ViewBag.paramtero.peso_grande">
+        </div>
+        <div class="col-md-3">
+            <h5>Distancia Minima(km)</h5>
+            <input type="number" min="0" name="dis_minima" id="dis_minima" value="@ViewBag.paramtero.distancia_minima">
+        </div>
+        <div class="col-md-3">
+            <h5>Distancia Maxima(km)</h5>
+            <input type="number" min="0" name="dis_maxima" id="dis_maxima" value="@ViewBag.paramtero.distancia_maxima">
+        </div>
+        <div class=" col-md-3 checkboxes in-row amenities_checkbox">
+            <ul>
+                <li>
+                    <input id="check-a1" type="checkbox" name="check">
+                    <label for="check-a1">Transporta Produto Sencivel</label>
+                </li>
+
+
+
+
+            </ul>
+        </div>
+    </div>
+    <div class="row with-forms">
+        <div class="col-md-3">
+            <a onclick="salvar()" style="margin-left:20px; margin-top:30px" class="button gray">Finalizar</a>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    $("#tipo").val("@ViewBag.paramtero.id_tipo_carga");
+     $(document).ready(function () {
+
+         $("#check-a1").prop("checked", @ViewBag.sensivel);
+
+        })
+    function salvar() {
+        if ($("#nome").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o nome da Transportadora");
+            throw new Error();
+        }
+        if ($("#dis_minima").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe a distancia minima");
+            throw new Error();
+        }
+        if ($("#dis_maxima").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe a distancia maxima");
+            throw new Error();
+        }
+        if ($("#preco").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o preco por km");
+            throw new Error();
+        }
+
+        if ($("#peso_max_pequeno").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o peso maximo em KG para a carga pequena, Medio ou Grande");
+            throw new Error();
+        }
+        if ($("#peso_max_medio").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o peso maximo em KG para a carga pequena, Medio ou Grande");
+            throw new Error();
+        }
+        if ($("#peso_max_grande").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o peso maximo em KG para a carga pequena, Medio ou Grande");
+            throw new Error();
+        }
+
+        if ($("#peso_medio").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o acrescimo em percentagem se o produto for Sensivel, Medio ou Grande");
+            throw new Error();
+        }
+        if ($("#peso_grande").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o acrescimo em percentagem se o produto for Sensivel, Medio ou Grande");
+            throw new Error();
+        }
+        if ($("#percentagem_sensivel").val().trim().toLowerCase() == "") {
+
+            informarErro("Informe o acrescimo em percentagem se o produto for Sensivel, Medio ou Grande");
+            throw new Error();
+        }
+
+        //var content = tinyMCE.activeEditor.getContent();
+        $.LoadingOverlay("show");
+        var model = new FormData();
+        model.append('id_transportadora', @Model.id_transportadora);
+        model.append('nome', $("#nome").val());
+        model.append('preco', $("#preco").val());
+        model.append('id_tipo_carga', $("#tipo").val());
+        model.append('distancia_minima', $("#dis_minima").val());
+        model.append('distancia_maxima', $("#dis_maxima").val());
+        model.append('percentagem_sensivel', $("#percentagem_sensivel").val());
+        //model.append('peso_pequeno', $("#peso_pequeno").val());
+        model.append('peso_medio', $("#peso_medio").val());
+        model.append('peso_grande', $("#peso_grande").val());
+        model.append('peso_max_carga_grande', $("#peso_max_grande").val());
+        model.append('peso_max_carga_media', $("#peso_max_medio").val());
+        model.append('peso_max_carga_pequena', $("#peso_max_pequeno").val());
+        model.append('sensivel', $("#check-a1").prop("checked"));
+
+
+
+        $.ajax({
+            method: "POST",
+            url: "/Transporte/SalvarAlteracoes",
+            data: model,
+            processData: false,
+            contentType: false,
+        })
+            .done(function (msg) {
+                if (msg == "false") {
+
+                    $.LoadingOverlay("hide", true);
+                    informarErro("Nao foi possivel cadastrar este Evento");
+
+
+                }
+                else {
+                    $.LoadingOverlay("hide", true);
+                    location.href = '/Transporte/Index';
+                    //location.href = '/AdminEvento/Index';
+                    //informarSucesso("musica Cadastrada com Sucesso")
+                    $('.with-forms').find("input[type=text], textarea").val("");
+                    Dropzone.forElement('#filedrop').removeAllFiles(true)
+
+                }
+
+            });
+    }
+</script>
+
